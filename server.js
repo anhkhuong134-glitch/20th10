@@ -1,8 +1,5 @@
-const http = require('http');
 const fs = require('fs');
 const path = require('path');
-
-const PORT = process.env.PORT || 3456;
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -17,8 +14,8 @@ const MIME_TYPES = {
   '.mp3': 'audio/mpeg'
 };
 
-const server = http.createServer((req, res) => {
-  let reqPath = decodeURIComponent(req.url.split('?')[0]);
+function handler(req, res) {
+  let reqPath = decodeURIComponent((req.url || '/').split('?')[0]);
   if (reqPath === '/' || reqPath === '') reqPath = '/index.html';
 
   const filePath = path.join(__dirname, reqPath);
@@ -35,7 +32,6 @@ const server = http.createServer((req, res) => {
     const total = stats.size;
     const range = req.headers.range;
 
-    // Support HTTP range requests for smooth audio seeking/streaming
     if (range && ext === '.mp3') {
       const parts = range.replace(/bytes=/, '').split('-');
       const start = parseInt(parts[0], 10);
@@ -50,8 +46,7 @@ const server = http.createServer((req, res) => {
         'Access-Control-Allow-Origin': '*'
       });
 
-      const stream = fs.createReadStream(filePath, { start, end });
-      stream.pipe(res);
+      fs.createReadStream(filePath, { start, end }).pipe(res);
     } else {
       res.writeHead(200, {
         'Content-Length': total,
@@ -59,14 +54,18 @@ const server = http.createServer((req, res) => {
         'Accept-Ranges': 'bytes',
         'Access-Control-Allow-Origin': '*'
       });
-      const stream = fs.createReadStream(filePath);
-      stream.pipe(res);
+      fs.createReadStream(filePath).pipe(res);
     }
   });
-});
+}
 
-server.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}/`);
-});
+module.exports = handler;
 
-module.exports = server;
+if (require.main === module) {
+  const http = require('http');
+  const PORT = process.env.PORT || 3456;
+  const server = http.createServer(handler);
+  server.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}/`);
+  });
+}
