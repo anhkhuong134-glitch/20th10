@@ -688,10 +688,62 @@ body {
 }
 
 .album-title-tag {
-  font-size: 0.88rem;
+  font-size: 0.92rem;
   font-weight: 800;
   color: #b45309;
   letter-spacing: 0.5px;
+}
+
+.album-reminder-box {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, rgba(254, 242, 242, 0.95), rgba(253, 244, 255, 0.95));
+  border: 1.5px dashed rgba(244, 114, 182, 0.55);
+  border-radius: 14px;
+  padding: 8px 12px;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 14px rgba(244, 114, 182, 0.12);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  animation: gentleBounce 3.5s ease-in-out infinite;
+}
+
+.album-reminder-box:hover {
+  transform: translateY(-2px);
+  border-color: #ec4899;
+  box-shadow: 0 6px 18px rgba(236, 72, 153, 0.2);
+}
+
+.album-reminder-box .reminder-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  display: inline-block;
+  animation: wiggle 2.4s infinite ease-in-out;
+}
+
+.album-reminder-box .reminder-text {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #9d174d;
+  line-height: 1.4;
+}
+
+.album-reminder-box .reminder-text strong {
+  color: #db2777;
+  font-weight: 800;
+}
+
+@keyframes gentleBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-8deg); }
+  75% { transform: rotate(8deg); }
 }
 
 .album-dots-wrap {
@@ -1473,10 +1525,10 @@ body {
             <div class="bloom-hint">🌹 Đóa hoa hồng vĩnh cửu (Chạm vào để hoa nở)</div>
           </div>
 
-          <!-- Interactive 3D Photo Album with All 5 Photos of Thu Phuong -->
+          <!-- Interactive 3D Photo Album of Puw -->
           <div class="album-card-wrapper">
             <div class="album-top-bar">
-              <span class="album-title-tag">📸 Album Thu Phương</span>
+              <span class="album-title-tag">📸 ALBUM của Puw ✨</span>
               <div class="album-dots-wrap">
                 <span class="autoslide-badge" id="autoslide-indicator" title="Ảnh tự động cuộn mỗi 3.5 giây ✨">
                   <span class="autoslide-dot"></span> Tự cuộn 3.5s
@@ -1485,6 +1537,12 @@ body {
                   <!-- JS generated dots -->
                 </div>
               </div>
+            </div>
+
+            <!-- Lời nhắc nhở dễ thương: yêu cầu chủ thớt nộp thêm ảnh selfie -->
+            <div class="album-reminder-box" id="album-reminder-box" title="Chạm vào để réo chủ thớt nộp ảnh nè 📸✨">
+              <span class="reminder-icon">📢</span>
+              <span class="reminder-text"><strong>Lời nhắc:</strong> Yêu cầu chủ thớt cung cấp cho toai nhìu tấm selfie hơn nhaa! 🤳✨🐾</span>
             </div>
 
             <div class="album-slider" id="album-slider">
@@ -2245,6 +2303,15 @@ albumCards.forEach(card => {
     resetAutoSlide();
   });
 });
+
+const albumReminderBox = document.getElementById('album-reminder-box');
+if (albumReminderBox) {
+  albumReminderBox.addEventListener('click', () => {
+    triggerConfetti(35);
+    soundFX.playMeow();
+    showToast("📢 Đã gửi tín hiệu réo chủ thớt! Mau mau nộp thêm nhìu ảnh selfie nhaa 🤳✨");
+  });
+}
 
 // Start immediately on load
 initAlbumSlider();

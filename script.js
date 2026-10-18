@@ -735,6 +735,15 @@ albumCards.forEach(card => {
   });
 });
 
+const albumReminderBox = document.getElementById('album-reminder-box');
+if (albumReminderBox) {
+  albumReminderBox.addEventListener('click', () => {
+    triggerConfetti(30);
+    soundFX.playMeow();
+    showToast("📢 Đã gửi tín hiệu réo chủ thớt! Mau mau nộp thêm nhìu ảnh selfie nhaa 🤳✨");
+  });
+}
+
 // ========================================================
 // 6. BLOOMING ROSE CANVAS ENGINE
 // ========================================================
