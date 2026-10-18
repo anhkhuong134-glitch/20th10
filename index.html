@@ -609,27 +609,36 @@ body {
   margin: 0 auto;
 }
 
-/* 2-Column Main Section */
-.gift-main-grid {
+/* Upper Section: Visual Showcase (Rose + Bouquet on Left, 3D Album on Right) */
+.gift-visual-section {
+  width: 100%;
+  max-width: 1060px;
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 1.3fr;
-  gap: 36px;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
   align-items: start;
 }
 
-@media (max-width: 950px) {
-  .gift-main-grid {
+@media (max-width: 900px) {
+  .gift-visual-section {
     grid-template-columns: 1fr;
-    gap: 32px;
+    gap: 28px;
   }
 }
 
-/* Visual Column: Blooming Rose + 3D Photo Album */
-.visual-column {
+.visual-cards-col {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.album-cards-col {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 26px;
+  width: 100%;
 }
 
 .rose-card {
@@ -640,8 +649,74 @@ body {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 15px 40px rgba(244, 114, 182, 0.14);
   border: 1px solid var(--border-neon);
+  background: var(--bg-card);
+}
+
+.bouquet-card {
+  width: 100%;
+  padding: 24px 20px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 15px 40px rgba(244, 114, 182, 0.14);
+  border: 1px solid var(--border-neon);
+  background: var(--bg-card);
+}
+
+.bouquet-top-tag {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #db2777;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.bouquet-img-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(236, 72, 153, 0.2);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.bouquet-img-wrapper:hover {
+  transform: scale(1.03);
+}
+
+.bouquet-img-wrapper img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.bouquet-ribbon-tag {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.92);
+  color: #be185d;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 14px;
+  border-radius: 50px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  white-space: nowrap;
+}
+
+.bouquet-caption {
+  margin-top: 14px;
+  font-size: 0.88rem;
+  color: var(--text-sub);
+  font-weight: 500;
 }
 
 .bloom-wrapper {
@@ -687,7 +762,7 @@ body {
 /* 3D Photo Album Section */
 .album-card-wrapper {
   width: 100%;
-  max-width: 340px;
+  max-width: 440px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -965,17 +1040,30 @@ body {
   letter-spacing: 0.5px;
 }
 
-/* Right Content Column: Heartfelt Letter */
+/* Lower Section: Full-Width Horizontal Report Card */
+.content-column {
+  width: 100%;
+  max-width: 1060px;
+  margin: 0 auto;
+}
+
 .letter-card {
+  width: 100%;
   background: var(--bg-card);
   border: 1.5px solid var(--border-neon);
   border-radius: var(--radius-lg);
-  padding: 40px 38px;
+  padding: 42px 48px;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   box-shadow: 0 15px 45px rgba(244, 114, 182, 0.14), 0 4px 20px rgba(139, 92, 246, 0.08);
   position: relative;
   overflow: hidden;
+}
+
+@media (max-width: 640px) {
+  .letter-card {
+    padding: 24px 20px;
+  }
 }
 
 .letter-card::before {
@@ -1029,16 +1117,16 @@ body {
   margin-bottom: 16px;
 }
 
-/* Accounting Ledger Box - Pastel Dreamy Style */
+/* Accounting Ledger Box - Pastel Dreamy Style (Horizontal Grid) */
 .accounting-ledger {
   background: linear-gradient(135deg, rgba(255, 245, 248, 0.95), rgba(245, 243, 255, 0.95));
   border: 1.5px solid rgba(244, 114, 182, 0.35);
   border-radius: var(--radius-md);
-  padding: 18px 22px;
-  margin: 24px 0;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  padding: 22px 24px;
+  margin: 26px 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
   box-shadow: 0 6px 20px rgba(244, 114, 182, 0.08);
 }
 
@@ -1046,20 +1134,21 @@ body {
   display: flex;
   flex-direction: column;
   font-size: 0.93rem;
-  padding-bottom: 8px;
-  border-bottom: 1px dashed rgba(244, 114, 182, 0.22);
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(244, 114, 182, 0.25);
+  border-radius: var(--radius-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.ledger-row:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
+.ledger-row:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(244, 114, 182, 0.15);
 }
 
 .ledger-row.highlight {
-  background: rgba(236, 72, 153, 0.09);
-  padding: 10px 14px;
-  border-radius: var(--radius-sm);
-  border-bottom: none;
+  background: rgba(236, 72, 153, 0.12);
+  border-color: rgba(236, 72, 153, 0.4);
 }
 
 .ledger-label {
@@ -1084,7 +1173,9 @@ body {
 .letter-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
   margin-top: 30px;
   padding-top: 22px;
   border-top: 1px solid rgba(244, 114, 182, 0.25);
@@ -1354,22 +1445,22 @@ body {
         </div>
 
         <div class="lock-badge">HỒ SƠ BÍ MẬT 🌸 20/10</div>
-        <h2 class="lock-title">Chào Cậu, Người Đẹp! ✨</h2>
+        <h2 class="lock-title">Hí nhô!!! Cô nương! ✨</h2>
         <p class="lock-desc">
-          Món quà này được lập trình dành riêng cho một người đặc biệt. Cậu hãy điền một chút thông tin để mở khóa nhé:
+          Cái này là đc lập trình dành riêng cho 1 người đặc biệt. Phiền cô điền 1 chút thông tin để sang phần chính nhó:
         </p>
 
         <form id="info-form" class="lock-form" onsubmit="return false;">
           <div class="form-group">
             <label class="input-label" for="user-name-input">
-              <span>👤</span> Họ và tên của cậu:
+              <span>👤</span> Họ và tên của cô:
             </label>
             <div class="info-input-wrap">
               <input 
                 type="text" 
                 id="user-name-input" 
                 class="info-input" 
-                placeholder="Nhập họ và tên (ví dụ: Nguyễn Thu Phương)..." 
+                placeholder="Nhập họ và tên (ví dụ: Nguyễn Văn A..." 
                 autocomplete="name" 
                 autofocus
                 required

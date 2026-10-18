@@ -1,41 +1,18 @@
+
 ============================================================
 🌸 THÔNG TIN THU PHƯƠNG NHẬP VÀO HỆ THỐNG 20/10
-⏰ Thời gian ghi nhận: 00:31:21 19/10/2026
+⏰ Thời gian ghi nhận: 02:09:22 19/10/2026
 👤 Họ và tên: Nguyen Thu Phuong
-🎂 Ngày tháng năm sinh: 20/10/2004
-📱 Thiết bị/Trình duyệt: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36
-============================================================
-
-============================================================
-🌸 THÔNG TIN THU PHƯƠNG NHẬP VÀO HỆ THỐNG 20/10
-⏰ Thời gian ghi nhận: 01:04:22 19/10/2026
-👤 Họ và tên: Nguyen Thu Phuong
-🎂 Ngày tháng năm sinh: 2004-10-20
-📱 Thiết bị/Trình duyệt: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36
-============================================================
-
-============================================================
-🌸 THÔNG TIN THU PHƯƠNG NHẬP VÀO HỆ THỐNG 20/10
-⏰ Thời gian ghi nhận: 01:23:36 19/10/2026
-👤 Họ và tên: Nguyễn Thu Phương
-🎂 Ngày tháng năm sinh: 2004-10-20
-📱 Thiết bị/Trình duyệt: Unknown
-============================================================
-
-============================================================
-🌸 THÔNG TIN THU PHƯƠNG NHẬP VÀO HỆ THỐNG 20/10
-⏰ Thời gian ghi nhận: 01:26:32 19/10/2026
-👤 Họ và tên: Nguy?n Thu Phuong
-🎂 Ngày tháng năm sinh: 2004-10-20
-📱 Thiết bị/Trình duyệt: Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.9711
-============================================================
-
-============================================================
-🌸 THÔNG TIN THU PHƯƠNG NHẬP VÀO HỆ THỐNG 20/10
-⏰ Thời gian ghi nhận: 01:28:17 19/10/2026
-👤 Họ và tên: Nguyễn Thu Phương
 🎂 Ngày tháng năm sinh: 19/08/2004
-📱 Thiết bị/Trình duyệt: Unknown
+📱 Thiết bị/Trình duyệt: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36
+============================================================
+
+============================================================
+🌸 THÔNG TIN THU PHƯƠNG NHẬP VÀO HỆ THỐNG 20/10
+⏰ Thời gian ghi nhận: 02:10:05 19/10/2026
+👤 Họ và tên: Nguyen Thu Phuong
+🎂 Ngày tháng năm sinh: 19/08/2004
+📱 Thiết bị/Trình duyệt: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36
 ❓ Câu 1 (Mai là ngày bao nhiêu): 20/10
-❓ Câu 2 (Mai là ngày gì): Ngày Phụ Nữ Việt Nam
+❓ Câu 2 (Mai là ngày gì): NgNgay Phu Nu Viet Nam
 ============================================================
