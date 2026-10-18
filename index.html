@@ -1014,7 +1014,10 @@ body {
   <canvas id="bg-canvas"></canvas>
 
   <!-- Real Audio Player (Ánh Nắng Của Anh - Đức Phúc) -->
-  <audio id="bg-audio" src="music.mp3" preload="auto" loop></audio>
+  <audio id="bg-audio" preload="auto" loop>
+    <source src="music.mp3" type="audio/mpeg">
+    <source src="https://raw.githubusercontent.com/anhkhuong134-glitch/for-thu-phuong/main/music.mp3" type="audio/mpeg">
+  </audio>
 
   <!-- Audio control floating button -->
   <button id="audio-toggle" class="audio-btn" aria-label="Bật/Tắt bài hát">
@@ -1114,7 +1117,7 @@ body {
               <div class="polaroid-card active" data-index="0">
                 <div class="tape-strip"></div>
                 <div class="photo-frame">
-                  <img src="photo1.png" alt="Thu Phương" onerror="this.src='avatar.jpg'">
+                  <img src="photo1.png" alt="Thu Phương" onerror="this.onerror=null; this.src='https://raw.githubusercontent.com/anhkhuong134-glitch/for-thu-phuong/main/photo1.png'">
                   <div class="photo-badge">Ăn là chân ái 🍗</div>
                 </div>
                 <div class="photo-caption">
@@ -1127,7 +1130,7 @@ body {
               <div class="polaroid-card" data-index="1">
                 <div class="tape-strip"></div>
                 <div class="photo-frame">
-                  <img src="photo2.png" alt="Thu Phương Filter Cún" onerror="this.src='avatar.jpg'">
+                  <img src="photo2.png" alt="Thu Phương Filter Cún" onerror="this.onerror=null; this.src='https://raw.githubusercontent.com/anhkhuong134-glitch/for-thu-phuong/main/photo2.png'">
                   <div class="photo-badge">Cún cưng lấp lánh 🐶</div>
                 </div>
                 <div class="photo-caption">
@@ -1140,7 +1143,7 @@ body {
               <div class="polaroid-card" data-index="2">
                 <div class="tape-strip"></div>
                 <div class="photo-frame">
-                  <img src="photo3.png" alt="Thu Phương Photobooth" onerror="this.src='avatar.jpg'">
+                  <img src="photo3.png" alt="Thu Phương Photobooth" onerror="this.onerror=null; this.src='https://raw.githubusercontent.com/anhkhuong134-glitch/for-thu-phuong/main/photo3.png'">
                   <div class="photo-badge">Kate & Jackson 🐰</div>
                 </div>
                 <div class="photo-caption">
@@ -1153,7 +1156,7 @@ body {
               <div class="polaroid-card" data-index="3">
                 <div class="tape-strip"></div>
                 <div class="photo-frame">
-                  <img src="photo4.png" alt="Thu Phương Mũ Ngược" onerror="this.src='avatar.jpg'">
+                  <img src="photo4.png" alt="Thu Phương Mũ Ngược" onerror="this.onerror=null; this.src='https://raw.githubusercontent.com/anhkhuong134-glitch/for-thu-phuong/main/photo4.png'">
                   <div class="photo-badge">Hờn dỗi 100 điểm 🧢</div>
                 </div>
                 <div class="photo-caption">
@@ -1166,7 +1169,7 @@ body {
               <div class="polaroid-card" data-index="4">
                 <div class="tape-strip"></div>
                 <div class="photo-frame">
-                  <img src="avatar.jpg" alt="Thu Phương Profile">
+                  <img src="avatar.jpg" alt="Thu Phương Profile" onerror="this.onerror=null; this.src='https://raw.githubusercontent.com/anhkhuong134-glitch/for-thu-phuong/main/avatar.jpg'">
                   <div class="photo-badge">Cô gái 20/10 💖</div>
                 </div>
                 <div class="photo-caption">
@@ -1823,22 +1826,52 @@ const audioBtn = document.getElementById('audio-toggle');
 const audioLabel = audioBtn.querySelector('.audio-label');
 const audioIcon = audioBtn.querySelector('.audio-icon');
 
+const CDN_SONG_URL = 'https://raw.githubusercontent.com/anhkhuong134-glitch/for-thu-phuong/main/music.mp3';
 let isSongPlaying = false;
+let hasSwitchedToCDN = false;
 
 function playRealSong() {
   if (!bgAudio) return;
   bgAudio.volume = 0.85;
-  const playPromise = bgAudio.play();
-  if (playPromise !== undefined) {
-    playPromise.then(() => {
-      isSongPlaying = true;
-      updateAudioUI(true);
-    }).catch(err => {
-      console.warn("Autoplay deferred or blocked:", err);
-      isSongPlaying = false;
-      updateAudioUI(false);
-    });
-  }
+
+  const tryPlay = () => {
+    const playPromise = bgAudio.play();
+    if (playPromise !== undefined) {
+      playPromise.then(() => {
+        isSongPlaying = true;
+        updateAudioUI(true);
+      }).catch(err => {
+        console.warn("Autoplay deferred or error:", err);
+        if (!hasSwitchedToCDN) {
+          hasSwitchedToCDN = true;
+          bgAudio.src = CDN_SONG_URL;
+          bgAudio.load();
+          bgAudio.play().then(() => {
+            isSongPlaying = true;
+            updateAudioUI(true);
+          }).catch(e => {
+            isSongPlaying = false;
+            updateAudioUI(false);
+          });
+        } else {
+          isSongPlaying = false;
+          updateAudioUI(false);
+        }
+      });
+    }
+  };
+
+  bgAudio.onerror = () => {
+    if (!hasSwitchedToCDN) {
+      hasSwitchedToCDN = true;
+      console.warn("Switching audio to GitHub CDN source");
+      bgAudio.src = CDN_SONG_URL;
+      bgAudio.load();
+      tryPlay();
+    }
+  };
+
+  tryPlay();
 }
 
 function pauseRealSong() {
