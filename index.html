@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Happy 20/10 Phương Thu ✨ | Secret Project for Her</title>
+  
+  <!-- SEO & Social Sharing preview -->
+  <meta name="description" content="Món quà 20/10 đặc biệt dành riêng cho Phương Thu - Năm 3 Kế Toán, Yêu Boss Mèo & Siêu Dễ Thương.">
+  <meta property="og:title" content="Gửi Phương Thu - Happy 20/10! 🐱🌸">
+  <meta property="og:description" content="Chạm để mở món quà giải cứu Boss Mèo & Bảng Cân Đối Hạnh Phúc!">
+  <meta property="og:image" content="avatar.jpg">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Background Particle & Floating Canvas -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Audio control floating button -->
+  <button id="audio-toggle" class="audio-btn" aria-label="Bật/Tắt giai điệu">
+    <span class="audio-icon">🎵</span>
+    <span class="audio-label">Bật nhạc chill</span>
+    <div class="sound-wave">
+      <span></span><span></span><span></span><span></span>
+    </div>
+  </button>
+
+  <!-- ========================================================
+       STAGE 1: Terminal Coder Intro (Dí dỏm, Quét profile Phương Thu)
+       ======================================================== -->
+  <section id="terminal-screen" class="screen-view active">
+    <div class="terminal-container">
+      <div class="terminal-header">
+        <div class="terminal-dots">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+        </div>
+        <div class="terminal-title">accounting_happiness_protocol.sh</div>
+        <div class="terminal-badge">TARGET: PHƯƠNG THU 🐾</div>
+      </div>
+      
+      <div class="terminal-body" id="terminal-content">
+        <!-- Lines typed out dynamically by script.js -->
+      </div>
+
+      <div class="terminal-footer">
+        <button id="btn-skip-typing" class="btn-terminal-action">Bỏ qua giới thiệu ⚡</button>
+        <button id="btn-start-game" class="btn-terminal-action primary glow">
+          <span class="btn-icon">🎮</span> BẮT ĐẦU NHIỆM VỤ 20/10
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       STAGE 2: Gen Z Minigame (Catch Boss Mèo & Bảng Cân Đối Tình Cảm)
+       ======================================================== -->
+  <section id="minigame-screen" class="screen-view">
+    <div class="game-container glassmorphism">
+      <div class="game-header">
+        <div class="game-badge">🐾 MINI-QUEST 20/10 CHO THU</div>
+        <h2 class="game-title">Giải Cứu Boss Mèo & Sạc Đầy Hạnh Phúc</h2>
+        <p class="game-desc">
+          Bắt nhanh <strong>5 chú mèo & bông hoa</strong> đang bay để cân đối Bảng Báo Cáo Hạnh Phúc nhé!
+        </p>
+        
+        <!-- Score & Progress -->
+        <div class="progress-wrapper">
+          <div class="progress-bar-bg">
+            <div id="game-progress-fill" class="progress-bar-fill"></div>
+          </div>
+          <div class="score-display">
+            <span>Tiến độ: <strong id="score-text">0 / 5</strong> 🐱</span>
+            <span id="score-status" class="status-pill">Đang chuẩn bị...</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Play Area where cats and flowers bounce -->
+      <div id="game-arena" class="game-arena">
+        <div class="arena-hint">Chạm vào Boss mèo hoặc hoa đang bay! 👆</div>
+      </div>
+
+      <!-- Quick GenZ Accounting Quiz (Appears after catching) -->
+      <div id="quiz-box" class="quiz-box hidden">
+        <div class="quiz-badge">📊 CÂU HỎI KẾ TOÁN ĐẶC BIỆT</div>
+        <h3 class="quiz-question">
+          "Theo Chuẩn mực Kế toán Tình cảm, khi Phương Thu mỉm cười thì số dư ghi nhận vào đâu?"
+        </h3>
+        <div class="quiz-options">
+          <button class="quiz-opt-btn" data-opt="A">
+            <strong>A.</strong> Nợ TK 111 (Tiền về đầy túi, thi cử qua môn)
+          </button>
+          <button class="quiz-opt-btn" data-opt="B">
+            <strong>B.</strong> Có TK 999 (Tăng vô hạn độ xinh xắn và đáng yêu)
+          </button>
+          <button class="quiz-opt-btn" data-opt="C">
+            <strong>C.</strong> Cả 2 đều đúng, vì Thu cười thì mọi Bảng Cân Đối đều Auto Khớp!
+          </button>
+        </div>
+        <div id="quiz-result" class="quiz-result hidden"></div>
+      </div>
+
+      <div class="game-footer">
+        <button id="btn-skip-to-gift" class="text-link-btn">Xem quà ngay không cần chơi &raquo;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       STAGE 3: Grand Finale Gift & 3D Album & Letter
+       ======================================================== -->
+  <section id="gift-screen" class="screen-view">
+    <div class="gift-layout">
+
+      <!-- LEFT COLUMN: 3D Photo Album + Blooming Garden Canvas -->
+      <div class="visual-column">
+        
+        <!-- Rose Bloom Centerpiece -->
+        <div class="bloom-wrapper">
+          <canvas id="rose-canvas"></canvas>
+          <div class="bloom-glow-core"></div>
+          <div class="bloom-caption">🌹 Đóa hoa vĩnh cửu cho Thu (Nhấn để hoa nở)</div>
+        </div>
+
+        <!-- Interactive 3D Photo Album (Phuong Thu + Cats + Flowers) -->
+        <div class="album-section">
+          <div class="album-header">
+            <span class="album-tag">📸 Album Kỷ Niệm & Dễ Thương</span>
+            <div class="album-nav-dots" id="album-nav-dots">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+          <div class="album-slider" id="album-slider">
+            
+            <!-- Slide 1: Main avatar of Phuong Thu -->
+            <div class="polaroid-card active" data-index="0">
+              <div class="tape-strip"></div>
+              <div class="photo-frame">
+                <img src="avatar.jpg" alt="Phương Thu" id="avatar-img" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80'">
+                <div class="photo-badge">Cô gái 20/10 ✨</div>
+              </div>
+              <div class="photo-caption">
+                <span class="caption-title">Phương Thu 🌸</span>
+                <span class="caption-sub">Năm 3 Kế Toán • Nụ cười toả nắng</span>
+              </div>
+            </div>
+
+            <!-- Slide 2: Cat & Accounting Vibe -->
+            <div class="polaroid-card" data-index="1">
+              <div class="tape-strip"></div>
+              <div class="photo-frame">
+                <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=600&q=80" alt="Boss mèo đáng yêu">
+                <div class="photo-badge">Boss Meow 🐱</div>
+              </div>
+              <div class="photo-caption">
+                <span class="caption-title">Đại diện Hội Boss Mèo 🐾</span>
+                <span class="caption-sub">Chúc con sen Phương Thu luôn vui vẻ!</span>
+              </div>
+            </div>
+
+            <!-- Slide 3: Cute puppy / flower vibe -->
+            <div class="polaroid-card" data-index="2">
+              <div class="tape-strip"></div>
+              <div class="photo-frame">
+                <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=600&q=80" alt="Cún cưng dễ thương">
+                <div class="photo-badge">Sen & Boss 🐶</div>
+              </div>
+              <div class="photo-caption">
+                <span class="caption-title">Thế giới ngập tràn năng lượng ✨</span>
+                <span class="caption-sub">Mong mọi điều may mắn đến với Thu</span>
+              </div>
+            </div>
+
+            <!-- Slide 4: Fresh Flowers -->
+            <div class="polaroid-card" data-index="3">
+              <div class="tape-strip"></div>
+              <div class="photo-frame">
+                <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=600&q=80" alt="Bó hoa 20/10">
+                <div class="photo-badge">Happy 20/10 💐</div>
+              </div>
+              <div class="photo-caption">
+                <span class="caption-title">Bó hoa không bao giờ tàn 🌷</span>
+                <span class="caption-sub">Dành tặng riêng cho Phương Thu</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Controls for Album -->
+          <div class="album-controls">
+            <button id="btn-prev-slide" class="slide-nav-btn" aria-label="Ảnh trước">‹</button>
+            <span class="slide-indicator" id="slide-indicator">1 / 4</span>
+            <button id="btn-next-slide" class="slide-nav-btn" aria-label="Ảnh sau">›</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT COLUMN: Heartfelt Letter with Accounting & Cat Metaphors -->
+      <div class="content-column">
+        <div class="letter-card glassmorphism">
+          <div class="letter-tag">BÁO CÁO TÀI CHÍNH CẢM XÚC 20/10</div>
+          
+          <h1 class="letter-heading">
+            Gửi <span class="recipient-name">Phương Thu</span> ✨
+          </h1>
+          <div class="sub-greeting">Chúc mừng Ngày Phụ Nữ Việt Nam 20/10!</div>
+
+          <div class="letter-body">
+            <p class="paragraph">
+              Chào Thu, một cô sinh viên năm 3 ngành Kế toán vừa thông minh, vừa mê boss mèo siêu đáng yêu!
+            </p>
+            
+            <p class="paragraph">
+              Dân Kế toán suốt ngày phải đau đầu vì những bảng cân đối nợ - có, những hàm Excel dài dằng dặc và hóa đơn chứng từ. Còn dân công nghệ bọn mình thì chỉ biết cắm đầu vào màn hình gõ code khô khan...
+            </p>
+
+            <p class="paragraph">
+              Nhưng hôm nay, thay vì một bảng cân đối kế toán thông thường, có một <em>"Báo cáo tài chính cảm xúc"</em> đặc biệt được lập ra chỉ để dành riêng cho cậu:
+            </p>
+
+            <!-- GenZ Accounting Ledger Style Quote Box -->
+            <div class="accounting-ledger">
+              <div class="ledger-row">
+                <span class="ledger-label">📌 Nợ TK 111 (Nụ cười):</span>
+                <span class="ledger-val">Luôn rạng rỡ 24/7, không bao giờ suy giảm</span>
+              </div>
+              <div class="ledger-row">
+                <span class="ledger-label">📌 Có TK 20/10 (Hạnh phúc):</span>
+                <span class="ledger-val">Tăng không giới hạn, lãi ròng niềm vui</span>
+              </div>
+              <div class="ledger-row">
+                <span class="ledger-label">📌 Nợ môn & Deadline:</span>
+                <span class="ledger-val">Trích lập dự phòng = 0, Auto qua môn điểm cao!</span>
+              </div>
+              <div class="ledger-row highlight">
+                <span class="ledger-label">🐾 Tình yêu động vật:</span>
+                <span class="ledger-val">Gặp mèo là được dụi, chó cưng vẫy đuôi mừng!</span>
+              </div>
+            </div>
+
+            <p class="paragraph">
+              Chúc Phương Thu luôn xinh đẹp, tự tin, học tập thật tốt trong năm 3 này. Mong cậu luôn giữ được sự dịu dàng, nụ cười tỏa nắng và luôn được cưng chiều, hạnh phúc như cách cậu yêu thương những chú mèo vậy!
+            </p>
+
+            <p class="paragraph closing">
+              Cảm ơn vì đã là một người bạn / một sự xuất hiện thật đặc biệt và đáng yêu trong cuộc sống này! 🌸
+            </p>
+          </div>
+
+          <!-- Interactive Action Buttons -->
+          <div class="letter-actions">
+            <button id="btn-bloom-more" class="magic-btn primary">
+              <span class="btn-emoji">🌸</span> Bắn pháo hoa & Thả tim
+            </button>
+            <button id="btn-secret-msg" class="magic-btn secondary">
+              <span class="btn-emoji">💌</span> Thông điệp bí mật
+            </button>
+            <button id="btn-cat-meow" class="magic-btn cat-btn">
+              <span class="btn-emoji">🐾</span> Meow meow!
+            </button>
+          </div>
+
+          <div class="footer-credit">
+            <span>Special 20.10 Build • Dedicated to Phương Thu 💖</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================
+       MODAL: Secret Message
+       ======================================================== -->
+  <div id="secret-modal" class="modal-overlay">
+    <div class="modal-card glassmorphism">
+      <div class="modal-header">
+        <div class="modal-icon">🐱</div>
+        <h3>Bật Mí Nhỏ Cho Phương Thu</h3>
+        <button id="modal-close" class="modal-close-btn" aria-label="Đóng">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>
+          Cậu có biết không, người ta bảo con gái học Kế toán thường rất chu đáo và tinh tế, còn người yêu thương chó mèo thì trái tim lúc nào cũng cực kỳ ấm áp.
+        </p>
+        <p>
+          Và ở Phương Thu có cả hai điều tuyệt vời đó! 🥰
+        </p>
+        <p class="modal-highlight">
+          Nếu cậu thấy trang web này vui và thú vị... thì hãy chụp màn hình gửi lại cho người gửi nhé, để người ta biết là cậu đã mỉm cười thật tươi! 😉
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button id="modal-confirm" class="magic-btn primary">Mình mỉm cười rồi nè! 🥰</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="toast"></div>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+</body>
+</html>
