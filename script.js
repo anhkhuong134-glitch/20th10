@@ -186,16 +186,20 @@ const lockErrorMsg = document.getElementById('lock-error-msg');
 const btnToggleHint = document.getElementById('btn-toggle-hint');
 const lockHintText = document.getElementById('lock-hint-text');
 
-// Check name validity: "Thu Phương", "Phương Thu", "Phương", "Thu", etc.
+// Check name validity: "Nguyễn Thu Phương", "Thu Phương", "Phương Thu", etc.
 function isNameValid(val) {
   const raw = val.toLowerCase().trim();
   const normalized = removeDiacritics(raw);
 
-  // Exact or partial friendly matches
+  // Exact or partial friendly matches (accepts Nguyen Thu Phuong, Thu Phuong, etc.)
   const validKeywords = [
+    'nguyen thu phuong',
+    'nguyễn thu phương',
     'thu phuong',
-    'phuong thu',
     'thu phương',
+    'nguyen phuong thu',
+    'nguyễn phương thu',
+    'phuong thu',
     'phương thu',
     'thu',
     'phương',
@@ -211,7 +215,7 @@ function handleNameSubmit() {
   const enteredName = nameInput.value.trim();
 
   if (!enteredName) {
-    showLockError("Cậu chưa nhập tên kìa! Nhập tên vào đây nhé 😊");
+    showLockError("Cậu chưa nhập tên kìa! Nhập họ và tên vào đây nhé 😊");
     return;
   }
 
@@ -221,7 +225,7 @@ function handleNameSubmit() {
     triggerConfetti(35);
     lockErrorMsg.classList.add('hidden');
     inputWrapper.classList.remove('shake');
-    showToast("✨ Xác thực thành công! Chào Thu Phương xinh xắn 🥰");
+    showToast("✨ Xác thực thành công! Chào Nguyễn Thu Phương xinh xắn 🥰");
 
     // Transition to Terminal Screen
     lockScreen.classList.remove('active');
@@ -235,7 +239,7 @@ function handleNameSubmit() {
     soundFX.playBuzz();
     inputWrapper.classList.add('shake');
     setTimeout(() => inputWrapper.classList.remove('shake'), 600);
-    showLockError("Ủa ai dợ? Món quà này chỉ dành riêng cho Thu Phương thôi ó! Thử nhập lại nha 🐾");
+    showLockError("Ủa ai dợ? Món quà này chỉ dành riêng cho Nguyễn Thu Phương thôi ó! Thử nhập lại nha 🐾");
   }
 }
 
@@ -265,7 +269,7 @@ const giftScreen = document.getElementById('gift-screen');
 
 const terminalLines = [
   { text: "> [SYSTEM SCAN]: Quét mục tiêu trên máy chủ...", cls: "comment" },
-  { text: "> Target: Thu Phương | Sinh viên Năm 3 Kế Toán", cls: "keyword" },
+  { text: "> Target: Nguyễn Thu Phương | Sinh viên Năm 3 Kế Toán", cls: "keyword" },
   { text: "> Sở thích phát hiện: Boss mèo 🐱, cún cưng 🐶, trà sữa, hoa tươi 🌸", cls: "string" },
   { text: "> Cảnh báo hệ thống: Chỉ số mệt mỏi vì Bảng Cân Đối & Báo Cáo Tài Chính đang cao!", cls: "func" },
   { text: "> Khởi chạy giao thức: 'GiaiCuuBossMeo_20_10.sh'...", cls: "keyword" },
