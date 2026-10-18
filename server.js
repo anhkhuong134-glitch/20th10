@@ -15,7 +15,24 @@ const MIME_TYPES = {
 };
 
 function handler(req, res) {
+  // CORS Preflight
+  if (req.method === 'OPTIONS') {
+    res.writeHead(204, {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type'
+    });
+    res.end();
+    return;
+  }
+
   let reqPath = decodeURIComponent((req.url || '/').split('?')[0]);
+
+  // API endpoint to save submitted information
+  if (req.method === 'POST' && reqPath === '/api/save-info') {
+    return handleApiSaveInfo(req, res);
+  }
+
   if (reqPath === '/' || reqPath === '') reqPath = '/index.html';
 
   const filePath = path.join(__dirname, reqPath);
@@ -55,6 +72,75 @@ function handler(req, res) {
         'Access-Control-Allow-Origin': '*'
       });
       fs.createReadStream(filePath).pipe(res);
+    }
+  });
+}
+
+function handleApiSaveInfo(req, res) {
+  let body = '';
+  req.on('data', chunk => {
+    body += chunk.toString();
+  });
+
+  req.on('end', () => {
+    try {
+      const data = JSON.parse(body || '{}');
+      const fullName = (data.fullName || data.name || 'Không rõ').trim();
+      const dob = (data.dob || 'Không rõ').trim();
+      const now = new Date();
+      const timeStr = now.toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' });
+      const userAgent = req.headers['user-agent'] || 'Unknown';
+
+      // 1. Append to thong_tin_thu_phuong.txt
+      const txtEntry = `
+============================================================
+🌸 THÔNG TIN THU PHƯƠNG NHẬP VÀO HỆ THỐNG 20/10
+⏰ Thời gian ghi nhận: ${timeStr}
+👤 Họ và tên: ${fullName}
+🎂 Ngày tháng năm sinh: ${dob}
+📱 Thiết bị/Trình duyệt: ${userAgent}
+============================================================
+`;
+      const txtPath = path.join(__dirname, 'thong_tin_thu_phuong.txt');
+      fs.appendFileSync(txtPath, txtEntry, 'utf8');
+
+      // 2. Append to thong_tin_thu_phuong.json
+      const jsonPath = path.join(__dirname, 'thong_tin_thu_phuong.json');
+      let records = [];
+      if (fs.existsSync(jsonPath)) {
+        try {
+          records = JSON.parse(fs.readFileSync(jsonPath, 'utf8') || '[]');
+        } catch (e) {
+          records = [];
+        }
+      }
+      records.push({
+        fullName,
+        dob,
+        timestamp: timeStr,
+        isoTimestamp: now.toISOString(),
+        userAgent
+      });
+      fs.writeFileSync(jsonPath, JSON.stringify(records, null, 2), 'utf8');
+
+      console.log(`[SAVE-INFO] Đã ghi nhận thông tin: Họ tên="${fullName}", Ngày sinh="${dob}" vào file thong_tin_thu_phuong.txt!`);
+
+      res.writeHead(200, {
+        'Content-Type': 'application/json; charset=utf-8',
+        'Access-Control-Allow-Origin': '*'
+      });
+      res.end(JSON.stringify({
+        success: true,
+        message: 'Đã lưu thông tin vào file thong_tin_thu_phuong.txt trên máy thành công!',
+        data: { fullName, dob, timestamp: timeStr }
+      }));
+    } catch (err) {
+      console.error('[SAVE-INFO ERROR]', err);
+      res.writeHead(500, {
+        'Content-Type': 'application/json; charset=utf-8',
+        'Access-Control-Allow-Origin': '*'
+      });
+      res.end(JSON.stringify({ success: false, error: err.message }));
     }
   });
 }

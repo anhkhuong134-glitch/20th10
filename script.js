@@ -179,19 +179,27 @@ function removeDiacritics(str) {
 // 2. STAGE 0: GATEKEEPER NAME VERIFICATION
 // ========================================================
 const lockScreen = document.getElementById('lock-screen');
-const lockForm = document.getElementById('lock-form');
+const stepInfo = document.getElementById('step-info');
+const stepQuiz = document.getElementById('step-quiz');
+const infoForm = document.getElementById('info-form');
 const nameInput = document.getElementById('user-name-input');
-const inputWrapper = document.getElementById('input-wrapper');
+const dobInput = document.getElementById('user-dob-input');
 const lockErrorMsg = document.getElementById('lock-error-msg');
 const btnToggleHint = document.getElementById('btn-toggle-hint');
 const lockHintText = document.getElementById('lock-hint-text');
+
+const quizStepIndicator = document.getElementById('quiz-step-indicator');
+const quizQ1 = document.getElementById('quiz-q1');
+const quizQ2 = document.getElementById('quiz-q2');
+const quizFeedback = document.getElementById('quiz-feedback');
+const btnBackToInfo = document.getElementById('btn-back-to-info');
+const btnDownloadRecord = document.getElementById('btn-download-record');
 
 // Check name validity: "Nguyễn Thu Phương", "Thu Phương", "Phương Thu", etc.
 function isNameValid(val) {
   const raw = val.toLowerCase().trim();
   const normalized = removeDiacritics(raw);
 
-  // Exact or partial friendly matches (accepts Nguyen Thu Phuong, Thu Phuong, etc.)
   const validKeywords = [
     'nguyen thu phuong',
     'nguyễn thu phương',
@@ -211,51 +219,227 @@ function isNameValid(val) {
   });
 }
 
-function handleNameSubmit() {
+function recordUserData(fullName, dob) {
+  const timeStr = new Date().toLocaleString('vi-VN');
+  const txtContent = `============================================================\n` +
+    `🌸 THÔNG TIN BẠN NỮ NHẬP VÀO HỆ THỐNG 20/10\n` +
+    `⏰ Thời gian: ${timeStr}\n` +
+    `👤 Họ và tên: ${fullName}\n` +
+    `🎂 Ngày tháng năm sinh: ${dob}\n` +
+    `📱 Thiết bị/Trình duyệt: ${navigator.userAgent}\n` +
+    `============================================================\n`;
+
+  const recordObj = { fullName, dob, timeStr, txtContent };
+  localStorage.setItem('saved_thu_phuong_info', JSON.stringify(recordObj));
+
+  fetch('/api/save-info', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ fullName, dob, timeStr })
+  })
+  .then(res => res.json())
+  .then(data => console.log('[RECORD-SAVED]', data))
+  .catch(err => console.warn('[SERVERLESS / OFFLINE BACKUP MODE]', err));
+}
+
+function triggerFileDownload(content, filename = 'thong_tin_thu_phuong.txt') {
+  try {
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }, 100);
+  } catch (err) {
+    console.error('Download error:', err);
+  }
+}
+
+function handleInfoSubmit() {
   const enteredName = nameInput.value.trim();
+  const enteredDob = dobInput.value.trim();
 
   if (!enteredName) {
-    showLockError("Cậu chưa nhập tên kìa! Nhập họ và tên vào đây nhé 😊");
+    showLockError("Cậu chưa nhập họ và tên kìa! Nhập vào đây nhé 😊");
+    nameInput.focus();
     return;
   }
 
-  if (isNameValid(enteredName)) {
-    // SUCCESS!
-    soundFX.playSparkle();
-    triggerConfetti(35);
-    lockErrorMsg.classList.add('hidden');
-    inputWrapper.classList.remove('shake');
-    showToast("✨ Xác thực thành công! Chào Nguyễn Thu Phương xinh xắn 🥰");
-
-    // Transition to Terminal Screen
-    lockScreen.classList.remove('active');
-    setTimeout(() => {
-      terminalScreen.classList.add('active');
-      typeTerminal();
-    }, 450);
-
-  } else {
-    // WRONG NAME
+  if (!isNameValid(enteredName)) {
     soundFX.playBuzz();
-    inputWrapper.classList.add('shake');
-    setTimeout(() => inputWrapper.classList.remove('shake'), 600);
-    showLockError("Ủa ai dợ? Món quà này chỉ dành riêng cho Nguyễn Thu Phương thôi ó! Thử nhập lại nha 🐾");
+    showLockError("Ủa ai dợ? Món quà này chỉ dành riêng cho Nguyễn Thu Phương thôi ó! Thử nhập lại tên nha 🐾");
+    nameInput.focus();
+    return;
+  }
+
+  if (!enteredDob) {
+    showLockError("Cậu chưa điền ngày tháng năm sinh nè! Điền vào nhé 🎂");
+    dobInput.focus();
+    return;
+  }
+
+  soundFX.playSparkle();
+  triggerConfetti(40);
+  if (lockErrorMsg) lockErrorMsg.classList.add('hidden');
+
+  recordUserData(enteredName, enteredDob);
+  showToast("💌 Đã ghi nhận thông tin của Thu Phương! Tiếp tục làm mini quiz nhé ✨");
+
+  if (stepInfo) stepInfo.classList.add('hidden');
+  if (stepQuiz) {
+    stepQuiz.classList.remove('hidden');
+    initQuizStep();
   }
 }
 
 function showLockError(msg) {
-  lockErrorMsg.textContent = msg;
-  lockErrorMsg.classList.remove('hidden');
+  if (lockErrorMsg) {
+    lockErrorMsg.textContent = msg;
+    lockErrorMsg.classList.remove('hidden');
+  }
 }
 
-lockForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  handleNameSubmit();
-});
+function initQuizStep() {
+  if (quizStepIndicator) quizStepIndicator.textContent = "✨ Câu hỏi 1 / 2";
+  if (quizQ1) quizQ1.classList.remove('hidden');
+  if (quizQ2) quizQ2.classList.add('hidden');
+  if (quizFeedback) quizFeedback.classList.add('hidden');
 
-btnToggleHint.addEventListener('click', () => {
-  lockHintText.classList.toggle('hidden');
-});
+  document.querySelectorAll('.quiz-opt-btn').forEach(btn => {
+    btn.classList.remove('correct-choice', 'wrong-choice');
+    btn.disabled = false;
+  });
+
+  setupQuizHandlers();
+}
+
+function setupQuizHandlers() {
+  if (quizQ1) {
+    const q1Buttons = quizQ1.querySelectorAll('.quiz-opt-btn');
+    q1Buttons.forEach(btn => {
+      btn.onclick = () => {
+        const isCorrect = btn.getAttribute('data-correct') === 'true';
+        if (isCorrect) {
+          soundFX.playSparkle();
+          triggerConfetti(45);
+          btn.classList.add('correct-choice');
+          q1Buttons.forEach(b => b.disabled = true);
+
+          if (quizFeedback) {
+            quizFeedback.className = 'quiz-feedback success';
+            quizFeedback.textContent = "✨ Chuẩn đét luôn! Ngày 20/10 rực rỡ nè... Tiếp câu 2 nha! 🌸";
+            quizFeedback.classList.remove('hidden');
+          }
+
+          setTimeout(() => {
+            if (quizFeedback) quizFeedback.classList.add('hidden');
+            if (quizQ1) quizQ1.classList.add('hidden');
+            if (quizQ2) quizQ2.classList.remove('hidden');
+            if (quizStepIndicator) quizStepIndicator.textContent = "✨ Câu hỏi 2 / 2";
+          }, 900);
+        } else {
+          soundFX.playBuzz();
+          btn.classList.add('wrong-choice');
+          setTimeout(() => btn.classList.remove('wrong-choice'), 600);
+
+          if (quizFeedback) {
+            quizFeedback.className = 'quiz-feedback retry';
+            quizFeedback.textContent = "Hehe mai không phải ngày này âu, chọn lại thử xem nè 🐾";
+            quizFeedback.classList.remove('hidden');
+          }
+        }
+      };
+    });
+  }
+
+  if (quizQ2) {
+    const q2Buttons = quizQ2.querySelectorAll('.quiz-opt-btn');
+    q2Buttons.forEach(btn => {
+      btn.onclick = () => {
+        const isCorrect = btn.getAttribute('data-correct') === 'true';
+        if (isCorrect) {
+          soundFX.playSparkle();
+          triggerConfetti(80);
+          btn.classList.add('correct-choice');
+          q2Buttons.forEach(b => b.disabled = true);
+
+          if (quizFeedback) {
+            quizFeedback.className = 'quiz-feedback success';
+            quizFeedback.textContent = "🎉 100 ĐIỂM! Món quà chính thức đang bung nở cho Thu Phương nè... 💐💖";
+            quizFeedback.classList.remove('hidden');
+          }
+
+          if (typeof playRealSong === 'function') playRealSong();
+
+          setTimeout(() => {
+            if (lockScreen) lockScreen.classList.remove('active');
+            setTimeout(() => {
+              const giftScreen = document.getElementById('gift-screen');
+              if (giftScreen) giftScreen.classList.add('active');
+              triggerConfetti(70);
+              if (typeof startRoseAnimation === 'function') startRoseAnimation();
+              if (typeof initAlbumSlider === 'function') initAlbumSlider();
+              showToast("✨ Chúc mừng 20/10 Nguyễn Thu Phương xinh đẹp nhất trần đời! 🌸");
+            }, 350);
+          }, 1100);
+        } else {
+          soundFX.playBuzz();
+          btn.classList.add('wrong-choice');
+          setTimeout(() => btn.classList.remove('wrong-choice'), 600);
+
+          if (quizFeedback) {
+            quizFeedback.className = 'quiz-feedback retry';
+            quizFeedback.textContent = "Ủa chưa đúng nà! Mai là ngày siêu ý nghĩa cơ mà, đoán lại nà 🤭";
+            quizFeedback.classList.remove('hidden');
+          }
+        }
+      };
+    });
+  }
+}
+
+if (btnBackToInfo) {
+  btnBackToInfo.addEventListener('click', () => {
+    if (stepQuiz) stepQuiz.classList.add('hidden');
+    if (stepInfo) stepInfo.classList.remove('hidden');
+    if (nameInput) nameInput.focus();
+  });
+}
+
+if (btnDownloadRecord) {
+  btnDownloadRecord.addEventListener('click', () => {
+    const raw = localStorage.getItem('saved_thu_phuong_info');
+    if (raw) {
+      try {
+        const parsed = JSON.parse(raw);
+        triggerFileDownload(parsed.txtContent || raw);
+        showToast("💾 Đã tải file thông tin về máy của bạn!");
+      } catch (e) {
+        triggerFileDownload(raw);
+      }
+    } else {
+      showToast("ℹ️ Chưa có thông tin nào được lưu! Hãy điền form trước nhé.");
+    }
+  });
+}
+
+if (infoForm) {
+  infoForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    handleInfoSubmit();
+  });
+}
+
+if (btnToggleHint) {
+  btnToggleHint.addEventListener('click', () => {
+    if (lockHintText) lockHintText.classList.toggle('hidden');
+  });
+}
 
 // ========================================================
 // 3. STAGE 1: TERMINAL INTRO (Accounting & Cat Target Scan)

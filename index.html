@@ -249,71 +249,116 @@ body {
   margin-bottom: 24px;
 }
 
+.lock-step {
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.lock-step.hidden {
+  display: none;
+  opacity: 0;
+  transform: translateY(15px);
+}
+
 .lock-form {
   position: relative;
-}
-
-.input-wrapper {
   display: flex;
-  background: rgba(255, 255, 255, 0.95);
-  border: 1.5px solid rgba(244, 114, 182, 0.45);
-  border-radius: 50px;
-  padding: 6px 6px 6px 20px;
-  box-shadow: 0 6px 20px rgba(244, 114, 182, 0.12);
-  transition: var(--transition);
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
 }
 
-.input-wrapper:focus-within {
-  border-color: var(--rose-primary);
-  box-shadow: 0 8px 30px rgba(236, 72, 153, 0.25);
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input-label {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #831843;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.input-label span {
+  font-size: 1.05rem;
+}
+
+.info-input-wrap {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1.5px solid rgba(244, 114, 182, 0.5);
+  border-radius: 16px;
+  padding: 10px 16px;
+  box-shadow: 0 4px 14px rgba(244, 114, 182, 0.12);
+  transition: all 0.25s ease;
+}
+
+.info-input-wrap:focus-within {
+  border-color: #ec4899;
+  box-shadow: 0 6px 20px rgba(236, 72, 153, 0.25);
   transform: translateY(-2px);
+  background: #ffffff;
 }
 
-.lock-input {
-  flex: 1;
+.info-input {
+  width: 100%;
   background: transparent;
   border: none;
   outline: none;
   color: var(--text-main);
   font-size: 0.95rem;
   font-family: inherit;
-  font-weight: 500;
+  font-weight: 600;
 }
 
-.lock-input::placeholder {
+.info-input::placeholder {
   color: #94a3b8;
+  font-weight: 400;
 }
 
-.btn-unlock {
+.btn-primary-flow {
+  width: 100%;
   background: linear-gradient(135deg, #ec4899, #be185d);
   color: #fff;
   border: none;
   border-radius: 50px;
-  padding: 12px 24px;
-  font-size: 0.95rem;
-  font-weight: 700;
+  padding: 14px 24px;
+  font-size: 1rem;
+  font-weight: 800;
   cursor: pointer;
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 6px;
-  transition: var(--transition);
-  box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+  gap: 8px;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 6px 22px rgba(236, 72, 153, 0.45);
+  margin-top: 8px;
 }
 
-.btn-unlock:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 20px rgba(236, 72, 153, 0.6);
+.btn-primary-flow:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 28px rgba(236, 72, 153, 0.6);
+}
+
+.btn-primary-flow:active {
+  transform: translateY(0) scale(0.98);
 }
 
 .lock-error-msg {
-  margin-top: 14px;
-  color: #e11d48;
+  margin-top: 10px;
+  color: #be185d;
   font-size: 0.88rem;
   font-weight: 600;
-  background: rgba(255, 228, 230, 0.8);
-  padding: 8px 16px;
-  border-radius: 20px;
-  border: 1px solid rgba(244, 63, 94, 0.3);
+  background: rgba(255, 228, 230, 0.9);
+  padding: 10px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(244, 63, 94, 0.35);
+  text-align: center;
+  animation: shake 0.4s ease-in-out;
 }
 
 .lock-error-msg.hidden {
@@ -321,7 +366,7 @@ body {
 }
 
 .lock-hint-area {
-  margin-top: 22px;
+  margin-top: 18px;
 }
 
 .hint-btn {
@@ -343,14 +388,148 @@ body {
   margin-top: 10px;
   font-size: 0.85rem;
   color: #7c3aed;
-  background: rgba(245, 243, 255, 0.9);
-  padding: 8px 14px;
+  background: rgba(245, 243, 255, 0.92);
+  padding: 10px 14px;
   border-radius: 12px;
   border: 1px dashed rgba(139, 92, 246, 0.4);
+  text-align: center;
 }
 
 .hint-text.hidden {
   display: none;
+}
+
+/* Quiz Section Styling */
+.quiz-progress-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.quiz-step-pill {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background: rgba(244, 114, 182, 0.15);
+  color: #be185d;
+  border: 1px solid rgba(244, 114, 182, 0.3);
+}
+
+.quiz-card {
+  text-align: left;
+  animation: fadeInQuiz 0.4s ease forwards;
+}
+
+@keyframes fadeInQuiz {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.quiz-question-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #831843;
+  margin-bottom: 16px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.quiz-opt-btn {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1.5px solid rgba(244, 114, 182, 0.35);
+  border-radius: 16px;
+  padding: 12px 18px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  box-shadow: 0 4px 12px rgba(244, 114, 182, 0.08);
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.quiz-opt-btn:hover {
+  border-color: #ec4899;
+  background: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(236, 72, 153, 0.2);
+  color: #be185d;
+}
+
+.quiz-opt-btn.correct-choice {
+  background: linear-gradient(135deg, rgba(236, 253, 245, 0.95), rgba(209, 250, 229, 0.95)) !important;
+  border-color: #10b981 !important;
+  color: #065f46 !important;
+  font-weight: 800 !important;
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3) !important;
+  transform: scale(1.02);
+}
+
+.quiz-opt-btn.wrong-choice {
+  background: rgba(254, 242, 242, 0.95) !important;
+  border-color: #f43f5e !important;
+  color: #9f1239 !important;
+  animation: shake 0.4s ease-in-out;
+}
+
+.quiz-feedback {
+  margin-top: 14px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 10px 16px;
+  border-radius: 14px;
+  transition: all 0.3s ease;
+}
+
+.quiz-feedback.success {
+  background: rgba(209, 250, 229, 0.9);
+  color: #065f46;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.quiz-feedback.retry {
+  background: rgba(255, 237, 213, 0.9);
+  color: #9a3412;
+  border: 1px solid rgba(249, 115, 22, 0.4);
+}
+
+.quiz-feedback.hidden {
+  display: none;
+}
+
+/* Floating / Subtle Admin Download Link */
+.save-record-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  font-size: 0.78rem;
+  color: #9d174d;
+  background: rgba(255, 241, 242, 0.8);
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(244, 114, 182, 0.25);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.save-record-badge:hover {
+  background: rgba(255, 228, 230, 1);
+  transform: translateY(-1px);
 }
 
 /* ========================================================
@@ -1098,40 +1277,137 @@ body {
        ======================================================== -->
   <section id="lock-screen" class="screen-view active">
     <div class="lock-container glassmorphism">
-      <div class="lock-icon-wrapper">
-        <div class="lock-glow"></div>
-        <span class="lock-icon">🔒</span>
-      </div>
+      
+      <!-- ================= STEP 1: ĐIỀN THÔNG TIN (HỌ TÊN & NGÀY SINH) ================= -->
+      <div id="step-info" class="lock-step">
+        <div class="lock-icon-wrapper">
+          <div class="lock-glow"></div>
+          <span class="lock-icon">💌</span>
+        </div>
 
-      <div class="lock-badge">HỆ THỐNG XÁC THỰC 20/10</div>
-      <h2 class="lock-title">Món Quà Được Mã Hóa</h2>
-      <p class="lock-desc">
-        Trang web này được lập trình dành riêng cho một người đặc biệt. Vui lòng nhập họ và tên của bạn để mở khóa:
-      </p>
+        <div class="lock-badge">HỒ SƠ BÍ MẬT 🌸 20/10</div>
+        <h2 class="lock-title">Chào Cậu, Người Đẹp! ✨</h2>
+        <p class="lock-desc">
+          Món quà này được lập trình dành riêng cho một người đặc biệt. Cậu hãy điền một chút thông tin để mở khóa nhé:
+        </p>
 
-      <form id="lock-form" class="lock-form" onsubmit="return false;">
-        <div class="input-wrapper" id="input-wrapper">
-          <input 
-            type="text" 
-            id="user-name-input" 
-            class="lock-input" 
-            placeholder="Nhập họ và tên của cậu vào đây nhé..." 
-            autocomplete="off" 
-            autofocus
-          />
-          <button type="submit" id="btn-unlock" class="btn-unlock" aria-label="Mở khóa">
-            <span>Mở Khóa</span> 💖
+        <form id="info-form" class="lock-form" onsubmit="return false;">
+          <div class="form-group">
+            <label class="input-label" for="user-name-input">
+              <span>👤</span> Họ và tên của cậu:
+            </label>
+            <div class="info-input-wrap">
+              <input 
+                type="text" 
+                id="user-name-input" 
+                class="info-input" 
+                placeholder="Nhập họ và tên (ví dụ: Nguyễn Thu Phương)..." 
+                autocomplete="name" 
+                autofocus
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="input-label" for="user-dob-input">
+              <span>🎂</span> Ngày tháng năm sinh:
+            </label>
+            <div class="info-input-wrap">
+              <input 
+                type="text" 
+                id="user-dob-input" 
+                class="info-input" 
+                placeholder="Ví dụ: 19/08/2004 hoặc DD/MM/YYYY..." 
+                autocomplete="bday"
+                required
+              />
+            </div>
+          </div>
+
+          <button type="submit" id="btn-submit-info" class="btn-primary-flow">
+            <span>Xác Nhận & Tiếp Tục</span> 💖
           </button>
-        </div>
-        <div id="lock-error-msg" class="lock-error-msg hidden"></div>
-      </form>
 
-      <div class="lock-hint-area">
-        <button id="btn-toggle-hint" class="hint-btn">Cần một chút gợi ý? 💡</button>
-        <div id="lock-hint-text" class="hint-text hidden">
-          🐾 Gợi ý: Họ và tên đầy đủ của một cô gái xinh đẹp sinh viên năm 3 Kế Toán siêu mê boss mèo ó!
+          <div id="lock-error-msg" class="lock-error-msg hidden"></div>
+        </form>
+
+        <div class="lock-hint-area">
+          <button id="btn-toggle-hint" class="hint-btn">Cần một chút gợi ý? 💡</button>
+          <div id="lock-hint-text" class="hint-text hidden">
+            🐾 Gợi ý: Hãy nhập đúng họ tên cậu (Nguyễn Thu Phương) để hệ thống chuẩn bị quà chu đáo nhất nè!
+          </div>
         </div>
       </div>
+
+      <!-- ================= STEP 2: MINI QUIZ GỢI NHỚ 20/10 ================= -->
+      <div id="step-quiz" class="lock-step hidden">
+        <div class="lock-icon-wrapper">
+          <div class="lock-glow"></div>
+          <span class="lock-icon">🎯</span>
+        </div>
+
+        <div class="quiz-progress-bar">
+          <span class="quiz-step-pill" id="quiz-step-indicator">✨ Câu hỏi 1 / 2</span>
+        </div>
+
+        <h2 class="lock-title">Đố Cậu Nhớ Ra Nè! 🤭</h2>
+        <p class="lock-desc">
+          Chỉ 2 câu hỏi nhỏ xíu thôi, trả lời xong là cánh cửa quà tặng mở toang luôn á!
+        </p>
+
+        <!-- Question 1: Mai là ngày bao nhiêu? -->
+        <div id="quiz-q1" class="quiz-card">
+          <div class="quiz-question-title">1. Đố cậu biết... mai là ngày bao nhiêu thế nà? 🤔</div>
+          <div class="quiz-options">
+            <button type="button" class="quiz-opt-btn" data-correct="true">
+              <span>🌸 Ngày 20 tháng 10 rực rỡ nè!</span>
+              <span class="opt-icon">✨</span>
+            </button>
+            <button type="button" class="quiz-opt-btn" data-correct="false">
+              <span>📚 Ngày làm bài tập Kế toán</span>
+              <span class="opt-icon">💤</span>
+            </button>
+            <button type="button" class="quiz-opt-btn" data-correct="false">
+              <span>🐾 Ngày ngủ nướng ôm boss mèo</span>
+              <span class="opt-icon">🐱</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Question 2: Mai là ngày gì? -->
+        <div id="quiz-q2" class="quiz-card hidden">
+          <div class="quiz-question-title">2. Thế mai là ngày gì đặc biệt nhất nhỉ? 🥰</div>
+          <div class="quiz-options">
+            <button type="button" class="quiz-opt-btn" data-correct="true">
+              <span>💖 Ngày Phụ Nữ VN & Ngày của Thu Phương xinh nhất trần đời!</span>
+              <span class="opt-icon">👑</span>
+            </button>
+            <button type="button" class="quiz-opt-btn" data-correct="false">
+              <span>📊 Ngày kiểm tra số dư nợ có</span>
+              <span class="opt-icon">📑</span>
+            </button>
+            <button type="button" class="quiz-opt-btn" data-correct="false">
+              <span>🏃‍♀️ Ngày deadline dí chạy hụt hơi</span>
+              <span class="opt-icon">💨</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="quiz-feedback" class="quiz-feedback hidden"></div>
+
+        <div style="margin-top: 16px; text-align: center;">
+          <button type="button" id="btn-back-to-info" class="hint-btn">← Sửa lại thông tin cá nhân</button>
+        </div>
+      </div>
+
+      <!-- Quick subtle admin download button for the saved file -->
+      <div style="text-align: center; margin-top: 14px;">
+        <button type="button" id="btn-download-record" class="save-record-badge" title="Tải file thong_tin_thu_phuong.txt về máy tính">
+          💾 <span>Tải file thông tin đã lưu</span>
+        </button>
+      </div>
+
     </div>
   </section>
 
@@ -1558,15 +1834,24 @@ function removeDiacritics(str) {
     .trim();
 }
 
-// Gatekeeper Name Verification
+// Gatekeeper Name & Info Verification + 20/10 Quiz Flow
 const lockScreen = document.getElementById('lock-screen');
-const lockForm = document.getElementById('lock-form');
+const stepInfo = document.getElementById('step-info');
+const stepQuiz = document.getElementById('step-quiz');
+const infoForm = document.getElementById('info-form');
 const nameInput = document.getElementById('user-name-input');
-const inputWrapper = document.getElementById('input-wrapper');
+const dobInput = document.getElementById('user-dob-input');
 const lockErrorMsg = document.getElementById('lock-error-msg');
 const btnToggleHint = document.getElementById('btn-toggle-hint');
 const lockHintText = document.getElementById('lock-hint-text');
 const giftScreen = document.getElementById('gift-screen');
+
+const quizStepIndicator = document.getElementById('quiz-step-indicator');
+const quizQ1 = document.getElementById('quiz-q1');
+const quizQ2 = document.getElementById('quiz-q2');
+const quizFeedback = document.getElementById('quiz-feedback');
+const btnBackToInfo = document.getElementById('btn-back-to-info');
+const btnDownloadRecord = document.getElementById('btn-download-record');
 
 function isNameValid(val) {
   const raw = val.toLowerCase().trim();
@@ -1591,39 +1876,91 @@ function isNameValid(val) {
   });
 }
 
-function handleNameSubmit() {
+// Hàm lưu dữ liệu vào Server (ghi file thong_tin_thu_phuong.txt trên máy) & LocalStorage
+function recordUserData(fullName, dob) {
+  const timeStr = new Date().toLocaleString('vi-VN');
+  const txtContent = `============================================================\n` +
+    `🌸 THÔNG TIN BẠN NỮ NHẬP VÀO HỆ THỐNG 20/10\n` +
+    `⏰ Thời gian: ${timeStr}\n` +
+    `👤 Họ và tên: ${fullName}\n` +
+    `🎂 Ngày tháng năm sinh: ${dob}\n` +
+    `📱 Thiết bị/Trình duyệt: ${navigator.userAgent}\n` +
+    `============================================================\n`;
+
+  // 1. Lưu vào LocalStorage
+  const recordObj = { fullName, dob, timeStr, txtContent };
+  localStorage.setItem('saved_thu_phuong_info', JSON.stringify(recordObj));
+
+  // 2. Gửi về Local Node Server ghi trực tiếp vào file .txt và .json
+  fetch('/api/save-info', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ fullName, dob, timeStr })
+  })
+  .then(res => res.json())
+  .then(data => {
+    console.log('[RECORD-SAVED]', data);
+  })
+  .catch(err => {
+    console.warn('[SERVERLESS / OFFLINE BACKUP MODE]', err);
+  });
+}
+
+// Tải file .txt về máy tính người dùng
+function triggerFileDownload(content, filename = 'thong_tin_thu_phuong.txt') {
+  try {
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }, 100);
+  } catch (err) {
+    console.error('Download error:', err);
+  }
+}
+
+// BƯỚC 1: Xử lý Submit Form Thông Tin Cá Nhân
+function handleInfoSubmit() {
   const enteredName = nameInput.value.trim();
+  const enteredDob = dobInput.value.trim();
 
   if (!enteredName) {
-    showLockError("Cậu chưa nhập tên kìa! Nhập họ và tên vào đây nhé 😊");
+    showLockError("Cậu chưa nhập họ và tên kìa! Nhập vào đây nhé 😊");
+    nameInput.focus();
     return;
   }
 
-  if (isNameValid(enteredName)) {
-    soundFX.playSparkle();
-    triggerConfetti(50);
-    lockErrorMsg.classList.add('hidden');
-    inputWrapper.classList.remove('shake');
-    showToast("✨ Mở khóa thành công! Chào Nguyễn Thu Phương xinh đẹp 🥰");
-
-    // Start real background song automatically on unlock gesture
-    playRealSong();
-
-    // Direct transition to the Grand Gift Experience!
-    lockScreen.classList.remove('active');
-    setTimeout(() => {
-      giftScreen.classList.add('active');
-      triggerConfetti(60);
-      startRoseAnimation();
-      initAlbumSlider();
-    }, 450);
-
-  } else {
+  if (!isNameValid(enteredName)) {
     soundFX.playBuzz();
-    inputWrapper.classList.add('shake');
-    setTimeout(() => inputWrapper.classList.remove('shake'), 600);
-    showLockError("Ủa ai dợ? Món quà này chỉ dành riêng cho Nguyễn Thu Phương thôi ó! Thử nhập lại nha 🐾");
+    showLockError("Ủa ai dợ? Món quà này chỉ dành riêng cho Nguyễn Thu Phương thôi ó! Thử nhập lại tên nha 🐾");
+    nameInput.focus();
+    return;
   }
+
+  if (!enteredDob) {
+    showLockError("Cậu chưa điền ngày tháng năm sinh nè! Điền vào nhé 🎂");
+    dobInput.focus();
+    return;
+  }
+
+  // Thông tin hợp lệ -> Lưu vào file & chuyển sang Bước 2 (Quiz)
+  soundFX.playSparkle();
+  triggerConfetti(40);
+  lockErrorMsg.classList.add('hidden');
+
+  recordUserData(enteredName, enteredDob);
+  showToast("💌 Đã ghi nhận thông tin của Thu Phương! Tiếp tục làm mini quiz nhé ✨");
+
+  // Chuyển sang Bước 2 (Mini Quiz)
+  stepInfo.classList.add('hidden');
+  stepQuiz.classList.remove('hidden');
+  initQuizStep();
 }
 
 function showLockError(msg) {
@@ -1631,9 +1968,131 @@ function showLockError(msg) {
   lockErrorMsg.classList.remove('hidden');
 }
 
-lockForm.addEventListener('submit', (e) => {
+// BƯỚC 2: Xử lý Mini Quiz 20/10
+let isQuizQ1Completed = false;
+
+function initQuizStep() {
+  isQuizQ1Completed = false;
+  quizStepIndicator.textContent = "✨ Câu hỏi 1 / 2";
+  quizQ1.classList.remove('hidden');
+  quizQ2.classList.add('hidden');
+  quizFeedback.classList.add('hidden');
+
+  // Reset visual styles của tất cả options
+  document.querySelectorAll('.quiz-opt-btn').forEach(btn => {
+    btn.classList.remove('correct-choice', 'wrong-choice');
+    btn.disabled = false;
+  });
+
+  setupQuizHandlers();
+}
+
+function setupQuizHandlers() {
+  // Setup Question 1
+  const q1Buttons = quizQ1.querySelectorAll('.quiz-opt-btn');
+  q1Buttons.forEach(btn => {
+    btn.onclick = () => {
+      const isCorrect = btn.getAttribute('data-correct') === 'true';
+      if (isCorrect) {
+        soundFX.playSparkle();
+        triggerConfetti(45);
+        btn.classList.add('correct-choice');
+        q1Buttons.forEach(b => b.disabled = true);
+
+        quizFeedback.className = 'quiz-feedback success';
+        quizFeedback.textContent = "✨ Chuẩn đét luôn! Ngày 20/10 rực rỡ nè... Tiếp câu 2 nha! 🌸";
+        quizFeedback.classList.remove('hidden');
+
+        setTimeout(() => {
+          quizFeedback.classList.add('hidden');
+          quizQ1.classList.add('hidden');
+          quizQ2.classList.remove('hidden');
+          quizStepIndicator.textContent = "✨ Câu hỏi 2 / 2";
+        }, 900);
+      } else {
+        soundFX.playBuzz();
+        btn.classList.add('wrong-choice');
+        setTimeout(() => btn.classList.remove('wrong-choice'), 600);
+
+        quizFeedback.className = 'quiz-feedback retry';
+        quizFeedback.textContent = "Hehe mai không phải ngày này âu, chọn lại thử xem nè 🐾";
+        quizFeedback.classList.remove('hidden');
+      }
+    };
+  });
+
+  // Setup Question 2
+  const q2Buttons = quizQ2.querySelectorAll('.quiz-opt-btn');
+  q2Buttons.forEach(btn => {
+    btn.onclick = () => {
+      const isCorrect = btn.getAttribute('data-correct') === 'true';
+      if (isCorrect) {
+        soundFX.playSparkle();
+        triggerConfetti(80);
+        btn.classList.add('correct-choice');
+        q2Buttons.forEach(b => b.disabled = true);
+
+        quizFeedback.className = 'quiz-feedback success';
+        quizFeedback.textContent = "🎉 100 ĐIỂM! Món quà chính thức đang bung nở cho Thu Phương nè... 💐💖";
+        quizFeedback.classList.remove('hidden');
+
+        // Bật nhạc tự động
+        playRealSong();
+
+        // Chuyển thẳng vào Màn Quà Tặng Chính Thức!
+        setTimeout(() => {
+          lockScreen.classList.remove('active');
+          setTimeout(() => {
+            giftScreen.classList.add('active');
+            triggerConfetti(70);
+            startRoseAnimation();
+            initAlbumSlider();
+            showToast("✨ Chúc mừng 20/10 Nguyễn Thu Phương xinh đẹp nhất trần đời! 🌸");
+          }, 350);
+        }, 1100);
+      } else {
+        soundFX.playBuzz();
+        btn.classList.add('wrong-choice');
+        setTimeout(() => btn.classList.remove('wrong-choice'), 600);
+
+        quizFeedback.className = 'quiz-feedback retry';
+        quizFeedback.textContent = "Ủa chưa đúng nà! Mai là ngày siêu ý nghĩa cơ mà, đoán lại nà 🤭";
+        quizFeedback.classList.remove('hidden');
+      }
+    };
+  });
+}
+
+// Nút quay lại sửa thông tin
+if (btnBackToInfo) {
+  btnBackToInfo.addEventListener('click', () => {
+    stepQuiz.classList.add('hidden');
+    stepInfo.classList.remove('hidden');
+    nameInput.focus();
+  });
+}
+
+// Nút tải file thông tin đã lưu về máy tính
+if (btnDownloadRecord) {
+  btnDownloadRecord.addEventListener('click', () => {
+    const raw = localStorage.getItem('saved_thu_phuong_info');
+    if (raw) {
+      try {
+        const parsed = JSON.parse(raw);
+        triggerFileDownload(parsed.txtContent || raw);
+        showToast("💾 Đã tải file thông tin về máy của bạn!");
+      } catch (e) {
+        triggerFileDownload(raw);
+      }
+    } else {
+      showToast("ℹ️ Chưa có thông tin nào được lưu! Hãy điền form trước nhé.");
+    }
+  });
+}
+
+infoForm.addEventListener('submit', (e) => {
   e.preventDefault();
-  handleNameSubmit();
+  handleInfoSubmit();
 });
 
 btnToggleHint.addEventListener('click', () => {
