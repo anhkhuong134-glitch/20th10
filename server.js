@@ -11,7 +11,8 @@ const MIME_TYPES = {
   '.jpeg': 'image/jpeg',
   '.ico': 'image/x-icon',
   '.svg': 'image/svg+xml',
-  '.mp3': 'audio/mpeg'
+  '.mp3': 'audio/mpeg',
+  '.txt': 'text/plain; charset=utf-8'
 };
 
 function handler(req, res) {
@@ -31,6 +32,25 @@ function handler(req, res) {
   // API endpoint to save submitted information
   if (req.method === 'POST' && reqPath === '/api/save-info') {
     return handleApiSaveInfo(req, res);
+  }
+
+  // API endpoint to download recorded information file
+  if (req.method === 'GET' && (reqPath === '/api/download-info' || reqPath === '/api/info-file')) {
+    const txtPath = path.join(__dirname, 'thong_tin_thu_phuong.txt');
+    if (fs.existsSync(txtPath)) {
+      const fileBuffer = fs.readFileSync(txtPath);
+      res.writeHead(200, {
+        'Content-Type': 'text/plain; charset=utf-8',
+        'Content-Disposition': 'attachment; filename="thong_tin_thu_phuong.txt"',
+        'Access-Control-Allow-Origin': '*'
+      });
+      res.end(fileBuffer);
+      return;
+    } else {
+      res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8', 'Access-Control-Allow-Origin': '*' });
+      res.end('Chưa có thông tin được ghi nhận.');
+      return;
+    }
   }
 
   if (reqPath === '/' || reqPath === '') reqPath = '/index.html';
@@ -87,20 +107,26 @@ function handleApiSaveInfo(req, res) {
       const data = JSON.parse(body || '{}');
       const fullName = (data.fullName || data.name || 'Không rõ').trim();
       const dob = (data.dob || 'Không rõ').trim();
+      const q1 = (data.q1 || '').trim();
+      const q2 = (data.q2 || '').trim();
       const now = new Date();
       const timeStr = now.toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' });
       const userAgent = req.headers['user-agent'] || 'Unknown';
 
       // 1. Append to thong_tin_thu_phuong.txt
-      const txtEntry = `
+      let txtEntry = `
 ============================================================
 🌸 THÔNG TIN THU PHƯƠNG NHẬP VÀO HỆ THỐNG 20/10
 ⏰ Thời gian ghi nhận: ${timeStr}
 👤 Họ và tên: ${fullName}
 🎂 Ngày tháng năm sinh: ${dob}
 📱 Thiết bị/Trình duyệt: ${userAgent}
-============================================================
 `;
+      if (q1 || q2) {
+        txtEntry += `❓ Câu 1 (Mai là ngày bao nhiêu): ${q1}\n❓ Câu 2 (Mai là ngày gì): ${q2}\n`;
+      }
+      txtEntry += `============================================================\n`;
+
       const txtPath = path.join(__dirname, 'thong_tin_thu_phuong.txt');
       fs.appendFileSync(txtPath, txtEntry, 'utf8');
 
@@ -117,13 +143,15 @@ function handleApiSaveInfo(req, res) {
       records.push({
         fullName,
         dob,
+        q1,
+        q2,
         timestamp: timeStr,
         isoTimestamp: now.toISOString(),
         userAgent
       });
       fs.writeFileSync(jsonPath, JSON.stringify(records, null, 2), 'utf8');
 
-      console.log(`[SAVE-INFO] Đã ghi nhận thông tin: Họ tên="${fullName}", Ngày sinh="${dob}" vào file thong_tin_thu_phuong.txt!`);
+      console.log(`[SAVE-INFO] Đã ghi nhận thông tin: Họ tên="${fullName}", Ngày sinh="${dob}"${q1 ? ` Q1="${q1}" Q2="${q2}"` : ''} vào file thong_tin_thu_phuong.txt!`);
 
       res.writeHead(200, {
         'Content-Type': 'application/json; charset=utf-8',
