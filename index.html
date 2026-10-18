@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Happy 20/10 Phương Thu ✨ | Secret Project for Her</title>
+  <title>Happy 20/10 Thu Phương ✨ | Special Secret Project</title>
   
   <!-- SEO & Social Sharing preview -->
-  <meta name="description" content="Món quà 20/10 đặc biệt dành riêng cho Phương Thu - Năm 3 Kế Toán, Yêu Boss Mèo & Siêu Dễ Thương.">
-  <meta property="og:title" content="Gửi Phương Thu - Happy 20/10! 🐱🌸">
-  <meta property="og:description" content="Chạm để mở món quà giải cứu Boss Mèo & Bảng Cân Đối Hạnh Phúc!">
+  <meta name="description" content="Món quà 20/10 đặc biệt dành riêng cho Thu Phương - Năm 3 Kế Toán, Yêu Boss Mèo & Siêu Dễ Thương.">
+  <meta property="og:title" content="Gửi Thu Phương - Happy 20/10! 🐱🌸">
+  <meta property="og:description" content="Nhập tên để mở khóa món quà bí mật được lập trình dành riêng cho cậu!">
   <meta property="og:image" content="avatar.jpg">
   
   <!-- Fonts -->
@@ -34,9 +34,51 @@
   </button>
 
   <!-- ========================================================
-       STAGE 1: Terminal Coder Intro (Dí dỏm, Quét profile Phương Thu)
+       STAGE 0: Gatekeeper / Name Check Lock Screen (BẮT BUỘC NHẬP TÊN)
        ======================================================== -->
-  <section id="terminal-screen" class="screen-view active">
+  <section id="lock-screen" class="screen-view active">
+    <div class="lock-container glassmorphism">
+      <div class="lock-icon-wrapper">
+        <div class="lock-glow"></div>
+        <span class="lock-icon">🔒</span>
+      </div>
+
+      <div class="lock-badge">HỆ THỐNG XÁC THỰC 20/10</div>
+      <h2 class="lock-title">Món Quà Được Mã Hóa</h2>
+      <p class="lock-desc">
+        Trang web này được lập trình dành riêng cho một người đặc biệt. Vui lòng nhập tên của bạn để mở khóa món quà:
+      </p>
+
+      <form id="lock-form" class="lock-form" onsubmit="return false;">
+        <div class="input-wrapper" id="input-wrapper">
+          <input 
+            type="text" 
+            id="user-name-input" 
+            class="lock-input" 
+            placeholder="Nhập tên của cậu vào đây nhé..." 
+            autocomplete="off" 
+            autofocus
+          />
+          <button type="submit" id="btn-unlock" class="btn-unlock" aria-label="Mở khóa">
+            <span>Mở Khóa</span> 💖
+          </button>
+        </div>
+        <div id="lock-error-msg" class="lock-error-msg hidden"></div>
+      </form>
+
+      <div class="lock-hint-area">
+        <button id="btn-toggle-hint" class="hint-btn">Cần một chút gợi ý? 💡</button>
+        <div id="lock-hint-text" class="hint-text hidden">
+          🐾 Gợi ý: Tên một cô gái xinh đẹp sinh viên năm 3 Kế Toán siêu mê boss mèo ó!
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       STAGE 1: Terminal Coder Intro (Quét profile Thu Phương)
+       ======================================================== -->
+  <section id="terminal-screen" class="screen-view">
     <div class="terminal-container">
       <div class="terminal-header">
         <div class="terminal-dots">
@@ -45,7 +87,7 @@
           <span class="dot green"></span>
         </div>
         <div class="terminal-title">accounting_happiness_protocol.sh</div>
-        <div class="terminal-badge">TARGET: PHƯƠNG THU 🐾</div>
+        <div class="terminal-badge">TARGET: THU PHƯƠNG 🐾</div>
       </div>
       
       <div class="terminal-body" id="terminal-content">
@@ -62,12 +104,12 @@
   </section>
 
   <!-- ========================================================
-       STAGE 2: Gen Z Minigame (Catch Boss Mèo & Bảng Cân Đối Tình Cảm)
+       STAGE 2: Gen Z Minigame (Catch Boss Mèo & Bảng Cân Đối)
        ======================================================== -->
   <section id="minigame-screen" class="screen-view">
     <div class="game-container glassmorphism">
       <div class="game-header">
-        <div class="game-badge">🐾 MINI-QUEST 20/10 CHO THU</div>
+        <div class="game-badge">🐾 MINI-QUEST 20/10 CHO THU PHƯƠNG</div>
         <h2 class="game-title">Giải Cứu Boss Mèo & Sạc Đầy Hạnh Phúc</h2>
         <p class="game-desc">
           Bắt nhanh <strong>5 chú mèo & bông hoa</strong> đang bay để cân đối Bảng Báo Cáo Hạnh Phúc nhé!
@@ -94,7 +136,7 @@
       <div id="quiz-box" class="quiz-box hidden">
         <div class="quiz-badge">📊 CÂU HỎI KẾ TOÁN ĐẶC BIỆT</div>
         <h3 class="quiz-question">
-          "Theo Chuẩn mực Kế toán Tình cảm, khi Phương Thu mỉm cười thì số dư ghi nhận vào đâu?"
+          "Theo Chuẩn mực Kế toán Tình cảm, khi Thu Phương mỉm cười thì số dư ghi nhận vào đâu?"
         </h3>
         <div class="quiz-options">
           <button class="quiz-opt-btn" data-opt="A">
@@ -104,7 +146,7 @@
             <strong>B.</strong> Có TK 999 (Tăng vô hạn độ xinh xắn và đáng yêu)
           </button>
           <button class="quiz-opt-btn" data-opt="C">
-            <strong>C.</strong> Cả 2 đều đúng, vì Thu cười thì mọi Bảng Cân Đối đều Auto Khớp!
+            <strong>C.</strong> Cả 2 đều đúng, vì Thu Phương cười thì mọi Bảng Cân Đối đều Auto Khớp!
           </button>
         </div>
         <div id="quiz-result" class="quiz-result hidden"></div>
@@ -129,10 +171,10 @@
         <div class="bloom-wrapper">
           <canvas id="rose-canvas"></canvas>
           <div class="bloom-glow-core"></div>
-          <div class="bloom-caption">🌹 Đóa hoa vĩnh cửu cho Thu (Nhấn để hoa nở)</div>
+          <div class="bloom-caption">🌹 Đóa hoa vĩnh cửu cho Thu Phương (Nhấn để hoa nở)</div>
         </div>
 
-        <!-- Interactive 3D Photo Album (Phuong Thu + Cats + Flowers) -->
+        <!-- Interactive 3D Photo Album (Thu Phuong + Cats + Flowers) -->
         <div class="album-section">
           <div class="album-header">
             <span class="album-tag">📸 Album Kỷ Niệm & Dễ Thương</span>
@@ -143,15 +185,15 @@
 
           <div class="album-slider" id="album-slider">
             
-            <!-- Slide 1: Main avatar of Phuong Thu -->
+            <!-- Slide 1: Main avatar of Thu Phuong -->
             <div class="polaroid-card active" data-index="0">
               <div class="tape-strip"></div>
               <div class="photo-frame">
-                <img src="avatar.jpg" alt="Phương Thu" id="avatar-img" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80'">
+                <img src="avatar.jpg" alt="Thu Phương" id="avatar-img" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80'">
                 <div class="photo-badge">Cô gái 20/10 ✨</div>
               </div>
               <div class="photo-caption">
-                <span class="caption-title">Phương Thu 🌸</span>
+                <span class="caption-title">Thu Phương 🌸</span>
                 <span class="caption-sub">Năm 3 Kế Toán • Nụ cười toả nắng</span>
               </div>
             </div>
@@ -165,7 +207,7 @@
               </div>
               <div class="photo-caption">
                 <span class="caption-title">Đại diện Hội Boss Mèo 🐾</span>
-                <span class="caption-sub">Chúc con sen Phương Thu luôn vui vẻ!</span>
+                <span class="caption-sub">Chúc con sen Thu Phương luôn vui vẻ!</span>
               </div>
             </div>
 
@@ -178,7 +220,7 @@
               </div>
               <div class="photo-caption">
                 <span class="caption-title">Thế giới ngập tràn năng lượng ✨</span>
-                <span class="caption-sub">Mong mọi điều may mắn đến với Thu</span>
+                <span class="caption-sub">Mong mọi điều may mắn đến với Thu Phương</span>
               </div>
             </div>
 
@@ -191,7 +233,7 @@
               </div>
               <div class="photo-caption">
                 <span class="caption-title">Bó hoa không bao giờ tàn 🌷</span>
-                <span class="caption-sub">Dành tặng riêng cho Phương Thu</span>
+                <span class="caption-sub">Dành tặng riêng cho Thu Phương</span>
               </div>
             </div>
 
@@ -213,13 +255,13 @@
           <div class="letter-tag">BÁO CÁO TÀI CHÍNH CẢM XÚC 20/10</div>
           
           <h1 class="letter-heading">
-            Gửi <span class="recipient-name">Phương Thu</span> ✨
+            Gửi <span class="recipient-name">Thu Phương</span> ✨
           </h1>
           <div class="sub-greeting">Chúc mừng Ngày Phụ Nữ Việt Nam 20/10!</div>
 
           <div class="letter-body">
             <p class="paragraph">
-              Chào Thu, một cô sinh viên năm 3 ngành Kế toán vừa thông minh, vừa mê boss mèo siêu đáng yêu!
+              Chào Phương, một cô sinh viên năm 3 ngành Kế toán vừa thông minh, vừa mê boss mèo siêu đáng yêu!
             </p>
             
             <p class="paragraph">
@@ -251,7 +293,7 @@
             </div>
 
             <p class="paragraph">
-              Chúc Phương Thu luôn xinh đẹp, tự tin, học tập thật tốt trong năm 3 này. Mong cậu luôn giữ được sự dịu dàng, nụ cười tỏa nắng và luôn được cưng chiều, hạnh phúc như cách cậu yêu thương những chú mèo vậy!
+              Chúc Thu Phương luôn xinh đẹp, tự tin, học tập thật tốt trong năm 3 này. Mong cậu luôn giữ được sự dịu dàng, nụ cười tỏa nắng và luôn được cưng chiều, hạnh phúc như cách cậu yêu thương những chú mèo vậy!
             </p>
 
             <p class="paragraph closing">
@@ -273,7 +315,7 @@
           </div>
 
           <div class="footer-credit">
-            <span>Special 20.10 Build • Dedicated to Phương Thu 💖</span>
+            <span>Special 20.10 Build • Dedicated to Thu Phương 💖</span>
           </div>
         </div>
       </div>
@@ -288,7 +330,7 @@
     <div class="modal-card glassmorphism">
       <div class="modal-header">
         <div class="modal-icon">🐱</div>
-        <h3>Bật Mí Nhỏ Cho Phương Thu</h3>
+        <h3>Bật Mí Nhỏ Cho Thu Phương</h3>
         <button id="modal-close" class="modal-close-btn" aria-label="Đóng">&times;</button>
       </div>
       <div class="modal-body">
@@ -296,7 +338,7 @@
           Cậu có biết không, người ta bảo con gái học Kế toán thường rất chu đáo và tinh tế, còn người yêu thương chó mèo thì trái tim lúc nào cũng cực kỳ ấm áp.
         </p>
         <p>
-          Và ở Phương Thu có cả hai điều tuyệt vời đó! 🥰
+          Và ở Thu Phương có cả hai điều tuyệt vời đó! 🥰
         </p>
         <p class="modal-highlight">
           Nếu cậu thấy trang web này vui và thú vị... thì hãy chụp màn hình gửi lại cho người gửi nhé, để người ta biết là cậu đã mỉm cười thật tươi! 😉

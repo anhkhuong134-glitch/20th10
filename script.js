@@ -1,8 +1,8 @@
 /**
- * 20/10 Special Gift for Phương Thu
+ * 20/10 Special Gift for Thu Phương
  * - Year 3 Accounting Student
  * - Cat Lover 🐱 & Radiant Smile
- * - Interactive Coder Intro, Minigame, Accounting Quiz, 3D Polaroid Album & Letter
+ * - Gatekeeper Name Verification Lock Screen, Interactive Coder Intro, Minigame, Accounting Quiz, 3D Polaroid Album & Letter
  */
 
 // ========================================================
@@ -74,7 +74,7 @@ class SoundFX {
     osc2.stop(now + duration + 1.3);
   }
 
-  // Cute synthesizer kitten meow! 🐱
+  // Cute kitten meow sound 🐱
   playMeow() {
     this.init();
     if (!this.ctx) return;
@@ -83,7 +83,6 @@ class SoundFX {
     const gain = this.ctx.createGain();
 
     osc.type = 'triangle';
-    // Frequency slide for natural meow pitch
     osc.frequency.setValueAtTime(450, now);
     osc.frequency.exponentialRampToValueAtTime(750, now + 0.12);
     osc.frequency.exponentialRampToValueAtTime(520, now + 0.35);
@@ -107,6 +106,28 @@ class SoundFX {
     notes.forEach((f, idx) => {
       setTimeout(() => this.playNote(f, 0.3), idx * 70);
     });
+  }
+
+  // Gentle buzz for wrong input
+  playBuzz() {
+    this.init();
+    if (!this.ctx) return;
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(150, now);
+    osc.frequency.linearRampToValueAtTime(100, now + 0.2);
+
+    gain.gain.setValueAtTime(0.08, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.25);
   }
 
   // Background Music loop
@@ -143,8 +164,97 @@ class SoundFX {
 
 const soundFX = new SoundFX();
 
+// Helper to remove Vietnamese diacritics for flexible matching
+function removeDiacritics(str) {
+  return str
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/đ/g, 'd')
+    .replace(/Đ/g, 'D')
+    .toLowerCase()
+    .trim();
+}
+
 // ========================================================
-// 2. TERMINAL INTRO (Accounting & Cat Target Scan)
+// 2. STAGE 0: GATEKEEPER NAME VERIFICATION
+// ========================================================
+const lockScreen = document.getElementById('lock-screen');
+const lockForm = document.getElementById('lock-form');
+const nameInput = document.getElementById('user-name-input');
+const inputWrapper = document.getElementById('input-wrapper');
+const lockErrorMsg = document.getElementById('lock-error-msg');
+const btnToggleHint = document.getElementById('btn-toggle-hint');
+const lockHintText = document.getElementById('lock-hint-text');
+
+// Check name validity: "Thu Phương", "Phương Thu", "Phương", "Thu", etc.
+function isNameValid(val) {
+  const raw = val.toLowerCase().trim();
+  const normalized = removeDiacritics(raw);
+
+  // Exact or partial friendly matches
+  const validKeywords = [
+    'thu phuong',
+    'phuong thu',
+    'thu phương',
+    'phương thu',
+    'thu',
+    'phương',
+    'phuong'
+  ];
+
+  return validKeywords.some(keyword => {
+    return normalized.includes(removeDiacritics(keyword));
+  });
+}
+
+function handleNameSubmit() {
+  const enteredName = nameInput.value.trim();
+
+  if (!enteredName) {
+    showLockError("Cậu chưa nhập tên kìa! Nhập tên vào đây nhé 😊");
+    return;
+  }
+
+  if (isNameValid(enteredName)) {
+    // SUCCESS!
+    soundFX.playSparkle();
+    triggerConfetti(35);
+    lockErrorMsg.classList.add('hidden');
+    inputWrapper.classList.remove('shake');
+    showToast("✨ Xác thực thành công! Chào Thu Phương xinh xắn 🥰");
+
+    // Transition to Terminal Screen
+    lockScreen.classList.remove('active');
+    setTimeout(() => {
+      terminalScreen.classList.add('active');
+      typeTerminal();
+    }, 450);
+
+  } else {
+    // WRONG NAME
+    soundFX.playBuzz();
+    inputWrapper.classList.add('shake');
+    setTimeout(() => inputWrapper.classList.remove('shake'), 600);
+    showLockError("Ủa ai dợ? Món quà này chỉ dành riêng cho Thu Phương thôi ó! Thử nhập lại nha 🐾");
+  }
+}
+
+function showLockError(msg) {
+  lockErrorMsg.textContent = msg;
+  lockErrorMsg.classList.remove('hidden');
+}
+
+lockForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  handleNameSubmit();
+});
+
+btnToggleHint.addEventListener('click', () => {
+  lockHintText.classList.toggle('hidden');
+});
+
+// ========================================================
+// 3. STAGE 1: TERMINAL INTRO (Accounting & Cat Target Scan)
 // ========================================================
 const terminalContent = document.getElementById('terminal-content');
 const btnStartGame = document.getElementById('btn-start-game');
@@ -155,12 +265,12 @@ const giftScreen = document.getElementById('gift-screen');
 
 const terminalLines = [
   { text: "> [SYSTEM SCAN]: Quét mục tiêu trên máy chủ...", cls: "comment" },
-  { text: "> Target: Nguyễn Phương Thu | Sinh viên Năm 3 Kế Toán", cls: "keyword" },
+  { text: "> Target: Thu Phương | Sinh viên Năm 3 Kế Toán", cls: "keyword" },
   { text: "> Sở thích phát hiện: Boss mèo 🐱, cún cưng 🐶, trà sữa, hoa tươi 🌸", cls: "string" },
   { text: "> Cảnh báo hệ thống: Chỉ số mệt mỏi vì Bảng Cân Đối & Báo Cáo Tài Chính đang cao!", cls: "func" },
   { text: "> Khởi chạy giao thức: 'GiaiCuuBossMeo_20_10.sh'...", cls: "keyword" },
   { text: "> Nạp module: NuCuoiRangRo.dll & AutoQuaMon.pkg... [100% SUCCESS]", cls: "success" },
-  { text: "> Mục tiêu: Hoàn thành mini-game để cân đối Bảng Hạnh Phúc cho Phương Thu!", cls: "string" },
+  { text: "> Mục tiêu: Hoàn thành mini-game để cân đối Bảng Hạnh Phúc cho Thu Phương!", cls: "string" },
   { text: "> Sẵn sàng! Nhấn nút bên dưới để giải cứu Boss Mèo & xem quà 20/10 ✨", cls: "highlight" }
 ];
 
@@ -219,7 +329,7 @@ btnStartGame.addEventListener('click', () => {
 });
 
 // ========================================================
-// 3. MINIGAME: Catch Boss Mèo & Bảng Cân Đối
+// 4. STAGE 2: MINIGAME (Catch Boss Mèo & Bảng Cân Đối)
 // ========================================================
 const gameArena = document.getElementById('game-arena');
 const progressFill = document.getElementById('game-progress-fill');
@@ -272,7 +382,7 @@ function spawnGameTarget() {
 
   gameArena.appendChild(target);
 
-  // Auto remove after 3s if not clicked
+  // Auto remove after 2.6s
   setTimeout(() => {
     if (target.parentNode) {
       target.style.opacity = '0';
@@ -347,7 +457,7 @@ document.querySelectorAll('.quiz-opt-btn').forEach(btn => {
     triggerConfetti(40);
     quizResult.classList.remove('hidden');
     quizResult.innerHTML = `
-      ✨ <strong>Chính xác 100%!</strong> Chuẩn mực Kế toán Tình cảm quy định: Khi Phương Thu cười, mọi số dư Nợ/Có đều tự động cân đối hoàn hảo và niềm vui tăng gấp bội! 🥰
+      ✨ <strong>Chính xác 100%!</strong> Chuẩn mực Kế toán Tình cảm quy định: Khi Thu Phương cười, mọi số dư Nợ/Có đều tự động cân đối hoàn hảo và niềm vui tăng gấp bội! 🥰
     `;
 
     // Transition to Grand Finale Gift Screen after 1.8s
@@ -367,14 +477,14 @@ function transitionToGiftScreen() {
   setTimeout(() => {
     giftScreen.classList.add('active');
     triggerConfetti(60);
-    showToast("✨ Món quà 20/10 dành riêng cho Phương Thu đã mở!");
+    showToast("✨ Món quà 20/10 dành riêng cho Thu Phương đã mở!");
     startRoseAnimation();
     initAlbumSlider();
   }, 400);
 }
 
 // ========================================================
-// 4. 3D POLAROID PHOTO ALBUM (Phuong Thu + Cats + Flowers)
+// 5. STAGE 3: 3D POLAROID PHOTO ALBUM
 // ========================================================
 const albumSlider = document.getElementById('album-slider');
 const albumCards = document.querySelectorAll('.polaroid-card');
@@ -429,17 +539,16 @@ btnNextSlide.addEventListener('click', () => {
   soundFX.playSparkle();
 });
 
-// Click card for reaction
 albumCards.forEach(card => {
   card.addEventListener('click', () => {
     triggerConfetti(25);
     soundFX.playMeow();
-    showToast("🥰 Ảnh xinh quá nè! Chúc Phương Thu 20/10 siêu vui!");
+    showToast("🥰 Ảnh xinh quá nè! Chúc Thu Phương 20/10 siêu vui!");
   });
 });
 
 // ========================================================
-// 5. BLOOMING ROSE CANVAS ENGINE
+// 6. BLOOMING ROSE CANVAS ENGINE
 // ========================================================
 const roseCanvas = document.getElementById('rose-canvas');
 const roseCtx = roseCanvas.getContext('2d');
@@ -529,11 +638,11 @@ roseCanvas.addEventListener('click', () => {
   startRoseAnimation();
   triggerConfetti(30);
   soundFX.playSparkle();
-  showToast("🌹 Đóa hoa nở rộ dành tặng Thu!");
+  showToast("🌹 Đóa hoa nở rộ dành tặng Thu Phương!");
 });
 
 // ========================================================
-// 6. BACKGROUND PARTICLES & PETALS CANVAS
+// 7. BACKGROUND PARTICLES & PETALS CANVAS
 // ========================================================
 const bgCanvas = document.getElementById('bg-canvas');
 const bgCtx = bgCanvas.getContext('2d');
@@ -611,7 +720,7 @@ function animateBg() {
 animateBg();
 
 // ========================================================
-// 7. CONFETTI BURST ENGINE
+// 8. CONFETTI BURST ENGINE
 // ========================================================
 function triggerConfetti(count = 40) {
   const emojis = ['🌸', '💖', '✨', '🌹', '💐', '🐱', '🐾', '🌷'];
@@ -650,7 +759,7 @@ function triggerConfetti(count = 40) {
 }
 
 // ========================================================
-// 8. TOAST & AUDIO UI
+// 9. TOAST & AUDIO UI
 // ========================================================
 const toastEl = document.getElementById('toast');
 let toastTimer = null;
@@ -686,7 +795,7 @@ audioBtn.addEventListener('click', () => {
 });
 
 // ========================================================
-// 9. MODAL & LETTER ACTION BUTTONS
+// 10. MODAL & LETTER ACTION BUTTONS
 // ========================================================
 const secretModal = document.getElementById('secret-modal');
 const btnSecretMsg = document.getElementById('btn-secret-msg');
@@ -709,7 +818,7 @@ modalConfirm.addEventListener('click', () => {
   closeModal();
   soundFX.playMeow();
   triggerConfetti(40);
-  showToast("🥰 Chúc Phương Thu 20/10 ngập tràn niềm vui!");
+  showToast("🥰 Chúc Thu Phương 20/10 ngập tràn niềm vui!");
 });
 
 secretModal.addEventListener('click', (e) => {
@@ -719,18 +828,11 @@ secretModal.addEventListener('click', (e) => {
 btnBloomMore.addEventListener('click', () => {
   triggerConfetti(55);
   soundFX.playSparkle();
-  showToast("🌸 Ngàn đóa hoa chúc mừng Phương Thu 20/10!");
+  showToast("🌸 Ngàn đóa hoa chúc mừng Thu Phương 20/10!");
 });
 
 btnCatMeow.addEventListener('click', () => {
   soundFX.playMeow();
   triggerConfetti(20);
-  showToast("🐾 Meow meow! Boss mèo chúc Thu luôn xinh xắn!");
-});
-
-// ========================================================
-// 10. BOOTSTRAP
-// ========================================================
-window.addEventListener('DOMContentLoaded', () => {
-  typeTerminal();
+  showToast("🐾 Meow meow! Boss mèo chúc Thu Phương luôn xinh xắn!");
 });
