@@ -1013,10 +1013,13 @@ body {
   <!-- Background Particle & Floating Canvas -->
   <canvas id="bg-canvas"></canvas>
 
+  <!-- Real Audio Player (Ánh Nắng Của Anh - Đức Phúc) -->
+  <audio id="bg-audio" src="music.mp3" preload="auto" loop></audio>
+
   <!-- Audio control floating button -->
-  <button id="audio-toggle" class="audio-btn" aria-label="Bật/Tắt giai điệu">
+  <button id="audio-toggle" class="audio-btn" aria-label="Bật/Tắt bài hát">
     <span class="audio-icon">🎵</span>
-    <span class="audio-label">Bật nhạc chill</span>
+    <span class="audio-label">Ánh Nắng Của Anh</span>
     <div class="sound-wave">
       <span></span><span></span><span></span><span></span>
     </div>
@@ -1500,11 +1503,8 @@ function handleNameSubmit() {
     inputWrapper.classList.remove('shake');
     showToast("✨ Mở khóa thành công! Chào Nguyễn Thu Phương xinh đẹp 🥰");
 
-    // Start background music automatically
-    if (!soundFX.isMusicPlaying) {
-      soundFX.startMusic();
-      updateAudioUI(true);
-    }
+    // Start real background song automatically on unlock gesture
+    playRealSong();
 
     // Direct transition to the Grand Gift Experience!
     lockScreen.classList.remove('active');
@@ -1817,27 +1817,60 @@ function showToast(msg) {
   }, 3200);
 }
 
-// Audio UI
+// Background Song Audio Player (Ánh Nắng Của Anh - Đức Phúc)
+const bgAudio = document.getElementById('bg-audio');
 const audioBtn = document.getElementById('audio-toggle');
 const audioLabel = audioBtn.querySelector('.audio-label');
+const audioIcon = audioBtn.querySelector('.audio-icon');
+
+let isSongPlaying = false;
+
+function playRealSong() {
+  if (!bgAudio) return;
+  bgAudio.volume = 0.85;
+  const playPromise = bgAudio.play();
+  if (playPromise !== undefined) {
+    playPromise.then(() => {
+      isSongPlaying = true;
+      updateAudioUI(true);
+    }).catch(err => {
+      console.warn("Autoplay deferred or blocked:", err);
+      isSongPlaying = false;
+      updateAudioUI(false);
+    });
+  }
+}
+
+function pauseRealSong() {
+  if (!bgAudio) return;
+  bgAudio.pause();
+  isSongPlaying = false;
+  updateAudioUI(false);
+}
+
+function toggleRealSong() {
+  if (isSongPlaying) {
+    pauseRealSong();
+    showToast("Đã tạm dừng bài hát ⏸️");
+  } else {
+    playRealSong();
+    showToast("🎶 Đang phát: Ánh Nắng Của Anh (Đức Phúc)");
+  }
+}
 
 function updateAudioUI(isPlaying) {
   if (isPlaying) {
     audioBtn.classList.add('playing');
-    audioLabel.textContent = 'Giai điệu lofi';
+    audioLabel.textContent = 'Ánh Nắng Của Anh 🎶';
+    if (audioIcon) audioIcon.textContent = '⏸️';
   } else {
     audioBtn.classList.remove('playing');
-    audioLabel.textContent = 'Bật nhạc chill';
+    audioLabel.textContent = 'Phát bài hát 🎵';
+    if (audioIcon) audioIcon.textContent = '▶️';
   }
 }
 
-audioBtn.addEventListener('click', () => {
-  const isPlaying = soundFX.toggleMusic();
-  updateAudioUI(isPlaying);
-  if (isPlaying) {
-    showToast("🎵 Đang phát giai điệu lãng mạn nhẹ nhàng...");
-  }
-});
+audioBtn.addEventListener('click', toggleRealSong);
 
 // Modal Actions
 const secretModal = document.getElementById('secret-modal');
