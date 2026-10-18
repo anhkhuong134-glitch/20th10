@@ -3,39 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Happy 20/10 Nguyễn Thu Phương ✨ | Secret Project for Her</title>
+  <title>Happy 20/10 Nguyễn Thu Phương ✨ | Dành Riêng Cho Cậu</title>
   
   <!-- SEO & Social Sharing preview -->
   <meta name="description" content="Món quà 20/10 đặc biệt dành riêng cho Nguyễn Thu Phương - Năm 3 Kế Toán, Yêu Boss Mèo & Siêu Dễ Thương.">
-  <meta property="og:title" content="Gửi Nguyễn Thu Phương - Happy 20/10! 🐱🌸">
+  <meta property="og:title" content="Gửi Nguyễn Thu Phương - Happy Vietnamese Women's Day 20/10! 🌸">
   <meta property="og:description" content="Nhập tên để mở khóa món quà bí mật được lập trình dành riêng cho cậu!">
-  <meta property="og:image" content="photo1.png">
+  <meta property="og:image" content="photo3.png">
   
-  <!-- Fonts -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
   
-  <!-- Embedded Stylesheet (Guaranteed to load 100% on Vercel without 404) -->
   <style>
 :root {
-  --bg-deep: #080710;
-  --bg-surface: rgba(22, 17, 39, 0.75);
-  --bg-card: rgba(30, 23, 53, 0.72);
-  --primary-rose: #ff3366;
-  --primary-pink: #ff6b8b;
-  --primary-coral: #ff758c;
-  --accent-gold: #ffd166;
-  --accent-mint: #06d6a0;
-  --accent-cyan: #00f2fe;
+  --bg-dark: #090714;
+  --bg-card: rgba(26, 19, 46, 0.75);
+  --bg-glass: rgba(255, 255, 255, 0.05);
+  --rose-primary: #ff3366;
+  --rose-light: #ff758c;
+  --rose-glow: rgba(255, 51, 102, 0.4);
+  --gold-accent: #ffd166;
+  --gold-glow: rgba(255, 209, 102, 0.35);
   --text-main: #f8fafc;
   --text-muted: #94a3b8;
+  --border-neon: rgba(255, 107, 139, 0.35);
   --border-glass: rgba(255, 255, 255, 0.12);
-  --border-neon: rgba(255, 51, 102, 0.4);
   --radius-sm: 8px;
   --radius-md: 16px;
   --radius-lg: 24px;
-  --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 * {
@@ -47,16 +45,16 @@
 
 body {
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  background-color: var(--bg-deep);
+  background-color: var(--bg-dark);
   color: var(--text-main);
   min-height: 100vh;
   min-height: 100dvh;
   overflow-x: hidden;
   position: relative;
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
-/* Background Canvas */
+/* Background Particle Canvas */
 #bg-canvas {
   position: fixed;
   top: 0;
@@ -67,37 +65,37 @@ body {
   pointer-events: none;
 }
 
-/* Audio Control Button */
+/* Audio Floating Button */
 .audio-btn {
   position: fixed;
-  top: 18px;
-  right: 18px;
+  top: 20px;
+  right: 20px;
   z-index: 100;
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(25, 18, 43, 0.85);
+  background: rgba(28, 20, 48, 0.85);
   border: 1px solid var(--border-neon);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  padding: 8px 16px;
+  padding: 9px 18px;
   border-radius: 50px;
   color: #fff;
   font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
-  transition: var(--transition-smooth);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 51, 102, 0.2);
+  transition: var(--transition);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 15px var(--rose-glow);
 }
 
 .audio-btn:hover {
   transform: translateY(-2px) scale(1.03);
-  box-shadow: 0 6px 25px rgba(255, 51, 102, 0.5);
-  border-color: var(--primary-pink);
+  box-shadow: 0 6px 25px rgba(255, 51, 102, 0.6);
+  border-color: var(--rose-light);
 }
 
 .audio-btn.playing {
-  border-color: var(--accent-gold);
+  border-color: var(--gold-accent);
   background: rgba(45, 23, 63, 0.9);
 }
 
@@ -111,7 +109,7 @@ body {
 .sound-wave span {
   width: 3px;
   height: 4px;
-  background-color: var(--primary-pink);
+  background-color: var(--rose-light);
   border-radius: 2px;
   transition: height 0.2s ease;
 }
@@ -134,7 +132,7 @@ body {
   border: 1px solid var(--border-glass);
 }
 
-/* Screen Transitions */
+/* Screen Views */
 .screen-view {
   position: absolute;
   top: 0;
@@ -144,8 +142,8 @@ body {
   z-index: 10;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.5s ease, visibility 0.5s ease, transform 0.5s ease;
-  padding: 24px 20px;
+  transition: opacity 0.6s ease, visibility 0.6s ease, transform 0.6s ease;
+  padding: 30px 20px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -160,16 +158,16 @@ body {
 }
 
 /* ========================================================
-   STAGE 0: Gatekeeper Lock Screen
+   SCREEN 1: GATEKEEPER PASSCODE LOCK
    ======================================================== */
 #lock-screen {
-  background: radial-gradient(circle at center, rgba(38, 20, 68, 0.5) 0%, rgba(8, 7, 16, 0.98) 75%);
+  background: radial-gradient(circle at center, rgba(42, 22, 75, 0.55) 0%, rgba(9, 7, 20, 0.98) 75%);
 }
 
 .lock-container {
   width: 100%;
   max-width: 500px;
-  padding: 40px 32px;
+  padding: 44px 34px;
   border-radius: var(--radius-lg);
   border: 1px solid var(--border-neon);
   box-shadow: 0 25px 65px rgba(0, 0, 0, 0.8), 0 0 45px rgba(255, 51, 102, 0.25);
@@ -184,9 +182,9 @@ body {
 
 .lock-icon-wrapper {
   position: relative;
-  width: 76px;
-  height: 76px;
-  margin: 0 auto 20px auto;
+  width: 82px;
+  height: 82px;
+  margin: 0 auto 22px auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -195,7 +193,7 @@ body {
 .lock-glow {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle, rgba(255, 51, 102, 0.5) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 51, 102, 0.55) 0%, transparent 70%);
   border-radius: 50%;
   animation: pulseGlow 3s infinite alternate;
 }
@@ -206,7 +204,7 @@ body {
 }
 
 .lock-icon {
-  font-size: 2.8rem;
+  font-size: 3rem;
   z-index: 2;
   filter: drop-shadow(0 4px 15px rgba(255, 51, 102, 0.6));
 }
@@ -214,7 +212,7 @@ body {
 .lock-badge {
   display: inline-block;
   background: rgba(255, 209, 102, 0.12);
-  color: var(--accent-gold);
+  color: var(--gold-accent);
   border: 1px solid rgba(255, 209, 102, 0.35);
   font-size: 0.75rem;
   font-weight: 700;
@@ -222,12 +220,12 @@ body {
   text-transform: uppercase;
   padding: 4px 14px;
   border-radius: 50px;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .lock-title {
   font-family: 'Playfair Display', serif;
-  font-size: 2rem;
+  font-size: 2.1rem;
   color: #fff;
   margin-bottom: 12px;
 }
@@ -236,7 +234,7 @@ body {
   color: var(--text-muted);
   font-size: 0.95rem;
   line-height: 1.6;
-  margin-bottom: 24px;
+  margin-bottom: 26px;
 }
 
 .lock-form {
@@ -255,7 +253,7 @@ body {
 }
 
 .input-wrapper:focus-within {
-  border-color: var(--primary-pink);
+  border-color: var(--rose-light);
   box-shadow: 0 0 25px rgba(255, 51, 102, 0.45);
 }
 
@@ -288,21 +286,21 @@ body {
 }
 
 .btn-unlock {
-  background: linear-gradient(135deg, var(--primary-rose), #e11d48);
+  background: linear-gradient(135deg, var(--rose-primary), #e11d48);
   border: none;
   outline: none;
   color: #fff;
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-weight: 700;
-  font-size: 0.9rem;
-  padding: 10px 20px;
+  font-size: 0.92rem;
+  padding: 10px 22px;
   border-radius: 50px;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 6px;
   box-shadow: 0 4px 15px rgba(255, 51, 102, 0.4);
-  transition: var(--transition-smooth);
+  transition: var(--transition);
 }
 
 .btn-unlock:hover {
@@ -325,8 +323,8 @@ body {
 .lock-error-msg.hidden { display: none; }
 
 .lock-hint-area {
-  margin-top: 22px;
-  padding-top: 16px;
+  margin-top: 24px;
+  padding-top: 18px;
   border-top: 1px solid var(--border-glass);
 }
 
@@ -340,7 +338,7 @@ body {
 }
 
 .hint-btn:hover {
-  color: var(--accent-gold);
+  color: var(--gold-accent);
 }
 
 .hint-text {
@@ -356,410 +354,113 @@ body {
 .hint-text.hidden { display: none; }
 
 /* ========================================================
-   STAGE 1: Terminal Coder Intro
-   ======================================================== */
-#terminal-screen {
-  background: radial-gradient(circle at center, rgba(35, 22, 60, 0.4) 0%, rgba(8, 7, 16, 0.95) 80%);
-}
-
-.terminal-container {
-  width: 100%;
-  max-width: 680px;
-  background: rgba(14, 11, 26, 0.9);
-  border: 1px solid rgba(255, 107, 139, 0.35);
-  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 51, 102, 0.2);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  font-family: 'Fira Code', monospace;
-  animation: floatTerminal 6s ease-in-out infinite;
-}
-
-@keyframes floatTerminal {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-
-.terminal-header {
-  background: rgba(22, 17, 39, 0.95);
-  padding: 12px 18px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid var(--border-glass);
-}
-
-.terminal-dots {
-  display: flex;
-  gap: 8px;
-}
-
-.dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.dot.red { background: #ff5f56; }
-.dot.yellow { background: #ffbd2e; }
-.dot.green { background: #27c93f; }
-
-.terminal-title {
-  color: var(--text-muted);
-  font-size: 0.82rem;
-  font-weight: 500;
-}
-
-.terminal-badge {
-  background: rgba(255, 51, 102, 0.15);
-  color: var(--primary-pink);
-  font-size: 0.72rem;
-  padding: 4px 10px;
-  border-radius: 4px;
-  border: 1px solid rgba(255, 51, 102, 0.3);
-  font-weight: 600;
-}
-
-.terminal-body {
-  padding: 24px;
-  min-height: 290px;
-  max-height: 52vh;
-  overflow-y: auto;
-  font-size: 0.9rem;
-  color: #e2e8f0;
-  line-height: 1.7;
-}
-
-.terminal-body .line {
-  margin-bottom: 6px;
-  word-break: break-word;
-}
-
-.terminal-body .comment { color: #64748b; font-style: italic; }
-.terminal-body .keyword { color: #f472b6; font-weight: 600; }
-.terminal-body .string { color: #ffd166; }
-.terminal-body .func { color: #67e8f9; }
-.terminal-body .success { color: #4ade80; font-weight: 600; }
-.terminal-body .highlight { color: #ff3366; font-weight: bold; }
-
-.terminal-footer {
-  padding: 16px 20px;
-  background: rgba(18, 14, 32, 0.92);
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  border-top: 1px solid var(--border-glass);
-}
-
-.btn-terminal-action {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid var(--border-glass);
-  color: var(--text-muted);
-  font-family: 'Fira Code', monospace;
-  font-size: 0.85rem;
-  padding: 10px 18px;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition: var(--transition-smooth);
-}
-
-.btn-terminal-action:hover {
-  background: rgba(255, 255, 255, 0.12);
-  color: #fff;
-  border-color: rgba(255, 255, 255, 0.3);
-}
-
-.btn-terminal-action.primary {
-  background: linear-gradient(135deg, var(--primary-rose), #e11d48);
-  border: none;
-  color: #fff;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.btn-terminal-action.primary.glow {
-  box-shadow: 0 0 20px rgba(255, 51, 102, 0.45);
-}
-
-.btn-terminal-action.primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 30px rgba(255, 51, 102, 0.7);
-}
-
-/* ========================================================
-   STAGE 2: Gen Z Minigame Screen
-   ======================================================== */
-.game-container {
-  width: 100%;
-  max-width: 650px;
-  padding: 30px 32px;
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border-neon);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), 0 0 35px rgba(255, 51, 102, 0.2);
-  text-align: center;
-}
-
-.game-badge {
-  display: inline-block;
-  background: rgba(255, 209, 102, 0.12);
-  color: var(--accent-gold);
-  border: 1px solid rgba(255, 209, 102, 0.3);
-  font-size: 0.76rem;
-  font-weight: 700;
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
-  padding: 5px 14px;
-  border-radius: 50px;
-  margin-bottom: 12px;
-}
-
-.game-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.85rem;
-  color: #fff;
-  margin-bottom: 8px;
-}
-
-.game-desc {
-  color: var(--text-muted);
-  font-size: 0.95rem;
-  margin-bottom: 20px;
-}
-
-.game-desc strong {
-  color: #ffd6e0;
-}
-
-/* Progress bar */
-.progress-wrapper {
-  margin-bottom: 20px;
-}
-
-.progress-bar-bg {
-  width: 100%;
-  height: 12px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-.progress-bar-fill {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, var(--primary-pink), var(--accent-gold));
-  border-radius: 10px;
-  transition: width 0.35s ease-out;
-  box-shadow: 0 0 12px rgba(255, 107, 139, 0.6);
-}
-
-.score-display {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 8px;
-  font-size: 0.88rem;
-  color: #e2e8f0;
-}
-
-.status-pill {
-  font-size: 0.75rem;
-  padding: 3px 10px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--accent-gold);
-}
-
-/* Game Arena */
-.game-arena {
-  position: relative;
-  width: 100%;
-  height: 260px;
-  background: radial-gradient(circle at center, rgba(40, 25, 65, 0.5) 0%, rgba(15, 12, 28, 0.85) 100%);
-  border: 1px dashed rgba(255, 107, 139, 0.3);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  cursor: crosshair;
-  margin-bottom: 20px;
-}
-
-.arena-hint {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: rgba(255, 255, 255, 0.3);
-  font-size: 0.85rem;
-  pointer-events: none;
-}
-
-/* Bouncing target elements (Cats, flowers) */
-.game-target {
-  position: absolute;
-  font-size: 2.3rem;
-  user-select: none;
-  cursor: pointer;
-  transition: transform 0.15s ease;
-  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
-  animation: floatBounce 2s infinite ease-in-out alternate;
-}
-
-.game-target:hover {
-  transform: scale(1.25);
-}
-
-.game-target:active {
-  transform: scale(0.9);
-}
-
-@keyframes floatBounce {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-8px); }
-}
-
-/* Quiz Section */
-.quiz-box {
-  background: rgba(20, 15, 35, 0.9);
-  border: 1px solid var(--accent-gold);
-  border-radius: var(--radius-md);
-  padding: 20px;
-  margin-bottom: 20px;
-  text-align: left;
-  animation: popIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.quiz-box.hidden { display: none; }
-
-@keyframes popIn {
-  from { opacity: 0; transform: scale(0.92); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-.quiz-badge {
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--accent-gold);
-  letter-spacing: 1px;
-  margin-bottom: 8px;
-}
-
-.quiz-question {
-  font-size: 1.05rem;
-  color: #fff;
-  margin-bottom: 16px;
-  line-height: 1.5;
-}
-
-.quiz-options {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.quiz-opt-btn {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--border-glass);
-  border-radius: var(--radius-sm);
-  padding: 12px 16px;
-  color: #e2e8f0;
-  font-size: 0.9rem;
-  text-align: left;
-  cursor: pointer;
-  transition: var(--transition-smooth);
-}
-
-.quiz-opt-btn:hover {
-  background: rgba(255, 51, 102, 0.15);
-  border-color: var(--primary-pink);
-  transform: translateX(4px);
-  color: #fff;
-}
-
-.quiz-opt-btn strong {
-  color: var(--accent-gold);
-  margin-right: 6px;
-}
-
-.quiz-result {
-  margin-top: 14px;
-  padding: 12px;
-  border-radius: var(--radius-sm);
-  background: rgba(6, 214, 160, 0.15);
-  border: 1px solid var(--accent-mint);
-  color: #a7f3d0;
-  font-size: 0.92rem;
-  line-height: 1.5;
-}
-
-.quiz-result.hidden { display: none; }
-
-.game-footer {
-  margin-top: 10px;
-}
-
-.text-link-btn {
-  background: none;
-  border: none;
-  color: var(--text-muted);
-  font-size: 0.82rem;
-  cursor: pointer;
-  text-decoration: underline;
-  transition: color 0.2s ease;
-}
-
-.text-link-btn:hover {
-  color: var(--primary-pink);
-}
-
-/* ========================================================
-   STAGE 3: Grand Finale Gift & 3D Album
+   SCREEN 2: MAIN GIFT EXPERIENCE
    ======================================================== */
 #gift-screen {
-  padding: 40px 20px;
+  padding: 50px 20px 80px 20px;
 }
 
-.gift-layout {
+.gift-wrapper {
   width: 100%;
-  max-width: 1150px;
+  max-width: 1180px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  z-index: 10;
+}
+
+/* Header Banner */
+.gift-hero-banner {
+  text-align: center;
+  padding: 24px 20px;
+}
+
+.hero-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 209, 102, 0.12);
+  border: 1px solid rgba(255, 209, 102, 0.35);
+  padding: 6px 18px;
+  border-radius: 50px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--gold-accent);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.hero-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2.8rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 12px;
+  color: #fff;
+}
+
+.highlight-name {
+  background: linear-gradient(135deg, var(--gold-accent), var(--rose-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-sub {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+/* 2-Column Main Section */
+.gift-main-grid {
   display: grid;
-  grid-template-columns: 1fr 1.35fr;
+  grid-template-columns: 1fr 1.3fr;
   gap: 36px;
   align-items: start;
-  z-index: 10;
-  margin: auto;
 }
 
 @media (max-width: 950px) {
-  .gift-layout {
+  .gift-main-grid {
     grid-template-columns: 1fr;
     gap: 32px;
   }
 }
 
-/* Visual Column */
+/* Visual Column: Blooming Rose + 3D Photo Album */
 .visual-column {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 28px;
+  gap: 26px;
 }
 
-/* Rose Canvas */
-.bloom-wrapper {
-  position: relative;
-  width: 250px;
-  height: 250px;
+.rose-card {
+  width: 100%;
+  padding: 24px 20px;
+  border-radius: var(--radius-lg);
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--border-neon);
+}
+
+.bloom-wrapper {
+  position: relative;
+  width: 230px;
+  height: 230px;
+  display: flex;
   justify-content: center;
   align-items: center;
 }
 
 #rose-canvas {
-  width: 220px;
-  height: 220px;
+  width: 210px;
+  height: 210px;
   border-radius: 50%;
   z-index: 2;
   filter: drop-shadow(0 0 25px rgba(255, 51, 102, 0.5));
@@ -773,31 +474,31 @@ body {
 
 .bloom-glow-core {
   position: absolute;
-  width: 150px;
-  height: 150px;
-  background: radial-gradient(circle, rgba(255, 51, 102, 0.35) 0%, transparent 70%);
+  width: 140px;
+  height: 140px;
+  background: radial-gradient(circle, rgba(255, 51, 102, 0.4) 0%, transparent 70%);
   border-radius: 50%;
   z-index: 1;
   animation: pulseGlow 4s infinite alternate;
 }
 
-.bloom-caption {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  margin-top: 6px;
-  letter-spacing: 0.4px;
+.bloom-hint {
+  font-size: 0.8rem;
+  color: var(--rose-light);
+  margin-top: 10px;
+  font-weight: 500;
 }
 
-/* 3D Photo Album */
-.album-section {
+/* 3D Photo Album Section */
+.album-card-wrapper {
   width: 100%;
-  max-width: 330px;
+  max-width: 340px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.album-header {
+.album-top-bar {
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -805,14 +506,13 @@ body {
   margin-bottom: 12px;
 }
 
-.album-tag {
-  font-size: 0.82rem;
+.album-title-tag {
+  font-size: 0.85rem;
   font-weight: 700;
-  color: var(--accent-gold);
-  letter-spacing: 0.5px;
+  color: var(--gold-accent);
 }
 
-.album-nav-dots {
+.album-dots {
   display: flex;
   gap: 6px;
 }
@@ -827,17 +527,16 @@ body {
 }
 
 .album-dot.active {
-  background: var(--primary-pink);
-  transform: scale(1.3);
+  background: var(--rose-light);
+  transform: scale(1.35);
 }
 
 .album-slider {
   position: relative;
   width: 100%;
-  height: 400px;
+  height: 420px;
 }
 
-/* Polaroid Card */
 .polaroid-card {
   position: absolute;
   top: 0;
@@ -873,7 +572,7 @@ body {
   transform: translateX(-50%);
   width: 80px;
   height: 22px;
-  background: rgba(255, 240, 180, 0.7);
+  background: rgba(255, 240, 180, 0.75);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
   transform: translateX(-50%) rotate(-1deg);
   backdrop-filter: blur(2px);
@@ -905,11 +604,11 @@ body {
   position: absolute;
   bottom: 8px;
   right: 8px;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.75);
   color: #fff;
-  font-size: 0.68rem;
+  font-size: 0.7rem;
   font-weight: 600;
-  padding: 3px 8px;
+  padding: 4px 10px;
   border-radius: 4px;
   backdrop-filter: blur(4px);
 }
@@ -934,8 +633,8 @@ body {
   margin-top: 3px;
 }
 
-/* Album controls */
-.album-controls {
+/* Album nav buttons */
+.album-nav-bar {
   display: flex;
   align-items: center;
   gap: 16px;
@@ -946,34 +645,34 @@ body {
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid var(--border-glass);
   color: #fff;
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   font-size: 1.3rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: var(--transition-smooth);
+  transition: var(--transition);
 }
 
 .slide-nav-btn:hover {
-  background: var(--primary-pink);
+  background: var(--rose-light);
   transform: scale(1.1);
 }
 
-.slide-indicator {
+.slide-counter {
   font-size: 0.85rem;
   color: var(--text-muted);
   font-weight: 600;
 }
 
-/* Right Column: Letter */
+/* Right Content Column: Heartfelt Letter */
 .letter-card {
   background: var(--bg-card);
   border: 1px solid var(--border-neon);
   border-radius: var(--radius-lg);
-  padding: 36px 38px;
+  padding: 40px 38px;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 35px rgba(255, 51, 102, 0.15);
@@ -988,7 +687,7 @@ body {
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, transparent, var(--primary-pink), var(--accent-gold), transparent);
+  background: linear-gradient(90deg, transparent, var(--rose-light), var(--gold-accent), transparent);
 }
 
 .letter-tag {
@@ -997,7 +696,7 @@ body {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1.5px;
-  color: var(--accent-gold);
+  color: var(--gold-accent);
   background: rgba(255, 209, 102, 0.1);
   padding: 4px 12px;
   border-radius: 50px;
@@ -1007,29 +706,23 @@ body {
 
 .letter-heading {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: 2.2rem;
+  font-size: 2.3rem;
   font-weight: 700;
   line-height: 1.25;
   color: #ffffff;
 }
 
-.recipient-name {
-  background: linear-gradient(135deg, var(--accent-gold), var(--primary-pink));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
 .sub-greeting {
   font-size: 0.95rem;
-  color: var(--primary-pink);
+  color: var(--rose-light);
   font-weight: 600;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .letter-body {
-  font-size: 1rem;
+  font-size: 1.02rem;
   color: #e2e8f0;
-  line-height: 1.8;
+  line-height: 1.85;
 }
 
 .letter-body .paragraph {
@@ -1041,17 +734,17 @@ body {
   background: rgba(18, 14, 30, 0.85);
   border: 1px solid rgba(255, 107, 139, 0.3);
   border-radius: var(--radius-md);
-  padding: 16px 20px;
-  margin: 22px 0;
+  padding: 18px 22px;
+  margin: 24px 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .ledger-row {
   display: flex;
   flex-direction: column;
-  font-size: 0.92rem;
+  font-size: 0.93rem;
   padding-bottom: 8px;
   border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
 }
@@ -1063,14 +756,14 @@ body {
 
 .ledger-row.highlight {
   background: rgba(255, 51, 102, 0.1);
-  padding: 8px 12px;
+  padding: 10px 14px;
   border-radius: var(--radius-sm);
   border-bottom: none;
 }
 
 .ledger-label {
   font-weight: 700;
-  color: var(--accent-gold);
+  color: var(--gold-accent);
   margin-bottom: 2px;
 }
 
@@ -1082,7 +775,7 @@ body {
   font-weight: 500;
   color: #cbd5e1;
   font-style: italic;
-  margin-top: 12px;
+  margin-top: 14px;
 }
 
 /* Actions */
@@ -1090,8 +783,8 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin-top: 28px;
-  padding-top: 20px;
+  margin-top: 30px;
+  padding-top: 22px;
   border-top: 1px solid var(--border-glass);
 }
 
@@ -1099,17 +792,17 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 12px 20px;
+  padding: 12px 22px;
   border-radius: 50px;
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 0.92rem;
   font-weight: 600;
   cursor: pointer;
-  transition: var(--transition-smooth);
+  transition: var(--transition);
 }
 
 .magic-btn.primary {
-  background: linear-gradient(135deg, var(--primary-rose), #e11d48);
+  background: linear-gradient(135deg, var(--rose-primary), #e11d48);
   border: none;
   color: #fff;
   box-shadow: 0 4px 20px rgba(255, 51, 102, 0.4);
@@ -1135,7 +828,7 @@ body {
 .magic-btn.cat-btn {
   background: rgba(255, 209, 102, 0.12);
   border: 1px solid rgba(255, 209, 102, 0.35);
-  color: var(--accent-gold);
+  color: var(--gold-accent);
 }
 
 .magic-btn.cat-btn:hover {
@@ -1144,8 +837,8 @@ body {
 }
 
 .footer-credit {
-  margin-top: 20px;
-  font-size: 0.78rem;
+  margin-top: 24px;
+  font-size: 0.8rem;
   color: var(--text-muted);
   text-align: right;
   font-style: italic;
@@ -1157,7 +850,7 @@ body {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(4, 3, 8, 0.8);
+  background: rgba(4, 3, 8, 0.82);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   z-index: 200;
@@ -1177,11 +870,11 @@ body {
 
 .modal-card {
   width: 100%;
-  max-width: 440px;
+  max-width: 460px;
   background: rgba(26, 20, 44, 0.95);
   border: 1px solid var(--border-neon);
   border-radius: var(--radius-md);
-  padding: 28px;
+  padding: 30px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 51, 102, 0.3);
   transform: scale(0.9);
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -1200,12 +893,12 @@ body {
 }
 
 .modal-icon {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
 }
 
 .modal-header h3 {
   font-family: 'Playfair Display', serif;
-  font-size: 1.3rem;
+  font-size: 1.35rem;
   color: #fff;
   flex: 1;
 }
@@ -1227,7 +920,7 @@ body {
 .modal-body {
   color: #e2e8f0;
   font-size: 0.98rem;
-  line-height: 1.7;
+  line-height: 1.75;
 }
 
 .modal-body p {
@@ -1235,12 +928,12 @@ body {
 }
 
 .modal-highlight {
-  color: var(--accent-gold);
-  font-weight: 500;
+  color: var(--gold-accent);
+  font-weight: 600;
 }
 
 .modal-footer {
-  margin-top: 20px;
+  margin-top: 22px;
   display: flex;
   justify-content: flex-end;
 }
@@ -1254,7 +947,7 @@ body {
   left: 50%;
   transform: translateX(-50%) translateY(100px);
   background: rgba(30, 20, 50, 0.95);
-  border: 1px solid var(--primary-pink);
+  border: 1px solid var(--rose-light);
   color: #fff;
   padding: 10px 24px;
   border-radius: 50px;
@@ -1274,6 +967,9 @@ body {
 
 /* Responsive tweaks */
 @media (max-width: 640px) {
+  .hero-title {
+    font-size: 2.1rem;
+  }
   .lock-container {
     padding: 30px 20px;
   }
@@ -1295,7 +991,7 @@ body {
     padding: 24px 20px;
   }
   .letter-heading {
-    font-size: 1.65rem;
+    font-size: 1.7rem;
   }
   .audio-btn {
     top: 12px;
@@ -1303,15 +999,11 @@ body {
     padding: 6px 12px;
     font-size: 0.78rem;
   }
-  .terminal-body {
-    padding: 16px;
-    font-size: 0.8rem;
-  }
-  .album-section {
+  .album-card-wrapper {
     max-width: 290px;
   }
   .album-slider {
-    height: 360px;
+    height: 380px;
   }
 }
   </style>
@@ -1331,7 +1023,7 @@ body {
   </button>
 
   <!-- ========================================================
-       STAGE 0: Gatekeeper / Name Check Lock Screen (BẮT BUỘC NHẬP TÊN)
+       SCREEN 1: Gatekeeper Name Check Lock Screen (NHẬP TÊN)
        ======================================================== -->
   <section id="lock-screen" class="screen-view active">
     <div class="lock-container glassmorphism">
@@ -1373,261 +1065,196 @@ body {
   </section>
 
   <!-- ========================================================
-       STAGE 1: Terminal Coder Intro (Quét profile Thu Phương)
-       ======================================================== -->
-  <section id="terminal-screen" class="screen-view">
-    <div class="terminal-container">
-      <div class="terminal-header">
-        <div class="terminal-dots">
-          <span class="dot red"></span>
-          <span class="dot yellow"></span>
-          <span class="dot green"></span>
-        </div>
-        <div class="terminal-title">accounting_happiness_protocol.sh</div>
-        <div class="terminal-badge">TARGET: NGUYỄN THU PHƯƠNG 🐾</div>
-      </div>
-      
-      <div class="terminal-body" id="terminal-content">
-        <!-- Lines typed out dynamically by script.js -->
-      </div>
-
-      <div class="terminal-footer">
-        <button id="btn-skip-typing" class="btn-terminal-action">Bỏ qua giới thiệu ⚡</button>
-        <button id="btn-start-game" class="btn-terminal-action primary glow">
-          <span class="btn-icon">🎮</span> BẮT ĐẦU NHIỆM VỤ 20/10
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========================================================
-       STAGE 2: Gen Z Minigame (Catch Boss Mèo & Bảng Cân Đối)
-       ======================================================== -->
-  <section id="minigame-screen" class="screen-view">
-    <div class="game-container glassmorphism">
-      <div class="game-header">
-        <div class="game-badge">🐾 MINI-QUEST 20/10 CHO THU PHƯƠNG</div>
-        <h2 class="game-title">Giải Cứu Boss Mèo & Sạc Đầy Hạnh Phúc</h2>
-        <p class="game-desc">
-          Bắt nhanh <strong>5 chú mèo & bông hoa</strong> đang bay để cân đối Bảng Báo Cáo Hạnh Phúc nhé!
-        </p>
-        
-        <!-- Score & Progress -->
-        <div class="progress-wrapper">
-          <div class="progress-bar-bg">
-            <div id="game-progress-fill" class="progress-bar-fill"></div>
-          </div>
-          <div class="score-display">
-            <span>Tiến độ: <strong id="score-text">0 / 5</strong> 🐱</span>
-            <span id="score-status" class="status-pill">Đang chuẩn bị...</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Play Area where cats and flowers bounce -->
-      <div id="game-arena" class="game-arena">
-        <div class="arena-hint">Chạm vào Boss mèo hoặc hoa đang bay! 👆</div>
-      </div>
-
-      <!-- Quick GenZ Accounting Quiz (Appears after catching) -->
-      <div id="quiz-box" class="quiz-box hidden">
-        <div class="quiz-badge">📊 CÂU HỎI KẾ TOÁN ĐẶC BIỆT</div>
-        <h3 class="quiz-question">
-          "Theo Chuẩn mực Kế toán Tình cảm, khi Thu Phương mỉm cười thì số dư ghi nhận vào đâu?"
-        </h3>
-        <div class="quiz-options">
-          <button class="quiz-opt-btn" data-opt="A">
-            <strong>A.</strong> Nợ TK 111 (Tiền về đầy túi, thi cử qua môn)
-          </button>
-          <button class="quiz-opt-btn" data-opt="B">
-            <strong>B.</strong> Có TK 999 (Tăng vô hạn độ xinh xắn và đáng yêu)
-          </button>
-          <button class="quiz-opt-btn" data-opt="C">
-            <strong>C.</strong> Cả 2 đều đúng, vì Thu Phương cười thì mọi Bảng Cân Đối đều Auto Khớp!
-          </button>
-        </div>
-        <div id="quiz-result" class="quiz-result hidden"></div>
-      </div>
-
-      <div class="game-footer">
-        <button id="btn-skip-to-gift" class="text-link-btn">Xem quà ngay không cần chơi &raquo;</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========================================================
-       STAGE 3: Grand Finale Gift & 3D Album & Letter
+       SCREEN 2: MAIN GIFT EXPERIENCE (NO MINIGAME - PURE ELEGANCE)
        ======================================================== -->
   <section id="gift-screen" class="screen-view">
-    <div class="gift-layout">
+    <div class="gift-wrapper">
 
-      <!-- LEFT COLUMN: 3D Photo Album + Blooming Garden Canvas -->
-      <div class="visual-column">
-        
-        <!-- Rose Bloom Centerpiece -->
-        <div class="bloom-wrapper">
-          <canvas id="rose-canvas"></canvas>
-          <div class="bloom-glow-core"></div>
-          <div class="bloom-caption">🌹 Đóa hoa vĩnh cửu cho Thu Phương (Nhấn để hoa nở)</div>
-        </div>
+      <!-- Top Hero Header -->
+      <header class="gift-hero-banner">
+        <div class="hero-pill">✨ Happy Vietnamese Women's Day • 20/10</div>
+        <h1 class="hero-title">
+          Dành Tặng <span class="highlight-name">Nguyễn Thu Phương</span> 🌸
+        </h1>
+        <p class="hero-sub">
+          Chúc cô sinh viên năm 3 Kế toán dịu dàng, mê boss mèo luôn rạng rỡ, hạnh phúc và ngập tràn niềm vui mỗi ngày!
+        </p>
+      </header>
 
-        <!-- Interactive 3D Photo Album (All 5 Photos of Thu Phuong) -->
-        <div class="album-section">
-          <div class="album-header">
-            <span class="album-tag">📸 Album Kỷ Niệm Của Thu Phương</span>
-            <div class="album-nav-dots" id="album-nav-dots">
-              <!-- Rendered via JS -->
-            </div>
-          </div>
+      <!-- Main 2-Column Content Grid -->
+      <div class="gift-main-grid">
 
-          <div class="album-slider" id="album-slider">
-            
-            <!-- Slide 1: Photo 1 - Đeo kính ăn gà rán siêu cute -->
-            <div class="polaroid-card active" data-index="0">
-              <div class="tape-strip"></div>
-              <div class="photo-frame">
-                <img src="photo1.png" alt="Thu Phương" onerror="this.src='avatar.jpg'">
-                <div class="photo-badge">Ăn là chân ái 🍗</div>
-              </div>
-              <div class="photo-caption">
-                <span class="caption-title">Thu Phương Ngố Tàu ✨</span>
-                <span class="caption-sub">Đeo kính tròn siêu đáng yêu</span>
-              </div>
-            </div>
-
-            <!-- Slide 2: Photo 2 - Filter cún cưng lấp lánh -->
-            <div class="polaroid-card" data-index="1">
-              <div class="tape-strip"></div>
-              <div class="photo-frame">
-                <img src="photo2.png" alt="Thu Phương Filter Cún" onerror="this.src='avatar.jpg'">
-                <div class="photo-badge">Cún cưng lấp lánh 🐶</div>
-              </div>
-              <div class="photo-caption">
-                <span class="caption-title">Dịu Dàng & Lung Linh 🌸</span>
-                <span class="caption-sub">Ánh mắt và nụ cười cực cuốn</span>
-              </div>
-            </div>
-
-            <!-- Slide 3: Photo 3 - Photobooth 3 tấm & Gấu bông -->
-            <div class="polaroid-card" data-index="2">
-              <div class="tape-strip"></div>
-              <div class="photo-frame">
-                <img src="photo3.png" alt="Thu Phương Photobooth" onerror="this.src='avatar.jpg'">
-                <div class="photo-badge">Kate & Jackson 🐰</div>
-              </div>
-              <div class="photo-caption">
-                <span class="caption-title">Bộ Ba Ảnh Xinh Xỉu 📸</span>
-                <span class="caption-sub">Mũ nồi beret chuẩn nàng thơ</span>
-              </div>
-            </div>
-
-            <!-- Slide 4: Photo 4 - Mũ ngược chu môi cá tính -->
-            <div class="polaroid-card" data-index="3">
-              <div class="tape-strip"></div>
-              <div class="photo-frame">
-                <img src="photo4.png" alt="Thu Phương Mũ Ngược" onerror="this.src='avatar.jpg'">
-                <div class="photo-badge">Hờn dỗi 100 điểm 🧢</div>
-              </div>
-              <div class="photo-caption">
-                <span class="caption-title">Cá Tính & Nghịch Ngợm ✨</span>
-                <span class="caption-sub">Mặt hờn dỗi mà vẫn cưng hết nấc</span>
-              </div>
-            </div>
-
-            <!-- Slide 5: Avatar profile -->
-            <div class="polaroid-card" data-index="4">
-              <div class="tape-strip"></div>
-              <div class="photo-frame">
-                <img src="avatar.jpg" alt="Thu Phương Profile">
-                <div class="photo-badge">Cô gái 20/10 💖</div>
-              </div>
-              <div class="photo-caption">
-                <span class="caption-title">Nguyễn Thu Phương 🌸</span>
-                <span class="caption-sub">Năm 3 Kế Toán • Nụ cười tỏa nắng</span>
-              </div>
-            </div>
-
-          </div>
-
-          <!-- Controls for Album -->
-          <div class="album-controls">
-            <button id="btn-prev-slide" class="slide-nav-btn" aria-label="Ảnh trước">‹</button>
-            <span class="slide-indicator" id="slide-indicator">1 / 5</span>
-            <button id="btn-next-slide" class="slide-nav-btn" aria-label="Ảnh sau">›</button>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- RIGHT COLUMN: Heartfelt Letter with Accounting & Cat Metaphors -->
-      <div class="content-column">
-        <div class="letter-card glassmorphism">
-          <div class="letter-tag">BÁO CÁO TÀI CHÍNH CẢM XÚC 20/10</div>
+        <!-- LEFT COLUMN: Blooming Rose Canvas + 3D Polaroid Photo Album -->
+        <div class="visual-column">
           
-          <h1 class="letter-heading">
-            Gửi <span class="recipient-name">Nguyễn Thu Phương</span> ✨
-          </h1>
-          <div class="sub-greeting">Chúc mừng Ngày Phụ Nữ Việt Nam 20/10!</div>
+          <!-- Parametric Rose Canvas -->
+          <div class="rose-card glassmorphism">
+            <div class="bloom-wrapper">
+              <canvas id="rose-canvas"></canvas>
+              <div class="bloom-glow-core"></div>
+            </div>
+            <div class="bloom-hint">🌹 Đóa hoa hồng vĩnh cửu (Chạm vào để hoa nở)</div>
+          </div>
 
-          <div class="letter-body">
-            <p class="paragraph">
-              Chào Phương, một cô sinh viên năm 3 ngành Kế toán vừa thông minh, vừa mê boss mèo siêu đáng yêu!
-            </p>
-            
-            <p class="paragraph">
-              Dân Kế toán suốt ngày phải đau đầu vì những bảng cân đối nợ - có, những hàm Excel dài dằng dặc và hóa đơn chứng từ. Còn dân công nghệ bọn mình thì chỉ biết cắm đầu vào màn hình gõ code khô khan...
-            </p>
-
-            <p class="paragraph">
-              Nhưng hôm nay, thay vì một bảng cân đối kế toán thông thường, có một <em>"Báo cáo tài chính cảm xúc"</em> đặc biệt được lập ra chỉ để dành riêng cho cậu:
-            </p>
-
-            <!-- GenZ Accounting Ledger Style Quote Box -->
-            <div class="accounting-ledger">
-              <div class="ledger-row">
-                <span class="ledger-label">📌 Nợ TK 111 (Nụ cười):</span>
-                <span class="ledger-val">Luôn rạng rỡ 24/7, không bao giờ suy giảm</span>
-              </div>
-              <div class="ledger-row">
-                <span class="ledger-label">📌 Có TK 20/10 (Hạnh phúc):</span>
-                <span class="ledger-val">Tăng không giới hạn, lãi ròng niềm vui</span>
-              </div>
-              <div class="ledger-row">
-                <span class="ledger-label">📌 Nợ môn & Deadline:</span>
-                <span class="ledger-val">Trích lập dự phòng = 0, Auto qua môn điểm cao!</span>
-              </div>
-              <div class="ledger-row highlight">
-                <span class="ledger-label">🐾 Tình yêu động vật:</span>
-                <span class="ledger-val">Gặp mèo là được dụi, chó cưng vẫy đuôi mừng!</span>
+          <!-- Interactive 3D Photo Album with All 5 Photos of Thu Phuong -->
+          <div class="album-card-wrapper">
+            <div class="album-top-bar">
+              <span class="album-title-tag">📸 Album Kỷ Niệm Của Thu Phương</span>
+              <div class="album-dots" id="album-dots">
+                <!-- JS generated dots -->
               </div>
             </div>
 
-            <p class="paragraph">
-              Chúc Thu Phương luôn xinh đẹp, tự tin, học tập thật tốt trong năm 3 này. Mong cậu luôn giữ được sự dịu dàng, nụ cười tỏa nắng và luôn được cưng chiều, hạnh phúc như cách cậu yêu thương những chú mèo vậy!
-            </p>
+            <div class="album-slider" id="album-slider">
+              
+              <!-- Slide 1: Photo 1 - Kính tròn ăn gà rán siêu cute -->
+              <div class="polaroid-card active" data-index="0">
+                <div class="tape-strip"></div>
+                <div class="photo-frame">
+                  <img src="photo1.png" alt="Thu Phương" onerror="this.src='avatar.jpg'">
+                  <div class="photo-badge">Ăn là chân ái 🍗</div>
+                </div>
+                <div class="photo-caption">
+                  <span class="caption-title">Thu Phương Ngố Tàu ✨</span>
+                  <span class="caption-sub">Đeo kính tròn siêu đáng yêu</span>
+                </div>
+              </div>
 
-            <p class="paragraph closing">
-              Cảm ơn vì đã là một người bạn / một sự xuất hiện thật đặc biệt và đáng yêu trong cuộc sống này! 🌸
-            </p>
+              <!-- Slide 2: Photo 2 - Filter cún cưng lấp lánh -->
+              <div class="polaroid-card" data-index="1">
+                <div class="tape-strip"></div>
+                <div class="photo-frame">
+                  <img src="photo2.png" alt="Thu Phương Filter Cún" onerror="this.src='avatar.jpg'">
+                  <div class="photo-badge">Cún cưng lấp lánh 🐶</div>
+                </div>
+                <div class="photo-caption">
+                  <span class="caption-title">Dịu Dàng & Lung Linh 🌸</span>
+                  <span class="caption-sub">Ánh mắt và nụ cười cực cuốn</span>
+                </div>
+              </div>
+
+              <!-- Slide 3: Photo 3 - Photobooth 3 tấm & Gấu bông -->
+              <div class="polaroid-card" data-index="2">
+                <div class="tape-strip"></div>
+                <div class="photo-frame">
+                  <img src="photo3.png" alt="Thu Phương Photobooth" onerror="this.src='avatar.jpg'">
+                  <div class="photo-badge">Kate & Jackson 🐰</div>
+                </div>
+                <div class="photo-caption">
+                  <span class="caption-title">Bộ Ba Ảnh Xinh Xỉu 📸</span>
+                  <span class="caption-sub">Mũ nồi beret chuẩn nàng thơ</span>
+                </div>
+              </div>
+
+              <!-- Slide 4: Photo 4 - Mũ ngược chu môi cá tính -->
+              <div class="polaroid-card" data-index="3">
+                <div class="tape-strip"></div>
+                <div class="photo-frame">
+                  <img src="photo4.png" alt="Thu Phương Mũ Ngược" onerror="this.src='avatar.jpg'">
+                  <div class="photo-badge">Hờn dỗi 100 điểm 🧢</div>
+                </div>
+                <div class="photo-caption">
+                  <span class="caption-title">Cá Tính & Nghịch Ngợm ✨</span>
+                  <span class="caption-sub">Mặt hờn dỗi mà vẫn cưng hết nấc</span>
+                </div>
+              </div>
+
+              <!-- Slide 5: Avatar profile -->
+              <div class="polaroid-card" data-index="4">
+                <div class="tape-strip"></div>
+                <div class="photo-frame">
+                  <img src="avatar.jpg" alt="Thu Phương Profile">
+                  <div class="photo-badge">Cô gái 20/10 💖</div>
+                </div>
+                <div class="photo-caption">
+                  <span class="caption-title">Nguyễn Thu Phương 🌸</span>
+                  <span class="caption-sub">Năm 3 Kế Toán • Nụ cười tỏa nắng</span>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Controls for Album -->
+            <div class="album-nav-bar">
+              <button id="btn-prev-slide" class="slide-nav-btn" aria-label="Ảnh trước">‹</button>
+              <span class="slide-counter" id="slide-counter">1 / 5</span>
+              <button id="btn-next-slide" class="slide-nav-btn" aria-label="Ảnh sau">›</button>
+            </div>
           </div>
 
-          <!-- Interactive Action Buttons -->
-          <div class="letter-actions">
-            <button id="btn-bloom-more" class="magic-btn primary">
-              <span class="btn-emoji">🌸</span> Bắn pháo hoa & Thả tim
-            </button>
-            <button id="btn-secret-msg" class="magic-btn secondary">
-              <span class="btn-emoji">💌</span> Thông điệp bí mật
-            </button>
-            <button id="btn-cat-meow" class="magic-btn cat-btn">
-              <span class="btn-emoji">🐾</span> Meow meow!
-            </button>
-          </div>
+        </div>
 
-          <div class="footer-credit">
-            <span>Special 20.10 Build • Dedicated to Thu Phương 💖</span>
+        <!-- RIGHT COLUMN: Heartfelt Letter with Accounting & Cat Metaphors -->
+        <div class="content-column">
+          <div class="letter-card glassmorphism">
+            <div class="letter-tag">BÁO CÁO TÀI CHÍNH CẢM XÚC 20/10</div>
+            
+            <h2 class="letter-heading">
+              Gửi <span class="highlight-name">Thu Phương</span> ✨
+            </h2>
+            <div class="sub-greeting">Chúc mừng Ngày Phụ Nữ Việt Nam 20/10!</div>
+
+            <div class="letter-body">
+              <p class="paragraph">
+                Chào Phương, một cô sinh viên năm 3 ngành Kế toán vừa thông minh, vừa mê boss mèo siêu đáng yêu!
+              </p>
+              
+              <p class="paragraph">
+                Dân Kế toán suốt ngày phải đau đầu vì những bảng cân đối nợ - có, những hàm Excel dài dằng dặc và hóa đơn chứng từ. Còn dân công nghệ bọn mình thì chỉ biết cắm đầu vào màn hình gõ những dòng code vô tri...
+              </p>
+
+              <p class="paragraph">
+                Nhưng hôm nay, thay vì một bảng cân đối số học khô khan, có một <em>"Báo cáo tài chính cảm xúc"</em> đặc biệt được lập ra chỉ để dành riêng cho cậu:
+              </p>
+
+              <!-- Accounting Ledger Table Box -->
+              <div class="accounting-ledger">
+                <div class="ledger-row">
+                  <span class="ledger-label">📌 Nợ TK 111 (Nụ cười):</span>
+                  <span class="ledger-val">Luôn rạng rỡ 24/7, không bao giờ suy giảm</span>
+                </div>
+                <div class="ledger-row">
+                  <span class="ledger-label">📌 Có TK 20/10 (Hạnh phúc):</span>
+                  <span class="ledger-val">Tăng không giới hạn, lãi ròng niềm vui</span>
+                </div>
+                <div class="ledger-row">
+                  <span class="ledger-label">📌 Nợ môn & Deadline:</span>
+                  <span class="ledger-val">Trích lập dự phòng = 0, Auto qua môn điểm cao!</span>
+                </div>
+                <div class="ledger-row highlight">
+                  <span class="ledger-label">🐾 Tình yêu động vật:</span>
+                  <span class="ledger-val">Gặp mèo là được dụi, chó cưng vẫy đuôi mừng!</span>
+                </div>
+              </div>
+
+              <p class="paragraph">
+                Chúc Thu Phương luôn xinh đẹp, tự tin và học tập thật tốt trong năm 3 này. Mong cậu luôn giữ được sự dịu dàng, nụ cười tỏa nắng và luôn được cưng chiều, hạnh phúc như cách cậu yêu thương những chú mèo vậy!
+              </p>
+
+              <p class="paragraph closing">
+                Cảm ơn vì đã là một người bạn / một sự xuất hiện thật đặc biệt và đáng yêu trong cuộc sống này! 🌸
+              </p>
+            </div>
+
+            <!-- Interactive Action Buttons -->
+            <div class="letter-actions">
+              <button id="btn-bloom-more" class="magic-btn primary">
+                <span class="btn-emoji">🌸</span> Thả hoa & Tim
+              </button>
+              <button id="btn-secret-msg" class="magic-btn secondary">
+                <span class="btn-emoji">💌</span> Thông điệp bí mật
+              </button>
+              <button id="btn-cat-meow" class="magic-btn cat-btn">
+                <span class="btn-emoji">🐾</span> Meow meow!
+              </button>
+            </div>
+
+            <div class="footer-credit">
+              <span>Special 20.10 Build • Dedicated to Nguyễn Thu Phương 💖</span>
+            </div>
           </div>
         </div>
+
       </div>
 
     </div>
@@ -1833,6 +1460,7 @@ const inputWrapper = document.getElementById('input-wrapper');
 const lockErrorMsg = document.getElementById('lock-error-msg');
 const btnToggleHint = document.getElementById('btn-toggle-hint');
 const lockHintText = document.getElementById('lock-hint-text');
+const giftScreen = document.getElementById('gift-screen');
 
 function isNameValid(val) {
   const raw = val.toLowerCase().trim();
@@ -1867,15 +1495,24 @@ function handleNameSubmit() {
 
   if (isNameValid(enteredName)) {
     soundFX.playSparkle();
-    triggerConfetti(35);
+    triggerConfetti(50);
     lockErrorMsg.classList.add('hidden');
     inputWrapper.classList.remove('shake');
-    showToast("✨ Xác thực thành công! Chào Nguyễn Thu Phương xinh xắn 🥰");
+    showToast("✨ Mở khóa thành công! Chào Nguyễn Thu Phương xinh đẹp 🥰");
 
+    // Start background music automatically
+    if (!soundFX.isMusicPlaying) {
+      soundFX.startMusic();
+      updateAudioUI(true);
+    }
+
+    // Direct transition to the Grand Gift Experience!
     lockScreen.classList.remove('active');
     setTimeout(() => {
-      terminalScreen.classList.add('active');
-      typeTerminal();
+      giftScreen.classList.add('active');
+      triggerConfetti(60);
+      startRoseAnimation();
+      initAlbumSlider();
     }, 450);
 
   } else {
@@ -1900,233 +1537,13 @@ btnToggleHint.addEventListener('click', () => {
   lockHintText.classList.toggle('hidden');
 });
 
-// Stage 1: Terminal
-const terminalContent = document.getElementById('terminal-content');
-const btnStartGame = document.getElementById('btn-start-game');
-const btnSkipTyping = document.getElementById('btn-skip-typing');
-const terminalScreen = document.getElementById('terminal-screen');
-const minigameScreen = document.getElementById('minigame-screen');
-const giftScreen = document.getElementById('gift-screen');
-
-const terminalLines = [
-  { text: "> [SYSTEM SCAN]: Quét mục tiêu trên máy chủ...", cls: "comment" },
-  { text: "> Target: Nguyễn Thu Phương | Sinh viên Năm 3 Kế Toán", cls: "keyword" },
-  { text: "> Sở thích phát hiện: Boss mèo 🐱, cún cưng 🐶, trà sữa, gà rán 🍗, hoa tươi 🌸", cls: "string" },
-  { text: "> Cảnh báo hệ thống: Chỉ số mệt mỏi vì Bảng Cân Đối & Báo Cáo Tài Chính đang cao!", cls: "func" },
-  { text: "> Khởi chạy giao thức: 'GiaiCuuBossMeo_20_10.sh'...", cls: "keyword" },
-  { text: "> Nạp module: NuCuoiRangRo.dll & AutoQuaMon.pkg... [100% SUCCESS]", cls: "success" },
-  { text: "> Mục tiêu: Hoàn thành mini-game để cân đối Bảng Hạnh Phúc cho Thu Phương!", cls: "string" },
-  { text: "> Sẵn sàng! Nhấn nút bên dưới để giải cứu Boss Mèo & xem quà 20/10 ✨", cls: "highlight" }
-];
-
-let termLineIdx = 0;
-let termCharIdx = 0;
-let termTimer = null;
-
-function typeTerminal() {
-  if (termLineIdx >= terminalLines.length) {
-    btnStartGame.classList.add('glow');
-    return;
-  }
-
-  const item = terminalLines[termLineIdx];
-  let el = document.getElementById(`term-l-${termLineIdx}`);
-  if (!el) {
-    el = document.createElement('div');
-    el.id = `term-l-${termLineIdx}`;
-    el.className = `line ${item.cls}`;
-    terminalContent.appendChild(el);
-  }
-
-  if (termCharIdx < item.text.length) {
-    el.textContent = item.text.substring(0, termCharIdx + 1);
-    termCharIdx++;
-    terminalContent.scrollTop = terminalContent.scrollHeight;
-    termTimer = setTimeout(typeTerminal, Math.random() * 20 + 15);
-  } else {
-    termLineIdx++;
-    termCharIdx = 0;
-    termTimer = setTimeout(typeTerminal, 160);
-  }
-}
-
-btnSkipTyping.addEventListener('click', () => {
-  if (termTimer) clearTimeout(termTimer);
-  terminalContent.innerHTML = '';
-  terminalLines.forEach(item => {
-    const el = document.createElement('div');
-    el.className = `line ${item.cls}`;
-    el.textContent = item.text;
-    terminalContent.appendChild(el);
-  });
-  terminalContent.scrollTop = terminalContent.scrollHeight;
-  btnStartGame.classList.add('glow');
-});
-
-btnStartGame.addEventListener('click', () => {
-  soundFX.playSparkle();
-  terminalScreen.classList.remove('active');
-  setTimeout(() => {
-    minigameScreen.classList.add('active');
-    initMinigame();
-  }, 400);
-});
-
-// Stage 2: Minigame
-const gameArena = document.getElementById('game-arena');
-const progressFill = document.getElementById('game-progress-fill');
-const scoreText = document.getElementById('score-text');
-const scoreStatus = document.getElementById('score-status');
-const quizBox = document.getElementById('quiz-box');
-const quizResult = document.getElementById('quiz-result');
-const btnSkipToGift = document.getElementById('btn-skip-to-gift');
-
-let gameScore = 0;
-const targetScore = 5;
-let spawnInterval = null;
-const gameIcons = ['🐱', '🌸', '😸', '🌹', '🐾', '💐', '🐶', '💖'];
-
-function initMinigame() {
-  gameScore = 0;
-  updateScoreUI();
-  scoreStatus.textContent = "Boss mèo đang xuất hiện!";
-  
-  if (spawnInterval) clearInterval(spawnInterval);
-  spawnInterval = setInterval(spawnGameTarget, 900);
-  spawnGameTarget();
-}
-
-function spawnGameTarget() {
-  if (gameScore >= targetScore) return;
-
-  const target = document.createElement('div');
-  target.className = 'game-target';
-  const icon = gameIcons[Math.floor(Math.random() * gameIcons.length)];
-  target.textContent = icon;
-
-  const arenaWidth = gameArena.clientWidth - 50;
-  const arenaHeight = gameArena.clientHeight - 50;
-  const x = Math.max(10, Math.random() * arenaWidth);
-  const y = Math.max(10, Math.random() * arenaHeight);
-
-  target.style.left = `${x}px`;
-  target.style.top = `${y}px`;
-
-  target.addEventListener('click', (e) => {
-    e.stopPropagation();
-    catchTarget(target, icon, x, y);
-  });
-
-  target.addEventListener('touchstart', (e) => {
-    e.stopPropagation();
-    catchTarget(target, icon, x, y);
-  }, { passive: true });
-
-  gameArena.appendChild(target);
-
-  setTimeout(() => {
-    if (target.parentNode) {
-      target.style.opacity = '0';
-      setTimeout(() => target.remove(), 200);
-    }
-  }, 2600);
-}
-
-function catchTarget(el, icon, x, y) {
-  if (gameScore >= targetScore) return;
-
-  if (icon.includes('🐱') || icon.includes('😸') || icon.includes('🐾')) {
-    soundFX.playMeow();
-  } else {
-    soundFX.playSparkle();
-  }
-
-  const pop = document.createElement('div');
-  pop.style.cssText = `
-    position: absolute;
-    left: ${x}px;
-    top: ${y}px;
-    color: #ffd166;
-    font-weight: 700;
-    font-size: 1rem;
-    pointer-events: none;
-    transition: transform 0.6s ease, opacity 0.6s ease;
-    z-index: 10;
-  `;
-  pop.textContent = icon.includes('🐱') ? '+1 Meow! 🥰' : '+1 Đóa hoa! 🌸';
-  gameArena.appendChild(pop);
-
-  requestAnimationFrame(() => {
-    pop.style.transform = 'translateY(-30px)';
-    pop.style.opacity = '0';
-  });
-  setTimeout(() => pop.remove(), 600);
-
-  el.remove();
-  gameScore++;
-  updateScoreUI();
-
-  if (gameScore >= targetScore) {
-    onMinigameComplete();
-  }
-}
-
-function updateScoreUI() {
-  scoreText.textContent = `${gameScore} / ${targetScore}`;
-  const pct = Math.min((gameScore / targetScore) * 100, 100);
-  progressFill.style.width = `${pct}%`;
-}
-
-function onMinigameComplete() {
-  if (spawnInterval) clearInterval(spawnInterval);
-  scoreStatus.textContent = "Đã đủ Boss mèo & Hoa! 🎉";
-  triggerConfetti(30);
-  soundFX.playSparkle();
-
-  setTimeout(() => {
-    quizBox.classList.remove('hidden');
-    quizBox.scrollIntoView({ behavior: 'smooth' });
-  }, 400);
-}
-
-document.querySelectorAll('.quiz-opt-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    soundFX.playSparkle();
-    triggerConfetti(40);
-    quizResult.classList.remove('hidden');
-    quizResult.innerHTML = `
-      ✨ <strong>Chính xác 100%!</strong> Chuẩn mực Kế toán Tình cảm quy định: Khi Thu Phương cười, mọi số dư Nợ/Có đều tự động cân đối hoàn hảo và niềm vui tăng gấp bội! 🥰
-    `;
-
-    setTimeout(transitionToGiftScreen, 1800);
-  });
-});
-
-btnSkipToGift.addEventListener('click', transitionToGiftScreen);
-
-function transitionToGiftScreen() {
-  if (!soundFX.isMusicPlaying) {
-    soundFX.startMusic();
-    updateAudioUI(true);
-  }
-
-  minigameScreen.classList.remove('active');
-  setTimeout(() => {
-    giftScreen.classList.add('active');
-    triggerConfetti(60);
-    showToast("✨ Món quà 20/10 dành riêng cho Thu Phương đã mở!");
-    startRoseAnimation();
-    initAlbumSlider();
-  }, 400);
-}
-
-// Stage 3: 3D Photo Album (All 5 Photos of Thu Phuong)
+// 3D Photo Album (All 5 Photos of Thu Phuong)
 const albumSlider = document.getElementById('album-slider');
 const albumCards = document.querySelectorAll('.polaroid-card');
-const albumDotsContainer = document.getElementById('album-nav-dots');
+const albumDotsContainer = document.getElementById('album-dots');
 const btnPrevSlide = document.getElementById('btn-prev-slide');
 const btnNextSlide = document.getElementById('btn-next-slide');
-const slideIndicator = document.getElementById('slide-indicator');
+const slideCounter = document.getElementById('slide-counter');
 
 let currentSlide = 0;
 const totalSlides = albumCards.length;
@@ -2161,7 +1578,7 @@ function updateSlideDisplay() {
     dot.classList.toggle('active', idx === currentSlide);
   });
 
-  slideIndicator.textContent = `${currentSlide + 1} / ${totalSlides}`;
+  slideCounter.textContent = `${currentSlide + 1} / ${totalSlides}`;
 }
 
 btnPrevSlide.addEventListener('click', () => {
@@ -2182,7 +1599,7 @@ albumCards.forEach(card => {
   });
 });
 
-// Rose Canvas
+// Blooming Rose Canvas Engine
 const roseCanvas = document.getElementById('rose-canvas');
 const roseCtx = roseCanvas.getContext('2d');
 let bloomProgress = 0;
@@ -2190,14 +1607,14 @@ let bloomProgress = 0;
 function setupRoseCanvas() {
   const dpr = window.devicePixelRatio || 1;
   const rect = roseCanvas.getBoundingClientRect();
-  roseCanvas.width = (rect.width || 220) * dpr;
-  roseCanvas.height = (rect.height || 220) * dpr;
+  roseCanvas.width = (rect.width || 210) * dpr;
+  roseCanvas.height = (rect.height || 210) * dpr;
   roseCtx.scale(dpr, dpr);
 }
 
 function drawParametricRose(progress) {
-  const w = roseCanvas.clientWidth || 220;
-  const h = roseCanvas.clientHeight || 220;
+  const w = roseCanvas.clientWidth || 210;
+  const h = roseCanvas.clientHeight || 210;
   const cx = w / 2;
   const cy = h / 2;
 
@@ -2208,7 +1625,7 @@ function drawParametricRose(progress) {
 
   for (let i = 0; i < maxLayers; i++) {
     const angle = i * 137.5 * (Math.PI / 180);
-    const r = Math.sqrt(i) * 11 * Math.min(progress, 1);
+    const r = Math.sqrt(i) * 10.5 * Math.min(progress, 1);
     const x = cx + r * Math.cos(angle);
     const y = cy + r * Math.sin(angle);
 
@@ -2237,6 +1654,7 @@ function drawParametricRose(progress) {
     roseCtx.restore();
   }
 
+  // Center gold bud
   roseCtx.save();
   const centerGrad = roseCtx.createRadialGradient(cx, cy, 0, cx, cy, 14 * progress);
   centerGrad.addColorStop(0, '#ffd166');
@@ -2268,12 +1686,12 @@ function startRoseAnimation() {
 roseCanvas.addEventListener('click', () => {
   bloomProgress = 0.2;
   startRoseAnimation();
-  triggerConfetti(30);
+  triggerConfetti(35);
   soundFX.playSparkle();
   showToast("🌹 Đóa hoa nở rộ dành tặng Thu Phương!");
 });
 
-// Canvas Background
+// Canvas Background Stars & Floating Hearts
 const bgCanvas = document.getElementById('bg-canvas');
 const bgCtx = bgCanvas.getContext('2d');
 let bgParticles = [];
@@ -2335,7 +1753,7 @@ class BgParticle {
   }
 }
 
-for (let i = 0; i < 70; i++) {
+for (let i = 0; i < 75; i++) {
   bgParticles.push(new BgParticle());
 }
 
@@ -2349,7 +1767,7 @@ function animateBg() {
 }
 animateBg();
 
-// Confetti
+// Confetti burst
 function triggerConfetti(count = 40) {
   const emojis = ['🌸', '💖', '✨', '🌹', '💐', '🐱', '🐾', '🌷', '🍗'];
   for (let i = 0; i < count; i++) {
@@ -2386,7 +1804,7 @@ function triggerConfetti(count = 40) {
   }
 }
 
-// Toast & Audio
+// Toast
 const toastEl = document.getElementById('toast');
 let toastTimer = null;
 
@@ -2399,6 +1817,7 @@ function showToast(msg) {
   }, 3200);
 }
 
+// Audio UI
 const audioBtn = document.getElementById('audio-toggle');
 const audioLabel = audioBtn.querySelector('.audio-label');
 
@@ -2420,7 +1839,7 @@ audioBtn.addEventListener('click', () => {
   }
 });
 
-// Modal & Letters
+// Modal Actions
 const secretModal = document.getElementById('secret-modal');
 const btnSecretMsg = document.getElementById('btn-secret-msg');
 const modalClose = document.getElementById('modal-close');
