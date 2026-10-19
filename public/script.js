@@ -1,4 +1,14 @@
 /* JAVASCRIPT ĐIỀU KHIỂN HOẠT HỌA & LOGIC 20/10 NGUYỄN THU PHƯƠNG */
+const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+const memoryStorage = new Map();
+function readSavedValue(key) {
+  try { return localStorage.getItem(key) || memoryStorage.get(key) || null; }
+  catch { return memoryStorage.get(key) || null; }
+}
+function saveValue(key, value) {
+  memoryStorage.set(key, value);
+  try { localStorage.setItem(key, value); } catch { /* The experience still works in a private browser. */ }
+}
 
 class SoundFX {
   constructor() {
@@ -221,6 +231,10 @@ function isNameValid(val) {
     'nguyễn phương thu',
     'phuong thu',
     'phương thu',
+    'puw',
+    'pu',
+    'phuong puw',
+    'be puw',
     'thu',
     'phương',
     'phuong'
@@ -267,7 +281,7 @@ function recordUserData(fullName, dob) {
 
   // 1. Lưu vào LocalStorage
   const recordObj = { fullName, dob, timeStr, txtContent };
-  localStorage.setItem('saved_thu_phuong_info', JSON.stringify(recordObj));
+  saveValue('saved_thu_phuong_info', JSON.stringify(recordObj));
 
   // 2. Gửi về Local Node Server ghi trực tiếp vào file .txt và .json
   fetch('/api/save-info', {
@@ -392,7 +406,7 @@ function handleQuizSubmit(e) {
   const q2SavedText = q2SelectedBtn ? `${q2SelectedBtn.getAttribute('data-opt')}: ${q2SelectedBtn.getAttribute('data-text')}` : ans2;
 
   // Lưu bổ sung câu trả lời vào record & server
-  const currentSaved = localStorage.getItem('saved_thu_phuong_info');
+  const currentSaved = readSavedValue('saved_thu_phuong_info');
   let savedName = nameInput.value.trim();
   let savedDob = dobInput.value.trim();
   if (currentSaved) {
@@ -402,7 +416,7 @@ function handleQuizSubmit(e) {
       obj.q2 = q2SavedText;
       savedName = obj.fullName || savedName;
       savedDob = obj.dob || savedDob;
-      localStorage.setItem('saved_thu_phuong_info', JSON.stringify(obj));
+      saveValue('saved_thu_phuong_info', JSON.stringify(obj));
     } catch(err){}
   }
 
@@ -420,6 +434,8 @@ function handleQuizSubmit(e) {
     lockScreen.classList.remove('active');
     setTimeout(() => {
       giftScreen.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      document.body.classList.add('gift-open');
       triggerConfetti(75);
       startRoseAnimation();
       initAlbumSlider();
@@ -529,7 +545,7 @@ btnToggleHint.addEventListener('click', () => {
 const btnLockDownloadRecord = document.getElementById('btn-lock-download-record');
 
 function downloadSavedInfoTxt() {
-  const savedData = localStorage.getItem('saved_thu_phuong_info');
+  const savedData = readSavedValue('saved_thu_phuong_info');
   let content = '';
   if (savedData) {
     try {
@@ -557,6 +573,7 @@ function downloadSavedInfoTxt() {
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(a.href), 1500);
   showToast("📥 Đã tải file thong_tin_thu_phuong.txt về máy!");
 }
 
@@ -574,7 +591,7 @@ window.addEventListener('keydown', (e) => {
 
 // 3D Photo Album with Smooth Auto-Scroll (Tự động cuộn ảnh thông minh)
 const albumSlider = document.getElementById('album-slider');
-const albumCards = document.querySelectorAll('.polaroid-card');
+let albumCards = Array.from(document.querySelectorAll('.polaroid-card'));
 const albumDotsContainer = document.getElementById('album-dots');
 const btnPrevSlide = document.getElementById('btn-prev-slide');
 const btnNextSlide = document.getElementById('btn-next-slide');
@@ -582,18 +599,21 @@ const slideCounter = document.getElementById('slide-counter');
 const autoslideBadge = document.getElementById('autoslide-indicator');
 
 let currentSlide = 0;
-const totalSlides = albumCards.length;
+let totalSlides = albumCards.length;
 let autoSlideInterval = null;
 let isSlidePaused = false;
+let isUserSlidePaused = reducedMotionQuery.matches;
 const SLIDE_INTERVAL_MS = 3200; // 3.2 giây tự động lướt sang ảnh tiếp theo
 
 function initAlbumSlider() {
   if (!albumDotsContainer || totalSlides === 0) return;
   albumDotsContainer.innerHTML = '';
   albumCards.forEach((_, idx) => {
-    const dot = document.createElement('div');
+    const dot = document.createElement('button');
+    dot.type = 'button';
     dot.className = `album-dot ${idx === currentSlide ? 'active' : ''}`;
     dot.setAttribute('title', `Xem ảnh ${idx + 1}`);
+    dot.setAttribute('aria-label', `Xem ảnh ${idx + 1}`);
     dot.addEventListener('click', () => {
       goToSlide(idx);
       resetAutoSlide();
@@ -601,16 +621,25 @@ function initAlbumSlider() {
     albumDotsContainer.appendChild(dot);
   });
   updateSlideDisplay();
-  startAutoSlide();
+  if (giftScreen.classList.contains('active')) startAutoSlide();
 }
 
 function goToSlide(idx) {
-  currentSlide = (idx + totalSlides) % totalSlides;
+  currentSlide = GiftCore.slideIndex(idx, totalSlides);
   updateSlideDisplay();
 }
 
 function updateSlideDisplay() {
   albumCards.forEach((card, idx) => {
+    let offset = GiftCore.slideIndex(idx - currentSlide, totalSlides);
+    if (offset > totalSlides / 2) offset -= totalSlides;
+    card.style.setProperty('--offset', offset);
+    card.style.setProperty('--distance', Math.abs(offset));
+    card.dataset.offstage = String(Math.abs(offset) > 2);
+    card.tabIndex = idx === currentSlide ? 0 : -1;
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-label', `${card.querySelector('.caption-title')?.textContent.trim() || 'Ảnh của Phương'}, chạm để chuyển ảnh`);
+    card.setAttribute('aria-hidden', String(idx !== currentSlide));
     if (idx === currentSlide) {
       card.classList.add('active');
     } else {
@@ -621,17 +650,19 @@ function updateSlideDisplay() {
   const dots = albumDotsContainer.querySelectorAll('.album-dot');
   dots.forEach((dot, idx) => {
     dot.classList.toggle('active', idx === currentSlide);
+    dot.setAttribute('aria-current', String(idx === currentSlide));
   });
 
   if (slideCounter) {
     slideCounter.textContent = `${currentSlide + 1} / ${totalSlides}`;
   }
+  window.dispatchEvent(new CustomEvent('albumchange', { detail: { index: currentSlide, total: totalSlides } }));
 }
 
 function startAutoSlide() {
   stopAutoSlide();
   autoSlideInterval = setInterval(() => {
-    if (!isSlidePaused) {
+    if (GiftCore.shouldAutoplay({ userPaused: isUserSlidePaused, hovered: isSlidePaused, lightboxOpen: document.getElementById('photo-lightbox')?.open, documentHidden: document.hidden, reducedMotion: reducedMotionQuery.matches }) && giftScreen.classList.contains('active')) {
       goToSlide(currentSlide + 1);
     }
   }, SLIDE_INTERVAL_MS);
@@ -685,13 +716,16 @@ if (albumSlider) {
 
 if (autoslideBadge) {
   autoslideBadge.addEventListener('click', () => {
-    isSlidePaused = !isSlidePaused;
-    if (isSlidePaused) {
+    isUserSlidePaused = !isUserSlidePaused;
+    autoslideBadge.setAttribute('aria-pressed', String(!isUserSlidePaused));
+    if (isUserSlidePaused) {
       showToast("⏸️ Đã tạm dừng tự động cuộn ảnh");
       autoslideBadge.style.opacity = '0.6';
+      autoslideBadge.innerHTML = '<span class="autoslide-dot"></span> Đã tạm dừng';
     } else {
       showToast("▶️ Tiếp tục tự động cuộn ảnh ✨");
       autoslideBadge.style.opacity = '1';
+      autoslideBadge.innerHTML = '<span class="autoslide-dot"></span> Tự cuộn 3.2s';
       resetAutoSlide();
     }
   });
@@ -735,6 +769,7 @@ initAlbumSlider();
 const roseCanvas = document.getElementById('rose-canvas');
 const roseCtx = roseCanvas.getContext('2d');
 let bloomProgress = 0;
+let roseAnimationFrame = null;
 
 function setupRoseCanvas() {
   const dpr = window.devicePixelRatio || 1;
@@ -800,14 +835,16 @@ function drawParametricRose(progress) {
 }
 
 function startRoseAnimation() {
+  if (roseAnimationFrame) cancelAnimationFrame(roseAnimationFrame);
   setupRoseCanvas();
+  if (reducedMotionQuery.matches) { drawParametricRose(1); return; }
   bloomProgress = 0;
 
   function render() {
     if (bloomProgress < 1) {
       bloomProgress += 0.016;
       drawParametricRose(Math.min(bloomProgress, 1));
-      requestAnimationFrame(render);
+      roseAnimationFrame = requestAnimationFrame(render);
     } else {
       drawParametricRose(1);
     }
@@ -885,11 +922,16 @@ class BgParticle {
   }
 }
 
-for (let i = 0; i < 75; i++) {
+for (let i = 0; i < (window.innerWidth < 600 ? 35 : 65); i++) {
   bgParticles.push(new BgParticle());
 }
 
 function animateBg() {
+  if (document.hidden || reducedMotionQuery.matches) {
+    bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+    setTimeout(animateBg, 200);
+    return;
+  }
   bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
   bgParticles.forEach(p => {
     p.update();
@@ -901,10 +943,13 @@ animateBg();
 
 // Confetti burst
 function triggerConfetti(count = 40) {
+  if (reducedMotionQuery.matches) return;
+  count = Math.min(count, 45);
   const emojis = ['🌸', '💖', '✨', '🌹', '💐', '🐱', '🐾', '🌷', '🍗'];
   for (let i = 0; i < count; i++) {
     const el = document.createElement('div');
     el.className = 'burst-particle';
+    el.setAttribute('aria-hidden', 'true');
     el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
     
     const startX = Math.random() * window.innerWidth;
@@ -1160,6 +1205,18 @@ const PRIVILEGE_TICKETS = [
     name: 'VÉ BOSS MÈO CƯNG CHIỀU',
     valid: 'May mắn x999',
     desc: 'Hôm nay hễ gặp bất kỳ chú mèo nào ngoài đời cũng sẽ tự động chạy tới dụi đầu cho cô vuốt ve mỏi tay!'
+  },
+  {
+    icon: '📊',
+    name: 'VÉ CÂN MỌI BẢNG TÀI CHÍNH',
+    valid: 'Kỳ này & mãi mãi',
+    desc: 'Bùa may mắn giúp bảng cân đối kế toán tự động cân, số dư khớp từng xu, thi cử điểm A rực rỡ và nợ môn = 0!'
+  },
+  {
+    icon: '🎧',
+    name: 'VÉ TÂM SỰ KHÔNG GIỚI HẠN',
+    valid: 'Bất cứ khi nào mệt',
+    desc: 'Bất cứ lúc nào cô thấy stress vì bài vở hay cuộc sống, toai sẽ lắng nghe 100% không phán xét, kèm trà sữa tiếp sức!'
   }
 ];
 
@@ -1204,12 +1261,14 @@ let lastTrailTime = 0;
 const TRAIL_ICONS = ['🌸', '✨', '🐾', '💖', '🌷', '⭐'];
 
 function spawnTrailParticle(x, y) {
+  if (reducedMotionQuery.matches || document.hidden) return;
   const now = performance.now();
   if (now - lastTrailTime < 45) return;
   lastTrailTime = now;
 
   const el = document.createElement('div');
   el.className = 'magic-trail-particle';
+  el.setAttribute('aria-hidden', 'true');
   el.textContent = TRAIL_ICONS[Math.floor(Math.random() * TRAIL_ICONS.length)];
 
   const randomOffsetX = (Math.random() - 0.5) * 20;

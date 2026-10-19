@@ -5,13 +5,14 @@
   <!-- 🌸 THẺ CẤU HÌNH CƠ BẢN CỦA TRANG WEB (BẠN KHÔNG CẦN CHỈNH SỬA PHẦN NÀY) 🌸 -->
   <!-- ========================================================================== -->
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#402536">
 
   <!-- ========================================================================== -->
   <!-- ✏️ [CHỖ SỬA 1]: TIÊU ĐỀ TRANG WEB (HIỂN THỊ TRÊN TAB TRÌNH DUYỆT) ✏️       -->
   <!-- Bạn có thể đổi chữ trong thẻ <title> thành bất kỳ câu chúc nào bạn thích -->
   <!-- ========================================================================== -->
-  <title>Happy 20/10 Nguyễn Thu Phương ✨ | Thơ Mộng & Chill GenZ 🌸</title>
+  <title>Sổ cái của những điều dễ thương | Gửi Thu Phương 20/10</title>
   
   <!-- ========================================================================== -->
   <!-- ✏️ [CHỖ SỬA 2]: THÔNG TIN KHI GỬI LINK QUA ZALO / FACEBOOK / MESSENGER ✏️ -->
@@ -31,6 +32,9 @@
   
   <!-- 👉 LIÊN KẾT TỚI FILE GIAO DIỆN STYLE.CSS RIÊNG BIỆT 👈 -->
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="studio.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -38,10 +42,10 @@
   <!-- 🌟 PHẦN 1: NỀN HOA RƠI LUNG LINH & NÚT BẬT TẮT NHẠC (MUSIC) 🌟          -->
   <!-- ========================================================================== -->
   <!-- Khung vẽ cánh hoa và hạt bụi lấp lánh rơi trên màn hình -->
-  <canvas id="bg-canvas"></canvas>
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
 
   <!-- 🎵 File nhạc thực tế: phát bài hát bạn đã chọn (file music.mp3) -->
-  <audio id="bg-audio" preload="auto" loop>
+  <audio id="bg-audio" preload="none" loop>
     <source src="music.mp3" type="audio/mpeg">
     <source src="public/music.mp3" type="audio/mpeg">
   </audio>
@@ -61,7 +65,19 @@
   <!-- 💌 PHẦN 2: MÀN HÌNH MỞ ĐẦU - ĐIỀN THÔNG TIN & MINI QUIZ 20/10 💌          -->
   <!-- ========================================================================== -->
   <section id="lock-screen" class="screen-view active">
+    <aside class="lock-scene" aria-label="Món quà 20/10 dành riêng cho Phương">
+      <div class="keepsake-wordmark">P<span>.</span><small>Một món quà ngày 20.10</small></div>
+      <h1>Sổ cái của<br>những điều<br><em>dễ thương.</em></h1>
+      <p>Có một khoản quan tâm,<br>không tính lãi.</p>
+      <img src="assets/keepsake.png" class="lock-keepsake" width="1024" height="1024" alt="Cuốn sổ hồng phấn, phong thư và cành hoa dành tặng Phương" fetchpriority="high">
+      <span class="lock-dedication">Gửi riêng Nguyễn Thu Phương</span>
+    </aside>
     <div class="lock-container glassmorphism">
+      <ol class="flow-bookmarks" aria-label="Các bước mở món quà">
+        <li class="current" data-flow-step="info">01 <span>Thông tin</span></li>
+        <li data-flow-step="quiz">02 <span>Đố vui</span></li>
+        <li data-flow-step="gift">03 <span>Mở quà</span></li>
+      </ol>
       
       <!-- ---------------------------------------------------------------------- -->
       <!-- 📋 [BƯỚC 1]: FORM THU THẬP THÔNG TIN (HỌ VÀ TÊN & NGÀY SINH)           -->
@@ -140,6 +156,7 @@
       <!-- Gồm: Câu 1 (Mai là ngày bao nhiêu?) & Câu 2 (Mai là ngày gì?)           -->
       <!-- ---------------------------------------------------------------------- -->
       <div id="step-quiz" class="lock-step hidden">
+        <button type="button" id="btn-back-to-info" class="back-to-info">‹ Sửa lại thông tin</button>
         <div class="lock-icon-wrapper">
           <div class="lock-glow"></div>
           <span class="lock-icon">🎯</span>
@@ -238,11 +255,23 @@
   <!-- ========================================================================== -->
   <section id="gift-screen" class="screen-view">
     <div class="gift-wrapper">
+      <nav class="keepsake-nav" aria-label="Các phần của món quà">
+        <a class="nav-monogram" href="#gift-screen" aria-label="Về đầu thiệp">P.</a>
+        <div class="chapter-links">
+          <a href="#album-section">Cuốn album</a>
+          <a href="#emotion-ledger">Sổ dễ thương</a>
+          <a href="#flowers-section">Hoa cho Phương</a>
+          <a href="#letter-section">Lời nhắn</a>
+        </div>
+        <button type="button" id="open-command" class="command-trigger" aria-label="Mở lối tắt, Control K">⌘ <span>Lối tắt</span></button>
+      </nav>
 
       <!-- ---------------------------------------------------------------------- -->
       <!-- 🎀 [TIÊU ĐỀ LỚN TRÊN CÙNG]: LỜI CHÚC MỪNG 20/10                           -->
       <!-- ---------------------------------------------------------------------- -->
       <header class="gift-hero-banner">
+        <div class="gift-hero-copy">
+        <p class="keepsake-eyebrow">Sổ cái của những điều dễ thương</p>
         <div class="hero-pill">✨ Happy Vietnamese Women's Day • 20/10</div>
         
         <!-- ✏️ [CHỖ SỬA TÊN]: Đổi tên người nhận ở đây -->
@@ -254,6 +283,16 @@
         <p class="hero-sub">
           Chúc cô sinh viên năm 3 Kế toán dịu dàng, bớt biếng ăn, luôn rạng rỡ, zui tươi và ngập tràn niềm vui mỗi ngày!
         </p>
+        <div class="hero-actions">
+          <a class="studio-primary" href="#album-section">Mở cuốn album <span aria-hidden="true">↗</span></a>
+          <a class="studio-link" href="#emotion-ledger">Ghi một điều dễ thương</a>
+        </div>
+        <p class="hero-footnote">Một cuốn sổ. Những tấm ảnh. Và rất nhiều điều muốn gửi.</p>
+        </div>
+        <button type="button" class="hero-book-scene" id="hero-book" aria-label="Mở cuốn album dành cho Phương">
+          <img src="assets/keepsake.png" width="1024" height="1024" alt="Cuốn sổ và phong thư mang chữ P" decoding="async">
+          <span class="book-caption">Nguyễn Thu Phương <small>20 tháng 10</small></span>
+        </button>
       </header>
 
 
@@ -286,7 +325,8 @@
         <!-- ======================= CỘT BÊN TRÁI: HOA & ALBUM ẢNH ======================= -->
         <div class="visual-column">
           
-          <div class="visual-cards-col">
+          <div class="visual-cards-col" id="flowers-section">
+            <div class="studio-section-title flowers-title"><p>Hoa vẫn xinh. Người nhận còn xinh hơn.</p><h2>Một chút rực rỡ,<br>dành riêng cho Phương.</h2></div>
             <!-- Bó hoa 20/10 tuyệt đẹp gửi tặng Thu Phương (file bouquet.jpg) -->
             <div class="bouquet-card glassmorphism" id="bouquet-card">
               <div class="bouquet-top-tag">💐 BÓ HOA RỰC RỠ 20/10</div>
@@ -319,14 +359,15 @@
           <!-- 📸 [ALBUM ẢNH POLAROID 3D TỰ ĐỘNG CUỘN MỖI 3.2 GIÂY]                 -->
           <!-- Thu Phương không cần bấm tay, ảnh sẽ tự động trôi qua êm ái        -->
           <!-- ------------------------------------------------------------------ -->
-          <div class="album-card-wrapper">
+          <div class="album-card-wrapper" id="album-section">
+            <div class="studio-section-title album-chapter"><p>Cuốn album của Puw</p><h2>Những điều không<br>đưa vào bảng tính.</h2><span>Nhưng vẫn muốn giữ lại thật lâu.</span></div>
             <div class="album-top-bar">
               <span class="album-title-tag">📸 ALBUM của Puw ✨</span>
               <div class="album-dots-wrap">
                 <!-- Huy hiệu thông báo trạng thái tự cuộn -->
-                <span class="autoslide-badge" id="autoslide-indicator" title="Ảnh tự động cuộn mỗi 3.2 giây ✨">
+                <button type="button" class="autoslide-badge" id="autoslide-indicator" title="Bật hoặc tạm dừng ảnh tự cuộn" aria-pressed="true">
                   <span class="autoslide-dot"></span> Tự cuộn 3.2s
-                </span>
+                </button>
                 <div class="album-dots" id="album-dots">
                   <!-- Các chấm tròn chỉ số ảnh do Javascript tự sinh -->
                 </div>
@@ -428,7 +469,10 @@
               <button id="btn-prev-slide" class="slide-nav-btn" aria-label="Xem ảnh trước">‹</button>
               <span class="slide-counter" id="slide-counter">1 / 5</span>
               <button id="btn-next-slide" class="slide-nav-btn" aria-label="Xem ảnh sau">›</button>
+              <button type="button" id="view-photo" class="studio-link">Xem ảnh lớn ↗</button>
             </div>
+            <div id="album-thumbnails" class="album-thumbnails" aria-label="Chọn ảnh trong cuốn album"></div>
+            <p class="album-upload-note">Có thể vuốt để lật ảnh. Ảnh cô tự thêm chỉ nằm trong lượt xem này.</p>
           </div>
 
         </div>
@@ -436,7 +480,7 @@
 
         <!-- ======================= CỘT BÊN PHẢI: BỨC THƯ KẾ TOÁN ======================= -->
         <div class="content-column">
-          <div class="letter-card glassmorphism">
+          <div class="letter-card glassmorphism" id="letter-section">
             <!-- 💌 Tem bưu điện kỷ niệm 20/10 gửi Puw -->
             <div class="letter-postage-stamp" title="Tem bưu điện đặc biệt 20/10 gửi Thu Phương">
               <div class="stamp-inner">
@@ -507,7 +551,7 @@
                 <span class="ticket-station-badge">🎟️ ĐẶC QUYỀN 20/10</span>
                 <span class="ticket-station-title">Hộp Vé May Mắn Dành Riêng Cho Puw ✨</span>
               </div>
-              <p class="ticket-station-desc">Mỗi ngày 20/10 cô nương được rút 1 vé đặc quyền miễn phí! Chạm nút để rút nè:</p>
+              <p class="ticket-station-desc">Hộp vé đặc quyền miễn phí dành riêng cho cô nương! Chạm nút để rút, thích thì rút lại nè:</p>
               
               <!-- Nơi hiển thị tấm vé được rút ra -->
               <div class="ticket-card-display" id="ticket-display">
@@ -521,6 +565,7 @@
                 <button type="button" class="btn-draw-ticket magic-btn primary" id="btn-draw-ticket">
                   <span class="btn-emoji">🎰</span> Rút 1 Vé Đặc Quyền Ngay!
                 </button>
+                <button type="button" id="save-ticket" class="studio-link" disabled>Lưu vé kỷ niệm ↓</button>
               </div>
             </div>
 
@@ -553,11 +598,11 @@
   <!-- ========================================================================== -->
   <!-- 💌 PHẦN 4: HỘP THOẠI BẬT MÍ BÍ MẬT (POPUP MODAL KHI BẤM NÚT) 💌            -->
   <!-- ========================================================================== -->
-  <div id="secret-modal" class="modal-overlay">
+  <div id="secret-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="secret-heading" aria-hidden="true">
     <div class="modal-card glassmorphism">
       <div class="modal-header">
         <div class="modal-icon">🐱</div>
-        <h3>Bật Mí Nhỏ Cho Thu Phương</h3>
+        <h3 id="secret-heading">Bật Mí Nhỏ Cho Thu Phương</h3>
         <button id="modal-close" class="modal-close-btn" aria-label="Đóng cửa sổ">&times;</button>
       </div>
       <!-- ✏️ [CHỖ SỬA NỘI DUNG POPUP BẬT MÍ]: Bạn có thể sửa lời tâm sự ở đây -->
@@ -579,14 +624,48 @@
   </div>
 
   <!-- Hộp thông báo nhanh (Toast) xuất hiện khi người dùng bấm các nút tương tác -->
-  <div id="toast" class="toast"></div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <template id="emotion-ledger-template">
+    <section id="emotion-ledger" class="emotion-ledger" aria-labelledby="emotion-heading">
+      <div class="studio-section-title"><p>Sổ ghi nhận những điều nhỏ bé</p><h2 id="emotion-heading">Hôm nay, mình<br>ghi nhận điều gì?</h2><span>Một cuốn sổ tưởng tượng. Đơn vị tính: điều dễ thương.</span></div>
+      <div class="emotion-workspace">
+        <div class="moment-options" aria-label="Chọn một khoảnh khắc">
+          <button type="button" data-moment="smile"><span>01</span> Một nụ cười <i aria-hidden="true">＋</i></button>
+          <button type="button" data-moment="meal"><span>02</span> Một bữa ngon <i aria-hidden="true">＋</i></button>
+          <button type="button" data-moment="exam"><span>03</span> Thi xong một môn <i aria-hidden="true">＋</i></button>
+          <button type="button" data-moment="rest"><span>04</span> Một ngày hơi mệt <i aria-hidden="true">＋</i></button>
+          <p class="handwritten">Còn quan tâm thì<br>không cần cân đong. ♡</p>
+        </div>
+        <div class="journal-paper">
+          <div class="journal-meta"><span>Dành riêng cho Nguyễn Thu Phương</span><span>20.10</span></div>
+          <table class="journal-table"><caption class="sr-only">Sổ phát sinh Nợ và Có của những điều dễ thương</caption><thead><tr><th scope="col">Diễn giải</th><th scope="col">Nợ</th><th scope="col">Có</th></tr></thead><tbody id="journal-rows"></tbody><tfoot><tr><th scope="row">Tổng phát sinh</th><td id="debit-total">0</td><td id="credit-total">0</td></tr></tfoot></table>
+          <div class="journal-bottom"><p id="moment-note" role="status">Chọn một điều ở bên cạnh để ghi vào sổ nhé.</p><span class="balanced-stamp" id="balanced-stamp">Đã<br>cân bằng <b>✓</b></span></div>
+          <div class="journal-actions"><button type="button" id="save-ledger" class="studio-link">Lưu trang sổ kỷ niệm ↓</button><button type="button" id="reset-ledger" class="studio-link">Ghi lại từ đầu</button></div>
+        </div>
+      </div>
+    </section>
+  </template>
+
+  <dialog id="photo-lightbox" class="photo-lightbox" aria-labelledby="large-photo-caption">
+    <button type="button" class="dialog-close" data-close-photo aria-label="Đóng ảnh lớn">×</button>
+    <img id="large-photo" alt="">
+    <div class="lightbox-bottom"><button type="button" id="large-photo-prev" aria-label="Xem ảnh trước">‹</button><p id="large-photo-caption"></p><button type="button" id="large-photo-next" aria-label="Xem ảnh sau">›</button></div>
+  </dialog>
+  <dialog id="command-palette" class="command-palette" aria-labelledby="command-title">
+    <div class="command-heading"><h2 id="command-title">Một vài lối tắt nhỏ</h2><button type="button" class="dialog-close" data-close-command aria-label="Đóng lối tắt">×</button></div>
+    <label class="sr-only" for="command-search">Tìm phần muốn xem</label><input id="command-search" placeholder="Tìm album, hoa, lời nhắn…" autocomplete="off">
+    <div id="command-results" class="command-results"></div><p class="command-hint">↑ ↓ để chọn · Enter để mở · Esc để đóng</p>
+  </dialog>
 
 
   <!-- ========================================================================== -->
   <!-- ⚙️ PHẦN 5: LIÊN KẾT FILE JAVASCRIPT RIÊNG BIỆT (SCRIPT.JS) ⚙️               -->
   <!-- Toàn bộ code logic, lưu file, âm thanh, hiệu ứng được đặt trong script.js -->
   <!-- ========================================================================== -->
+  <script src="gift-core.js"></script>
   <script src="script.js"></script>
+  <script src="studio.js"></script>
 
 </body>
 </html>
