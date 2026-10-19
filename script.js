@@ -1014,21 +1014,21 @@ function pauseRealSong() {
 function toggleRealSong() {
   if (isSongPlaying) {
     pauseRealSong();
-    showToast("Đã tạm dừng bài hát ⏸️");
+    showToast("Đã tạm dừng phát nhạc ⏸️");
   } else {
     playRealSong();
-    showToast("🎶 Đang phát: Xao Xuyến (Bình Minh Vũ x Mr. Siro)");
+    showToast("🎶 Đang phát nhạc nè!");
   }
 }
 
 function updateAudioUI(isPlaying) {
   if (isPlaying) {
     audioBtn.classList.add('playing');
-    audioLabel.textContent = 'Xao Xuyến 🎶';
+    audioLabel.textContent = 'music';
     if (audioIcon) audioIcon.textContent = '⏸️';
   } else {
     audioBtn.classList.remove('playing');
-    audioLabel.textContent = 'Phát bài hát 🎵';
+    audioLabel.textContent = 'music';
     if (audioIcon) audioIcon.textContent = '▶️';
   }
 }
