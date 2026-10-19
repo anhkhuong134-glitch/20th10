@@ -1037,14 +1037,24 @@ audioBtn.addEventListener('click', toggleRealSong);
 
 // Chibi and Bouquet Interactive Listeners
 const chibiTrigger = document.getElementById('chibi-avatar');
+const chibiCard = document.getElementById('chibi-card');
 const btnBouquetShake = document.getElementById('btn-bouquet-burst') || document.getElementById('btn-bouquet-shake');
 const bouquetImgBox = document.getElementById('bouquet-img-box');
 
+function triggerChibiMeow() {
+  soundFX.playMeow();
+  triggerConfetti(35);
+  showToast("🐾 Meow! Thu Phương xinh gái nhất trần đời! 🥰");
+}
+
 if (chibiTrigger) {
-  chibiTrigger.addEventListener('click', () => {
-    soundFX.playMeow();
-    triggerConfetti(35);
-    showToast("🐾 Meow! Thu Phương xinh gái nhất trần đời! 🥰");
+  chibiTrigger.addEventListener('click', triggerChibiMeow);
+}
+if (chibiCard) {
+  chibiCard.addEventListener('click', (e) => {
+    if (e.target !== chibiTrigger && !chibiTrigger.contains(e.target)) {
+      triggerChibiMeow();
+    }
   });
 }
 
