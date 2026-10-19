@@ -286,13 +286,7 @@
         <!-- ======================= CỘT BÊN TRÁI: HOA & ALBUM ẢNH ======================= -->
         <div class="visual-column">
           
-          <!-- Khung đóa hoa hồng 3D tự bung nở bằng thuật toán hình học -->
-          <div class="rose-card glassmorphism">
-            <div class="bloom-wrapper">
-              <canvas id="rose-canvas"></canvas>
-              <div class="bloom-glow-core"></div>
-            </div>
-
+          <div class="visual-cards-col">
             <!-- Bó hoa 20/10 tuyệt đẹp gửi tặng Thu Phương (file bouquet.jpg) -->
             <div class="bouquet-card glassmorphism" id="bouquet-card">
               <div class="bouquet-top-tag">💐 BÓ HOA RỰC RỠ 20/10</div>
@@ -309,7 +303,15 @@
               </div>
             </div>
 
-            <div class="bloom-hint">🌹 Đóa hoa hồng vĩnh cửu (Chạm vào để hoa nở)</div>
+            <!-- Khung đóa hoa hồng 3D tự bung nở bằng thuật toán hình học -->
+            <div class="rose-card glassmorphism" id="rose-bloom-card">
+              <div class="rose-top-tag">🌹 ĐÓA HỒNG VĨNH CỬU 3D</div>
+              <div class="bloom-wrapper">
+                <canvas id="rose-canvas"></canvas>
+                <div class="bloom-glow-core"></div>
+              </div>
+              <div class="bloom-hint">🌹 Chạm vào để đóa hoa bung nở lấp lánh ✨</div>
+            </div>
           </div>
 
 
@@ -435,6 +437,15 @@
         <!-- ======================= CỘT BÊN PHẢI: BỨC THƯ KẾ TOÁN ======================= -->
         <div class="content-column">
           <div class="letter-card glassmorphism">
+            <!-- 💌 Tem bưu điện kỷ niệm 20/10 gửi Puw -->
+            <div class="letter-postage-stamp" title="Tem bưu điện đặc biệt 20/10 gửi Thu Phương">
+              <div class="stamp-inner">
+                <span class="stamp-icon">🌸</span>
+                <span class="stamp-code">20.10</span>
+                <span class="stamp-dest">PUW</span>
+              </div>
+            </div>
+
             <div class="letter-tag">BÁO CÁO TÀI CHÍNH CẢM XÚC 20/10</div>
             
             <!-- ✏️ [CHỖ SỬA TÊN NGƯỜI NHẬN TRÊN THƯ] -->
@@ -488,6 +499,29 @@
               <p class="paragraph closing">
                 Thank you for being my friend, for always being there for me, and for taking the time to listen to me 🌸
               </p>
+            </div>
+
+            <!-- 🎟️ HỘP VÉ ĐẶC QUYỀN 20/10 DÀNH RIÊNG CHO PHƯƠNG -->
+            <div class="wish-ticket-station" id="wish-ticket-box">
+              <div class="ticket-station-header">
+                <span class="ticket-station-badge">🎟️ ĐẶC QUYỀN 20/10</span>
+                <span class="ticket-station-title">Hộp Vé May Mắn Dành Riêng Cho Puw ✨</span>
+              </div>
+              <p class="ticket-station-desc">Mỗi ngày 20/10 cô nương được rút 1 vé đặc quyền miễn phí! Chạm nút để rút nè:</p>
+              
+              <!-- Nơi hiển thị tấm vé được rút ra -->
+              <div class="ticket-card-display" id="ticket-display">
+                <div class="ticket-placeholder">
+                  <span class="ticket-placeholder-icon">🎁</span>
+                  <span>Chạm nút bên dưới để mở vé may mắn của cô nha! ✨</span>
+                </div>
+              </div>
+
+              <div class="ticket-draw-wrap">
+                <button type="button" class="btn-draw-ticket magic-btn primary" id="btn-draw-ticket">
+                  <span class="btn-emoji">🎰</span> Rút 1 Vé Đặc Quyền Ngay!
+                </button>
+              </div>
             </div>
 
             <!-- Các nút bấm tương tác vui nhộn cuối bức thư -->

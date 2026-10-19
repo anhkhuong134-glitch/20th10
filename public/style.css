@@ -859,6 +859,15 @@ body {
   margin-bottom: 12px;
 }
 
+.rose-top-tag {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #be185d;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
 .bouquet-img-wrapper {
   position: relative;
   width: 100%;
@@ -1291,6 +1300,76 @@ body {
   background: linear-gradient(90deg, transparent, var(--rose-primary), var(--lavender), transparent);
 }
 
+/* Vintage Pastel Postage Stamp */
+.letter-postage-stamp {
+  position: absolute;
+  top: 24px;
+  right: 28px;
+  width: 68px;
+  height: 82px;
+  background: #ffffff;
+  border: 2px dashed rgba(244, 114, 182, 0.65);
+  border-radius: 8px;
+  padding: 4px;
+  box-shadow: 0 4px 14px rgba(244, 114, 182, 0.22);
+  transform: rotate(4deg);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  user-select: none;
+  z-index: 5;
+  cursor: pointer;
+}
+
+.letter-postage-stamp:hover {
+  transform: rotate(0deg) scale(1.08);
+  box-shadow: 0 8px 20px rgba(236, 72, 153, 0.35);
+}
+
+.stamp-inner {
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(244, 114, 182, 0.35);
+  background: linear-gradient(135deg, #fff1f2, #fdf2f8);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  text-align: center;
+}
+
+.stamp-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.stamp-code {
+  font-size: 0.72rem;
+  font-weight: 900;
+  color: #db2777;
+  letter-spacing: 0.5px;
+}
+
+.stamp-dest {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #8b5cf6;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 640px) {
+  .letter-postage-stamp {
+    top: 16px;
+    right: 16px;
+    width: 52px;
+    height: 66px;
+    transform: rotate(3deg);
+  }
+  .stamp-icon { font-size: 1rem; }
+  .stamp-code { font-size: 0.6rem; }
+  .stamp-dest { font-size: 0.52rem; }
+}
+
 .letter-tag {
   display: inline-block;
   font-size: 0.75rem;
@@ -1382,6 +1461,177 @@ body {
   color: #475569;
   font-style: italic;
   margin-top: 14px;
+}
+
+/* Lucky 20/10 Wish Ticket Station */
+.wish-ticket-station {
+  margin: 32px 0 24px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(254, 242, 242, 0.9));
+  border: 1.5px solid rgba(244, 114, 182, 0.4);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(244, 114, 182, 0.12);
+  position: relative;
+  overflow: hidden;
+}
+
+.wish-ticket-station::before {
+  content: '✦';
+  position: absolute;
+  top: 12px;
+  left: 16px;
+  color: var(--rose-light);
+  font-size: 1rem;
+  opacity: 0.6;
+}
+
+.wish-ticket-station::after {
+  content: '✦';
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  color: var(--lavender-light);
+  font-size: 1rem;
+  opacity: 0.6;
+}
+
+.ticket-station-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.ticket-station-badge {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #db2777;
+  background: rgba(236, 72, 153, 0.12);
+  padding: 3px 12px;
+  border-radius: 50px;
+  letter-spacing: 0.5px;
+}
+
+.ticket-station-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #831843;
+}
+
+.ticket-station-desc {
+  font-size: 0.88rem;
+  color: var(--text-sub);
+  margin-bottom: 18px;
+}
+
+.ticket-card-display {
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.ticket-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: #94a3b8;
+  font-size: 0.88rem;
+  font-style: italic;
+  padding: 16px;
+  border: 1.5px dashed rgba(244, 114, 182, 0.35);
+  border-radius: 14px;
+  width: 100%;
+  max-width: 440px;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.ticket-placeholder-icon {
+  font-size: 1.6rem;
+  animation: gentleBounce 2.5s infinite ease-in-out;
+}
+
+/* Revealed Ticket Card */
+.revealed-ticket {
+  width: 100%;
+  max-width: 480px;
+  background: linear-gradient(135deg, #ffffff 0%, #fff1f2 100%);
+  border: 2px dashed #ec4899;
+  border-radius: 16px;
+  padding: 16px 20px;
+  box-shadow: 0 10px 30px rgba(236, 72, 153, 0.22);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-align: left;
+  animation: ticketPop 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  position: relative;
+}
+
+@keyframes ticketPop {
+  0% { transform: scale(0.8) translateY(15px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.ticket-icon-box {
+  width: 52px;
+  height: 52px;
+  min-width: 52px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #fce7f3, #fae8ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  box-shadow: 0 4px 12px rgba(236, 72, 153, 0.18);
+}
+
+.ticket-info {
+  flex: 1;
+}
+
+.ticket-name {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #be185d;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.ticket-name .valid-tag {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #10b981;
+  background: #d1fae5;
+  padding: 1px 8px;
+  border-radius: 50px;
+}
+
+.ticket-detail {
+  font-size: 0.86rem;
+  color: #334155;
+  line-height: 1.45;
+  font-weight: 500;
+}
+
+.ticket-draw-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-draw-ticket {
+  font-size: 0.95rem;
+  padding: 12px 28px;
+  box-shadow: 0 6px 20px rgba(236, 72, 153, 0.35);
 }
 
 /* Actions */
@@ -1622,4 +1872,17 @@ body {
   .album-slider {
     height: 380px;
   }
+}
+
+/* Magic Touch & Cursor Sparkle Trail */
+.magic-trail-particle {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  font-size: 1rem;
+  line-height: 1;
+  user-select: none;
+  transform: translate(-50%, -50%) scale(1);
+  transition: transform 0.75s cubic-bezier(0.12, 0.8, 0.32, 1), opacity 0.75s ease;
+  opacity: 1;
 }

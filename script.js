@@ -1117,3 +1117,128 @@ btnCatMeow.addEventListener('click', () => {
   triggerConfetti(20);
   showToast("🐾 Meow meow! Boss mèo chúc Thu Phương luôn xinh xắn!");
 });
+
+// ============================================================================
+// 🎟️ TÍNH NĂNG: HỘP RÚT VÉ ĐẶC QUYỀN 20/10 DÀNH RIÊNG CHO PHƯƠNG
+// ============================================================================
+const btnDrawTicket = document.getElementById('btn-draw-ticket');
+const ticketDisplay = document.getElementById('ticket-display');
+
+const PRIVILEGE_TICKETS = [
+  {
+    icon: '🧋',
+    name: 'VÉ QUY ĐỔI TRÀ SỮA',
+    valid: 'Hạn dùng: Vô hạn',
+    desc: 'Có giá trị đổi thành 1 ly trà sữa full topping bất cứ lúc nào cô thèm (toai tài trợ 100% không giới hạn thời gian)!'
+  },
+  {
+    icon: '👑',
+    name: 'VÉ SAI VẶT QUYỀN LỰC',
+    valid: 'Hạn dùng: Hôm nay',
+    desc: 'Được quyền bắt toai làm 1 việc bất kỳ trong ngày hôm nay, yêu cầu hợp lệ là auto thực hiện cấm cãi!'
+  },
+  {
+    icon: '⏰',
+    name: 'VÉ MIỄN TRỪ THỨC KHUYA',
+    valid: 'Hạn dùng: 24/7',
+    desc: 'Nhắc nhở cô nương tối nay cấm cày phim quá 12h đêm, phải đi ngủ sớm để giữ da dẻ luôn xinh đẹp rạng rỡ nha!'
+  },
+  {
+    icon: '📸',
+    name: 'VÉ NỤ CƯỜI BẮT BUỘC',
+    valid: 'Hiệu lực tức thì',
+    desc: 'Chụp màn hình tấm vé này gửi lại cho toai kèm 1 tấm ảnh cô đang cười thật tươi để nghiệm thu chất lượng nụ cười!'
+  },
+  {
+    icon: '🍗',
+    name: 'VÉ VỖ BÉO ĂN NGON',
+    valid: 'Đặc quyền 20/10',
+    desc: 'Đặc quyền được dắt đi ăn món cô thích nhất (gà rán, lẩu, nướng...) để bớt thói quen biếng ăn lại nha!'
+  },
+  {
+    icon: '🐾',
+    name: 'VÉ BOSS MÈO CƯNG CHIỀU',
+    valid: 'May mắn x999',
+    desc: 'Hôm nay hễ gặp bất kỳ chú mèo nào ngoài đời cũng sẽ tự động chạy tới dụi đầu cho cô vuốt ve mỏi tay!'
+  }
+];
+
+let lastTicketIdx = -1;
+
+if (btnDrawTicket && ticketDisplay) {
+  btnDrawTicket.addEventListener('click', () => {
+    soundFX.playPop();
+    soundFX.playSparkle();
+    triggerConfetti(45);
+
+    let randomIdx;
+    do {
+      randomIdx = Math.floor(Math.random() * PRIVILEGE_TICKETS.length);
+    } while (randomIdx === lastTicketIdx && PRIVILEGE_TICKETS.length > 1);
+    lastTicketIdx = randomIdx;
+
+    const ticket = PRIVILEGE_TICKETS[randomIdx];
+
+    ticketDisplay.innerHTML = `
+      <div class="revealed-ticket">
+        <div class="ticket-icon-box">${ticket.icon}</div>
+        <div class="ticket-info">
+          <div class="ticket-name">
+            <span>${ticket.name}</span>
+            <span class="valid-tag">${ticket.valid}</span>
+          </div>
+          <p class="ticket-detail">${ticket.desc}</p>
+        </div>
+      </div>
+    `;
+
+    btnDrawTicket.innerHTML = `<span class="btn-emoji">🎲</span> Rút Vé Khác Nè!`;
+    showToast(`🎉 Puw vừa rút trúng: ${ticket.name}! ✨`);
+  });
+}
+
+// ============================================================================
+// ✨ HIỆU ỨNG: DẤU CHÂN MÈO & HOA ĐÀO THEO ĐẦU NGÓN TAY / CHUỘT (TOUCH TRAIL)
+// ============================================================================
+let lastTrailTime = 0;
+const TRAIL_ICONS = ['🌸', '✨', '🐾', '💖', '🌷', '⭐'];
+
+function spawnTrailParticle(x, y) {
+  const now = performance.now();
+  if (now - lastTrailTime < 45) return;
+  lastTrailTime = now;
+
+  const el = document.createElement('div');
+  el.className = 'magic-trail-particle';
+  el.textContent = TRAIL_ICONS[Math.floor(Math.random() * TRAIL_ICONS.length)];
+
+  const randomOffsetX = (Math.random() - 0.5) * 20;
+  const randomOffsetY = (Math.random() - 0.5) * 20;
+  const moveY = -25 - Math.random() * 25;
+  const moveX = (Math.random() - 0.5) * 35;
+  const rot = (Math.random() - 0.5) * 90;
+  const scale = Math.random() * 0.5 + 0.8;
+
+  el.style.left = `${x + randomOffsetX}px`;
+  el.style.top = `${y + randomOffsetY}px`;
+  el.style.transform = `translate(-50%, -50%) scale(${scale}) rotate(0deg)`;
+
+  document.body.appendChild(el);
+
+  requestAnimationFrame(() => {
+    el.style.transform = `translate(calc(-50% + ${moveX}px), calc(-50% + ${moveY}px)) scale(${scale * 1.2}) rotate(${rot}deg)`;
+    el.style.opacity = '0';
+  });
+
+  setTimeout(() => el.remove(), 750);
+}
+
+window.addEventListener('mousemove', (e) => {
+  spawnTrailParticle(e.clientX, e.clientY);
+}, { passive: true });
+
+window.addEventListener('touchmove', (e) => {
+  if (e.touches && e.touches[0]) {
+    spawnTrailParticle(e.touches[0].clientX, e.touches[0].clientY);
+  }
+}, { passive: true });
