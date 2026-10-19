@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <!-- ========================================================================== -->
+  <!-- 🌸 THẺ CẤU HÌNH CƠ BẢN CỦA TRANG WEB (BẠN KHÔNG CẦN CHỈNH SỬA PHẦN NÀY) 🌸 -->
+  <!-- ========================================================================== -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <!-- ========================================================================== -->
+  <!-- ✏️ [CHỖ SỬA 1]: TIÊU ĐỀ TRANG WEB (HIỂN THỊ TRÊN TAB TRÌNH DUYỆT) ✏️       -->
+  <!-- Bạn có thể đổi chữ trong thẻ <title> thành bất kỳ câu chúc nào bạn thích -->
+  <!-- ========================================================================== -->
+  <title>Happy 20/10 Nguyễn Thu Phương ✨ | Thơ Mộng & Chill GenZ 🌸</title>
+  
+  <!-- ========================================================================== -->
+  <!-- ✏️ [CHỖ SỬA 2]: THÔNG TIN KHI GỬI LINK QUA ZALO / FACEBOOK / MESSENGER ✏️ -->
+  <!-- ========================================================================== -->
+  <meta name="description" content="Món quà 20/10 đc lập trình đặc biệt dành riêng cho Puw - Cô sinh ziên năm 3 kế toán, siêu dễ thương.">
+  <meta property="og:title" content="Gửi Nguyễn Thu Phương - Happy Vietnamese Women's Day 20/10! 🌸">
+  <meta property="og:description" content="Nhập tên để mở khóa món quà bí mật được lập trình dành riêng cho cô!">
+  <meta property="og:image" content="photo3.png">
+  
+  <!-- ========================================================================== -->
+  <!-- PHÔNG CHỮ GOOGLE FONTS & FILE GIAO DIỆN STYLE.CSS ĐÃ ĐƯỢC TÁCH RIÊNG       -->
+  <!-- (Phần này liên kết file style.css để trang web có màu hồng thơ mộng)      -->
+  <!-- ========================================================================== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- 👉 LIÊN KẾT TỚI FILE GIAO DIỆN STYLE.CSS RIÊNG BIỆT 👈 -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ========================================================================== -->
+  <!-- 🌟 PHẦN 1: NỀN HOA RƠI LUNG LINH & TRÌNH PHÁT BÀI HÁT "XAO XUYẾN" 🌟      -->
+  <!-- ========================================================================== -->
+  <!-- Khung vẽ cánh hoa và hạt bụi lấp lánh rơi trên màn hình -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- 🎵 File nhạc thực tế: phát bài hát "Xao Xuyến" (file music.mp3 nằm cùng thư mục) -->
+  <audio id="bg-audio" preload="auto" loop>
+    <source src="music.mp3" type="audio/mpeg">
+    <source src="https://cdn.jsdelivr.net/gh/anhkhuong134-glitch/for-thu-phuong@main/music.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- 🔘 Nút bấm nổi ở góc trên bên phải để người dùng Bật / Tắt bài hát -->
+  <button id="audio-toggle" class="audio-btn" aria-label="Bật hoặc tắt bài hát">
+    <span class="audio-icon">🎵</span>
+    <span class="audio-label">music</span>
+    <!-- Đồ họa sóng nhạc chuyển động theo giai điệu -->
+    <div class="sound-wave">
+      <span></span><span></span><span></span><span></span>
+    </div>
+  </button>
+
+
+  <!-- ========================================================================== -->
+  <!-- 💌 PHẦN 2: MÀN HÌNH MỞ ĐẦU - ĐIỀN THÔNG TIN & MINI QUIZ 20/10 💌          -->
+  <!-- ========================================================================== -->
+  <section id="lock-screen" class="screen-view active">
+    <div class="lock-container glassmorphism">
+      
+      <!-- ---------------------------------------------------------------------- -->
+      <!-- 📋 [BƯỚC 1]: FORM THU THẬP THÔNG TIN (HỌ VÀ TÊN & NGÀY SINH)           -->
+      <!-- Dữ liệu điền ở đây sẽ được tự động lưu về file thong_tin_thu_phuong.txt -->
+      <!-- ---------------------------------------------------------------------- -->
+      <div id="step-info" class="lock-step">
+        <div class="lock-icon-wrapper">
+          <div class="lock-glow"></div>
+          <span class="lock-icon">💌</span>
+        </div>
+
+        <div class="lock-badge">HỒ SƠ BÍ MẬT 🌸 20/10</div>
+        
+        <!-- ✏️ [CHỖ SỬA LỜI CHÀO]: Bạn có thể sửa câu chào này tùy thích -->
+        <h2 class="lock-title">Hí nhô!!! Cô nương! ✨</h2>
+        <p class="lock-desc">
+          Cái này là đc lập trình dành riêng cho 1 người đặc biệt. Phiền cô điền 1 chút thông tin để sang phần chính nhó:
+        </p>
+
+        <form id="info-form" class="lock-form" onsubmit="return false;">
+          <!-- Ô nhập Họ và tên -->
+          <div class="form-group">
+            <label class="input-label" for="user-name-input">
+              <span>👤</span> Họ và tên của cô:
+            </label>
+            <div class="info-input-wrap">
+              <input 
+                type="text" 
+                id="user-name-input" 
+                class="info-input" 
+                placeholder="Nhập họ và tên (ví dụ: Nguyễn Thu Phương)..." 
+                autocomplete="name" 
+                autofocus
+                required
+              />
+            </div>
+          </div>
+
+          <!-- Ô nhập Ngày tháng năm sinh -->
+          <div class="form-group">
+            <label class="input-label" for="user-dob-input">
+              <span>🎂</span> Ngày tháng năm sinh:
+            </label>
+            <div class="info-input-wrap">
+              <input 
+                type="text" 
+                id="user-dob-input" 
+                class="info-input" 
+                placeholder="Ví dụ: 19/08/2004 hoặc DD/MM/YYYY..." 
+                autocomplete="bday"
+                required
+              />
+            </div>
+          </div>
+
+          <!-- Nút bấm xác nhận để chuyển sang phần trả lời câu hỏi 20/10 -->
+          <button type="submit" id="btn-submit-info" class="btn-primary-flow">
+            <span>Xác Nhận & Tiếp Tục</span> 💖
+          </button>
+
+          <!-- Dòng chữ báo lỗi nếu người dùng bỏ trống hoặc điền sai -->
+          <div id="lock-error-msg" class="lock-error-msg hidden"></div>
+        </form>
+
+        <div class="lock-hint-area">
+          <button id="btn-toggle-hint" class="hint-btn">Cần một chút gợi ý? 💡</button>
+          <div id="lock-hint-text" class="hint-text hidden">
+            🐾 Gợi ý: Hãy nhập đúng họ tên cậu (Nguyễn Thu Phương) để hệ thống ghi nhận và chuẩn bị quà chu đáo nhất nè!
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ---------------------------------------------------------------------- -->
+      <!-- 🎯 [BƯỚC 2]: MINI QUIZ GỒM 2 CÂU HỎI GỢI NHỚ NGÀY 20/10                -->
+      <!-- Gồm: Câu 1 (Mai là ngày bao nhiêu?) & Câu 2 (Mai là ngày gì?)           -->
+      <!-- ---------------------------------------------------------------------- -->
+      <div id="step-quiz" class="lock-step hidden">
+        <div class="lock-icon-wrapper">
+          <div class="lock-glow"></div>
+          <span class="lock-icon">🎯</span>
+        </div>
+
+        <div class="quiz-progress-bar">
+          <span class="quiz-step-pill">Ko trả lời đc thì xem lại giới tính đeeee</span>
+        </div>
+
+        <!-- ✏️ [CHỖ SỬA TIÊU ĐỀ QUIZ]: Có thể sửa dòng tiêu đề đố vui này -->
+        <h2 class="lock-title">Đố Cô Bt! 🤭</h2>
+        <p class="lock-desc">
+          Nhập câu trả lời cho 2 câu hỏi nhỏ xíu dưới đây để mở toang cánh cửa quà tặng nha!
+        </p>
+
+        <form id="quiz-form" class="quiz-form" autocomplete="off">
+          
+          <!-- ❓ CÂU HỎI 1: MAI LÀ NGÀY BAO NHIÊU? (Gõ tay: 20, 20/10, ngày 20...) -->
+          <div class="quiz-input-group">
+            <label class="quiz-q-label" for="quiz-ans-1">
+              <span class="q-num">1</span>
+              <span>Ỏooooo... mai là ngày bao nhiêu thế nà? 🤔</span>
+            </label>
+            <div class="info-input-wrap">
+              <input 
+                type="text" 
+                id="quiz-ans-1" 
+                class="info-input quiz-text-input" 
+                placeholder="Gõ câu trả lời vào đây nè ..." 
+                autocomplete="off"
+                required
+              />
+            </div>
+            <!-- Thông báo lỗi nếu gõ sai câu 1 -->
+            <div id="quiz-error-1" class="quiz-field-error hidden"></div>
+          </div>
+
+          <!-- ❓ CÂU HỎI 2: MAI LÀ NGÀY GÌ? (Trắc nghiệm bấm chọn 1 trong 4 đáp án A, B, C, D) -->
+          <div class="quiz-input-group" style="margin-top: 16px;">
+            <label class="quiz-q-label">
+              <span class="q-num">2</span>
+              <span>Cô có bíc mai có sk j đặc biệc khum? 🥰</span>
+            </label>
+
+            <!-- Ô lưu ẩn giá trị đáp án đã chọn -->
+            <input type="hidden" id="quiz-ans-2" value="" />
+
+            <!-- Lưới 4 nút trắc nghiệm: A, B, C, D (Đáp án C là đáp án ĐÚNG) -->
+            <div class="quiz-options-grid" id="quiz-q2-options">
+              <!-- Lựa chọn A (Sai - ngày 10/10) -->
+              <button type="button" class="quiz-option-btn" data-opt="A" data-text="Ngày giải phóng thủ đô" onclick="selectQuizOption(this, 'A')">
+                <span class="quiz-opt-letter">A</span>
+                <span class="quiz-opt-text">Ngày giải phóng thủ đô</span>
+              </button>
+              
+              <!-- Lựa chọn B (Sai - ngày 8/3) -->
+              <button type="button" class="quiz-option-btn" data-opt="B" data-text="Ngày quốc tế phụ nữ" onclick="selectQuizOption(this, 'B')">
+                <span class="quiz-opt-letter">B</span>
+                <span class="quiz-opt-text">Ngày quốc tế phụ nữ</span>
+              </button>
+              
+              <!-- 🏆 Lựa chọn C (ĐÁP ÁN ĐÚNG - Ngày phụ nữ Việt Nam 💐) -->
+              <button type="button" class="quiz-option-btn" data-opt="C" data-text="Ngày phụ nữ Việt Nam" onclick="selectQuizOption(this, 'C')">
+                <span class="quiz-opt-letter">C</span>
+                <span class="quiz-opt-text">Ngày phụ nữ Việt Nam 💐</span>
+              </button>
+              
+              <!-- Lựa chọn D (Sai - ngày 20/11) -->
+              <button type="button" class="quiz-option-btn" data-opt="D" data-text="Ngày nhà giáo Việt Nam" onclick="selectQuizOption(this, 'D')">
+                <span class="quiz-opt-letter">D</span>
+                <span class="quiz-opt-text">Ngày nhà giáo Việt Nam</span>
+              </button>
+            </div>
+
+            <!-- Thông báo lỗi nếu chưa chọn hoặc chọn sai -->
+            <div id="quiz-error-2" class="quiz-field-error hidden"></div>
+          </div>
+
+          <!-- Thông báo chúc mừng khi trả lời đúng cả 2 câu -->
+          <div id="quiz-feedback" class="quiz-feedback hidden"></div>
+
+          <!-- Nút hoàn tất trả lời để mở thẳng vào Màn Quà Tặng Chính Thức -->
+          <button type="submit" id="btn-submit-quiz" class="btn-primary-flow" style="margin-top: 18px;">
+            <span>Mở Cửa Quà Tặng 20/10</span> 🎁✨
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ========================================================================== -->
+  <!-- 💐 PHẦN 3: MÀN HÌNH QUÀ TẶNG CHÍNH THỨC (GIFT EXPERIENCE SCREEN) 💐        -->
+  <!-- Khi trả lời xong 2 câu hỏi sẽ tự động chuyển thẳng vào màn hình tuyệt đẹp này -->
+  <!-- ========================================================================== -->
+  <section id="gift-screen" class="screen-view">
+    <div class="gift-wrapper">
+
+      <!-- ---------------------------------------------------------------------- -->
+      <!-- 🎀 [TIÊU ĐỀ LỚN TRÊN CÙNG]: LỜI CHÚC MỪNG 20/10                           -->
+      <!-- ---------------------------------------------------------------------- -->
+      <header class="gift-hero-banner">
+        <div class="hero-pill">✨ Happy Vietnamese Women's Day • 20/10</div>
+        
+        <!-- ✏️ [CHỖ SỬA TÊN]: Đổi tên người nhận ở đây -->
+        <h1 class="hero-title">
+          Dành Tặng <span class="highlight-name">Nguyễn Thu Phương</span> 🌸
+        </h1>
+        
+        <!-- ✏️ [CHỖ SỬA LỜI DẪN]: Đổi lời chúc ngắn dưới tiêu đề -->
+        <p class="hero-sub">
+          Chúc cô sinh viên năm 3 Kế toán dịu dàng, bớt biếng ăn, luôn rạng rỡ, zui tươi và ngập tràn niềm vui mỗi ngày!
+        </p>
+      </header>
+
+
+      <!-- ---------------------------------------------------------------------- -->
+      <!-- 🐾 [CARD CHIBI DỄ THƯƠNG]: HÌNH CHIBI THU PHƯƠNG & BOSS MÈO             -->
+      <!-- ---------------------------------------------------------------------- -->
+      <div class="chibi-hero-card" id="chibi-card">
+        <!-- Khung ảnh Chibi tròn (sử dụng file ảnh chibi.jpg cùng thư mục) -->
+        <div class="chibi-avatar-frame" id="chibi-avatar" title="Chạm vào tụi tớ nè! 🐾">
+          <!-- ✏️ [CHỖ ĐỔI ẢNH CHIBI]: Bạn có thể thay file chibi.jpg bằng ảnh khác nếu muốn -->
+          <img src="chibi.jpg" alt="Chibi Thu Phương và Boss Mèo" class="chibi-img" />
+        </div>
+        
+       
+      </div>
+
+
+      <!-- ---------------------------------------------------------------------- -->
+      <!-- 🖼️ [KHU VỰC 2 CỘT CHÍNH]: CỘT TRÁI (HOA & ẢNH) - CỘT PHẢI (BỨC THƯ)     -->
+      <!-- ---------------------------------------------------------------------- -->
+      <div class="gift-main-grid">
+
+        <!-- ======================= CỘT BÊN TRÁI: HOA & ALBUM ẢNH ======================= -->
+        <div class="visual-column">
+          
+          <!-- Khung đóa hoa hồng 3D tự bung nở bằng thuật toán hình học -->
+          <div class="rose-card glassmorphism">
+            <div class="bloom-wrapper">
+              <canvas id="rose-canvas"></canvas>
+              <div class="bloom-glow-core"></div>
+            </div>
+
+            <!-- Bó hoa 20/10 tuyệt đẹp gửi tặng Thu Phương (file bouquet.jpg) -->
+            <div class="bouquet-card glassmorphism" id="bouquet-card">
+              <div class="bouquet-top-tag">💐 BÓ HOA RỰC RỠ 20/10</div>
+              <div class="bouquet-img-wrapper" id="bouquet-img-box" title="Chạm để hoa rung rinh & tỏa hương!">
+                <!-- ✏️ [CHỖ ĐỔI ẢNH BÓ HOA]: Dùng file bouquet.jpg -->
+                <img src="bouquet.jpg" alt="Bó hoa 20/10 gửi tặng Thu Phương" class="bouquet-img" />
+                <div class="bouquet-ribbon-tag">Gửi tặng Puw 🌸</div>
+              </div>
+              <div class="bouquet-caption">
+                <p>Hoa xinh tặng người xinh! Chạm vào bó hoa để nhận nhé! ✨</p>
+                <button id="btn-bouquet-shake" class="magic-btn primary" style="margin-top: 12px; font-size: 0.85rem; padding: 8px 18px;">
+                  💐 Ôm trọn bó hoa
+                </button>
+              </div>
+            </div>
+
+            <div class="bloom-hint">🌹 Đóa hoa hồng vĩnh cửu (Chạm vào để hoa nở)</div>
+          </div>
+
+
+          <!-- ------------------------------------------------------------------ -->
+          <!-- 📸 [ALBUM ẢNH POLAROID 3D TỰ ĐỘNG CUỘN MỖI 3.2 GIÂY]                 -->
+          <!-- Thu Phương không cần bấm tay, ảnh sẽ tự động trôi qua êm ái        -->
+          <!-- ------------------------------------------------------------------ -->
+          <div class="album-card-wrapper">
+            <div class="album-top-bar">
+              <span class="album-title-tag">📸 ALBUM của Puw ✨</span>
+              <div class="album-dots-wrap">
+                <!-- Huy hiệu thông báo trạng thái tự cuộn -->
+                <span class="autoslide-badge" id="autoslide-indicator" title="Ảnh tự động cuộn mỗi 3.2 giây ✨">
+                  <span class="autoslide-dot"></span> Tự cuộn 3.2s
+                </span>
+                <div class="album-dots" id="album-dots">
+                  <!-- Các chấm tròn chỉ số ảnh do Javascript tự sinh -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Lời nhắc nhở nhí nhảnh yêu cầu chủ thớt đăng nhiều ảnh selfie hơn -->
+            <div class="album-reminder-box" id="album-reminder-box" title="Chạm vào để yêu cầu đăng thêm ảnh hoặc tự tải ảnh lên nè 📸✨">
+              <div class="reminder-left">
+                <span class="reminder-icon">📢</span>
+                <span class="reminder-text"><strong>Lời nhắc:</strong> Yêu cầu chủ thớt phải đăng nhiều tấm selfie hơn nhaa! 📸✨🐾</span>
+              </div>
+              <button type="button" class="btn-quick-upload" id="btn-quick-upload" title="Bấm vào để đăng thêm ảnh mới">📸 Đăng thêm ảnh</button>
+              <input type="file" id="album-upload-input" accept="image/*" multiple style="display:none;" />
+            </div>
+
+            <!-- Khung chứa danh sách các tấm ảnh Polaroid -->
+            <div class="album-slider" id="album-slider">
+              
+              <!-- 📷 TẤM ẢNH 1: Kính tròn ăn gà rán siêu cute (file photo1.png) -->
+              <div class="polaroid-card active" data-index="0">
+                <div class="tape-strip"></div>
+                <div class="photo-frame">
+                  <!-- ✏️ [CHỖ ĐỔI ẢNH 1]: Thay đổi tên file photo1.png nếu bạn có ảnh mới -->
+                  <img src="photo1.png" alt="Ảnh 1 của Thu Phương" class="polaroid-img" />
+                  <div class="photo-badge">Cute phô Mai wueeeee</div>
+                </div>
+                <div class="photo-caption">
+                  <!-- ✏️ [CHỖ ĐỔI CHỮ CHÚ THÍCH ẢNH 1] -->
+                  <span class="caption-title">Puw Ngốch Nghếch </span>
+                  <span class="caption-sub">Đeo kính tròn siêu đáng yêu</span>
+                </div>
+              </div>
+
+              <!-- 📷 TẤM ẢNH 2: Filter cún cưng lấp lánh (file photo2.png) -->
+              <div class="polaroid-card" data-index="1">
+                <div class="tape-strip"></div>
+                <div class="photo-frame">
+                  <!-- ✏️ [CHỖ ĐỔI ẢNH 2]: Thay đổi tên file photo2.png nếu bạn có ảnh mới -->
+                  <img src="photo2.png" alt="Ảnh 2 của Thu Phương" class="polaroid-img" />
+                  <div class="photo-badge">Cún cưng lấp lánh 🐶</div>
+                </div>
+                <div class="photo-caption">
+                  <!-- ✏️ [CHỖ ĐỔI CHỮ CHÚ THÍCH ẢNH 2] -->
+                  <span class="caption-title">Dịu Dàng & Lung Linh 🌸</span>
+                  <span class="caption-sub">Ánh mắt và nụ cười cực cuốn</span>
+                </div>
+              </div>
+
+              <!-- 📷 TẤM ẢNH 3: Photobooth 3 tấm & Gấu bông (file photo3.png) -->
+              <div class="polaroid-card" data-index="2">
+                <div class="tape-strip"></div>
+                <div class="photo-frame">
+                  <!-- ✏️ [CHỖ ĐỔI ẢNH 3]: Thay đổi tên file photo3.png nếu bạn có ảnh mới -->
+                  <img src="photo3.png" alt="Ảnh 3 của Thu Phương" class="polaroid-img" />
+                  <div class="photo-badge">Kate & Jackson 🐰</div>
+                </div>
+                <div class="photo-caption">
+                  <!-- ✏️ [CHỖ ĐỔI CHỮ CHÚ THÍCH ẢNH 3] -->
+                  <span class="caption-title">Bộ Ba Ảnh Xinh Xỉu 📸</span>
+                  <span class="caption-sub">Mũ nồi beret chuẩn nàng thơ</span>
+                </div>
+              </div>
+
+              <!-- 📷 TẤM ẢNH 4: Mũ ngược chu môi cá tính (file photo4.png) -->
+              <div class="polaroid-card" data-index="3">
+                <div class="tape-strip"></div>
+                <div class="photo-frame">
+                  <!-- ✏️ [CHỖ ĐỔI ẢNH 4]: Thay đổi tên file photo4.png nếu bạn có ảnh mới -->
+                  <img src="photo4.png" alt="Ảnh 4 của Thu Phương" class="polaroid-img" />
+                  <div class="photo-badge">Hờn dỗi 100 điểm 🧢</div>
+                </div>
+                <div class="photo-caption">
+                  <!-- ✏️ [CHỖ ĐỔI CHỮ CHÚ THÍCH ẢNH 4] -->
+                  <span class="caption-title">Cá Tính & Nghịch Ngợm ✨</span>
+                  <span class="caption-sub">Mặt hờn dỗi mà vẫn cưng hết nấc</span>
+                </div>
+              </div>
+
+              <!-- 📷 TẤM ẢNH 5: Avatar profile xinh đẹp (file avatar.jpg) -->
+              <div class="polaroid-card" data-index="4">
+                <div class="tape-strip"></div>
+                <div class="photo-frame">
+                  <!-- ✏️ [CHỖ ĐỔI ẢNH 5]: Thay đổi tên file avatar.jpg nếu bạn có ảnh mới -->
+                  <img src="avatar.jpg" alt="Ảnh chân dung Thu Phương" class="polaroid-img" />
+                  <div class="photo-badge">Cô gái 20/10 💖</div>
+                </div>
+                <div class="photo-caption">
+                  <!-- ✏️ [CHỖ ĐỔI CHỮ CHÚ THÍCH ẢNH 5] -->
+                  <span class="caption-title">Nguyễn Thu Phương 🌸</span>
+                  <span class="caption-sub">Cái mặt rất bướng</span>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Nút bấm chuyển ảnh thủ công qua lại nếu muốn dừng ngắm kỹ -->
+            <div class="album-nav-bar">
+              <button id="btn-prev-slide" class="slide-nav-btn" aria-label="Xem ảnh trước">‹</button>
+              <span class="slide-counter" id="slide-counter">1 / 5</span>
+              <button id="btn-next-slide" class="slide-nav-btn" aria-label="Xem ảnh sau">›</button>
+            </div>
+          </div>
+
+        </div>
+
+
+        <!-- ======================= CỘT BÊN PHẢI: BỨC THƯ KẾ TOÁN ======================= -->
+        <div class="content-column">
+          <div class="letter-card glassmorphism">
+            <div class="letter-tag">BÁO CÁO TÀI CHÍNH CẢM XÚC 20/10</div>
+            
+            <!-- ✏️ [CHỖ SỬA TÊN NGƯỜI NHẬN TRÊN THƯ] -->
+            <h2 class="letter-heading">
+              Gửi <span class="highlight-name">Thu Phương</span> ✨
+            </h2>
+            <div class="sub-greeting">Chúc mừng Ngày Phụ Nữ Việt Nam 20/10!</div>
+
+            <!-- ---------------------------------------------------------------- -->
+            <!-- 📝 [NỘI DUNG TỪNG ĐOẠN TRONG BỨC THƯ GỬI THU PHƯƠNG]              -->
+            <!-- Bạn có thể thêm, bớt hoặc sửa từng chữ trong các thẻ <p> dưới đây  -->
+            <!-- ---------------------------------------------------------------- -->
+            <div class="letter-body">
+              <p class="paragraph">
+                Chào Phương, một cô sinh viên năm 3 ngành Kế toán vừa thông minh, vừa mê boss mèo siêu đáng yêu!
+              </p>
+              
+              <p class="paragraph">
+                Dân Kế toán suốt ngày phải đau đầu vì những bảng cân đối nợ - có, những hàm Excel dài dằng dặc và hóa đơn chứng từ. Còn dân công nghệ bọn mình thì chỉ biết cắm đầu vào màn hình gõ những dòng code vô tri...
+              </p>
+
+              <p class="paragraph">
+                Nhưng hôm nay, thay vì một bảng cân đối số học khô khan, có một <em>"Báo cáo tài chính cảm xúc"</em> đặc biệt được lập ra chỉ để dành riêng cho cậu:
+              </p>
+
+              <!-- 📊 BẢNG CÂN ĐỐI TÀI CHÍNH CẢM XÚC (HÀI HƯỚC & ĐÁNG YÊU) -->
+              <div class="accounting-ledger">
+                <div class="ledger-row">
+                  <span class="ledger-label">📌 Nợ TK 111 (Nụ cười):</span>
+                  <span class="ledger-val">Luôn rạng rỡ 24/7, không bao giờ suy giảm</span>
+                </div>
+                <div class="ledger-row">
+                  <span class="ledger-label">📌 Có TK 20/10 (Hạnh phúc):</span>
+                  <span class="ledger-val">Tăng không giới hạn, lãi ròng niềm vui</span>
+                </div>
+                <div class="ledger-row">
+                  <span class="ledger-label">📌 Nợ môn & Deadline:</span>
+                  <span class="ledger-val">Trích lập dự phòng = 0, Auto qua môn điểm cao!</span>
+                </div>
+                <div class="ledger-row highlight">
+                  <span class="ledger-label">🐾 Tình yêu động vật:</span>
+                  <span class="ledger-val">Gặp mèo là được dụi, chó cưng vẫy đuôi mừng!</span>
+                </div>
+              </div>
+
+              <p class="paragraph">
+                Chúc Thu Phương luôn xinh đẹp, tự tin và học tập thật tốt trong năm 3 này. Mong cậu luôn giữ được sự dịu dàng, nụ cười tỏa nắng và luôn được cưng chiều, hạnh phúc như cách cậu yêu thương những chú mèo vậy!
+              </p>
+
+              <p class="paragraph closing">
+                Cảm ơn vì đã là một người bạn / một sự xuất hiện thật đặc biệt và đáng yêu trong cuộc sống này! 🌸
+              </p>
+            </div>
+
+            <!-- Các nút bấm tương tác vui nhộn cuối bức thư -->
+            <div class="letter-actions">
+              <button id="btn-bloom-more" class="magic-btn primary">
+                <span class="btn-emoji">🌸</span> Thả hoa & Tim
+              </button>
+              <button id="btn-secret-msg" class="magic-btn secondary">
+                <span class="btn-emoji">💌</span> Thông điệp bí mật
+              </button>
+              <button id="btn-cat-meow" class="magic-btn cat-btn">
+                <span class="btn-emoji">🐾</span> Meow meow!
+              </button>
+            </div>
+
+            <!-- Dòng chữ bản quyền nhỏ xinh ở chân bức thư -->
+            <div class="footer-credit">
+              <span>Special 20.10 Build • Dedicated to Nguyễn Thu Phương 💖</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ========================================================================== -->
+  <!-- 💌 PHẦN 4: HỘP THOẠI BẬT MÍ BÍ MẬT (POPUP MODAL KHI BẤM NÚT) 💌            -->
+  <!-- ========================================================================== -->
+  <div id="secret-modal" class="modal-overlay">
+    <div class="modal-card glassmorphism">
+      <div class="modal-header">
+        <div class="modal-icon">🐱</div>
+        <h3>Bật Mí Nhỏ Cho Thu Phương</h3>
+        <button id="modal-close" class="modal-close-btn" aria-label="Đóng cửa sổ">&times;</button>
+      </div>
+      <!-- ✏️ [CHỖ SỬA NỘI DUNG POPUP BẬT MÍ]: Bạn có thể sửa lời tâm sự ở đây -->
+      <div class="modal-body">
+        <p>
+          Cô bíc j khummm, ngta bảo cgai học Kế toán thường rất khô khan, ngtắc, luôn giữ 1 cái đầu lạnh, làm j cx nhạy bén, chu toàn đâu ra đey
+        </p>
+        <p>
+          Và Cô đôi lúc hơi bị biếng ăn đó nha! 😝
+        </p>
+        <p class="modal-highlight">
+          Nếu cậu thấy trang web này vui và thú vị... thì hãy gửi ngay cho người đã tạo cái đống này vài tấm hình cô đang cười, để ngta biết là cô đang cừi! 😉
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button id="modal-confirm" class="magic-btn primary">Mình mỉm cười rồi nè! 🥰</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hộp thông báo nhanh (Toast) xuất hiện khi người dùng bấm các nút tương tác -->
+  <div id="toast" class="toast"></div>
+
+
+  <!-- ========================================================================== -->
+  <!-- ⚙️ PHẦN 5: LIÊN KẾT FILE JAVASCRIPT RIÊNG BIỆT (SCRIPT.JS) ⚙️               -->
+  <!-- Toàn bộ code logic, lưu file, âm thanh, hiệu ứng được đặt trong script.js -->
+  <!-- ========================================================================== -->
+  <script src="script.js"></script>
+
+</body>
+</html>

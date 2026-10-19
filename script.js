@@ -1,13 +1,5 @@
-/**
- * 20/10 Special Gift for Thu Phương
- * - Year 3 Accounting Student
- * - Cat Lover 🐱 & Radiant Smile
- * - Gatekeeper Name Verification Lock Screen, Interactive Coder Intro, Minigame, Accounting Quiz, 3D Polaroid Album & Letter
- */
+/* JAVASCRIPT ĐIỀU KHIỂN HOẠT HỌA & LOGIC 20/10 NGUYỄN THU PHƯƠNG */
 
-// ========================================================
-// 1. PROCEDURAL SOUND SYNTHESIZER (Web Audio API)
-// ========================================================
 class SoundFX {
   constructor() {
     this.ctx = null;
@@ -15,24 +7,23 @@ class SoundFX {
     this.musicTimer = null;
     this.melodyIndex = 0;
 
-    // Romantic music box melody (frequencies in Hz)
     this.melody = [
-      { f: 349.23, d: 0.45 }, // F4
-      { f: 440.00, d: 0.45 }, // A4
-      { f: 523.25, d: 0.65 }, // C5
-      { f: 659.25, d: 0.85 }, // E5
-      { f: 587.33, d: 0.50 }, // D5
-      { f: 440.00, d: 0.35 }, // A4
-      { f: 523.25, d: 0.70 }, // C5
-      { f: 392.00, d: 0.50 }, // G4
-      { f: 440.00, d: 0.45 }, // A4
-      { f: 523.25, d: 0.45 }, // C5
-      { f: 587.33, d: 0.55 }, // D5
-      { f: 659.25, d: 0.95 }, // E5
-      { f: 523.25, d: 0.45 }, // C5
-      { f: 440.00, d: 0.45 }, // A4
-      { f: 392.00, d: 0.85 }, // G4
-      { f: 349.23, d: 1.10 }  // F4
+      { f: 349.23, d: 0.45 },
+      { f: 440.00, d: 0.45 },
+      { f: 523.25, d: 0.65 },
+      { f: 659.25, d: 0.85 },
+      { f: 587.33, d: 0.50 },
+      { f: 440.00, d: 0.35 },
+      { f: 523.25, d: 0.70 },
+      { f: 392.00, d: 0.50 },
+      { f: 440.00, d: 0.45 },
+      { f: 523.25, d: 0.45 },
+      { f: 587.33, d: 0.55 },
+      { f: 659.25, d: 0.95 },
+      { f: 523.25, d: 0.45 },
+      { f: 440.00, d: 0.45 },
+      { f: 392.00, d: 0.85 },
+      { f: 349.23, d: 1.10 }
     ];
   }
 
@@ -46,7 +37,6 @@ class SoundFX {
     }
   }
 
-  // Play a music box chime
   playNote(freq, duration) {
     if (!this.ctx) return;
     const now = this.ctx.currentTime;
@@ -74,63 +64,88 @@ class SoundFX {
     osc2.stop(now + duration + 1.3);
   }
 
-  // Cute kitten meow sound 🐱
   playMeow() {
-    this.init();
-    if (!this.ctx) return;
-    const now = this.ctx.currentTime;
-    const osc = this.ctx.createOscillator();
-    const gain = this.ctx.createGain();
+    try {
+      this.init();
+      if (!this.ctx) return;
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
 
-    osc.type = 'triangle';
-    osc.frequency.setValueAtTime(450, now);
-    osc.frequency.exponentialRampToValueAtTime(750, now + 0.12);
-    osc.frequency.exponentialRampToValueAtTime(520, now + 0.35);
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(450, now);
+      osc.frequency.exponentialRampToValueAtTime(750, now + 0.12);
+      osc.frequency.exponentialRampToValueAtTime(520, now + 0.35);
 
-    gain.gain.setValueAtTime(0.01, now);
-    gain.gain.linearRampToValueAtTime(0.3, now + 0.08);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+      gain.gain.setValueAtTime(0.01, now);
+      gain.gain.linearRampToValueAtTime(0.3, now + 0.08);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
 
-    osc.connect(gain);
-    gain.connect(this.ctx.destination);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
 
-    osc.start(now);
-    osc.stop(now + 0.42);
+      osc.start(now);
+      osc.stop(now + 0.42);
+    } catch(e) {}
   }
 
-  // Sparkle chime sound
   playSparkle() {
-    this.init();
-    if (!this.ctx) return;
-    const notes = [587.33, 783.99, 880.0, 1174.66];
-    notes.forEach((f, idx) => {
-      setTimeout(() => this.playNote(f, 0.3), idx * 70);
-    });
+    try {
+      this.init();
+      if (!this.ctx) return;
+      const notes = [587.33, 783.99, 880.0, 1174.66];
+      notes.forEach((f, idx) => {
+        setTimeout(() => this.playNote(f, 0.3), idx * 70);
+      });
+    } catch(e) {}
   }
 
-  // Gentle buzz for wrong input
+  playPop() {
+    try {
+      this.init();
+      if (!this.ctx) return;
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(450, now);
+      osc.frequency.exponentialRampToValueAtTime(850, now + 0.08);
+
+      gain.gain.setValueAtTime(0.08, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(now);
+      osc.stop(now + 0.12);
+    } catch(e) {}
+  }
+
   playBuzz() {
-    this.init();
-    if (!this.ctx) return;
-    const now = this.ctx.currentTime;
-    const osc = this.ctx.createOscillator();
-    const gain = this.ctx.createGain();
+    try {
+      this.init();
+      if (!this.ctx) return;
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
 
-    osc.type = 'sawtooth';
-    osc.frequency.setValueAtTime(150, now);
-    osc.frequency.linearRampToValueAtTime(100, now + 0.2);
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(150, now);
+      osc.frequency.linearRampToValueAtTime(100, now + 0.2);
 
-    gain.gain.setValueAtTime(0.08, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+      gain.gain.setValueAtTime(0.08, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
 
-    osc.connect(gain);
-    gain.connect(this.ctx.destination);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
 
-    osc.start(now);
-    osc.stop(now + 0.25);
+      osc.start(now);
+      osc.stop(now + 0.25);
+    } catch(e) {}
   }
 
-  // Background Music loop
   startMusic() {
     this.init();
     this.isMusicPlaying = true;
@@ -164,7 +179,6 @@ class SoundFX {
 
 const soundFX = new SoundFX();
 
-// Helper to remove Vietnamese diacritics for flexible matching
 function removeDiacritics(str) {
   return str
     .normalize('NFD')
@@ -175,9 +189,7 @@ function removeDiacritics(str) {
     .trim();
 }
 
-// ========================================================
-// 2. STAGE 0: GATEKEEPER NAME VERIFICATION
-// ========================================================
+// Gatekeeper Name & Info Verification + 20/10 Quiz Flow
 const lockScreen = document.getElementById('lock-screen');
 const stepInfo = document.getElementById('step-info');
 const stepQuiz = document.getElementById('step-quiz');
@@ -187,15 +199,15 @@ const dobInput = document.getElementById('user-dob-input');
 const lockErrorMsg = document.getElementById('lock-error-msg');
 const btnToggleHint = document.getElementById('btn-toggle-hint');
 const lockHintText = document.getElementById('lock-hint-text');
-
-const quizStepIndicator = document.getElementById('quiz-step-indicator');
-const quizQ1 = document.getElementById('quiz-q1');
-const quizQ2 = document.getElementById('quiz-q2');
+const giftScreen = document.getElementById('gift-screen');
+const quizForm = document.getElementById('quiz-form');
+const quizAns1 = document.getElementById('quiz-ans-1');
+const quizAns2 = document.getElementById('quiz-ans-2');
+const quizError1 = document.getElementById('quiz-error-1');
+const quizError2 = document.getElementById('quiz-error-2');
 const quizFeedback = document.getElementById('quiz-feedback');
 const btnBackToInfo = document.getElementById('btn-back-to-info');
-const btnDownloadRecord = document.getElementById('btn-download-record');
 
-// Check name validity: "Nguyễn Thu Phương", "Thu Phương", "Phương Thu", etc.
 function isNameValid(val) {
   const raw = val.toLowerCase().trim();
   const normalized = removeDiacritics(raw);
@@ -219,6 +231,30 @@ function isNameValid(val) {
   });
 }
 
+// Kiểm tra câu trả lời 1: "Mai là ngày bao nhiêu?"
+function isQ1Valid(val) {
+  const norm = removeDiacritics(val.toLowerCase().trim());
+  if (!norm) return false;
+  
+  // Chấp nhận: 20/10, 20-10, 20.10, 20th10, 20 tháng 10, ngày 20, 20...
+  const has20And10 = norm.includes('20/10') || norm.includes('20-10') || norm.includes('20.10') || norm.includes('20th10') ||
+                     (norm.includes('20') && (norm.includes('10') || norm.includes('muoi'))) ||
+                     (norm.includes('hai muoi') && (norm.includes('muoi') || norm.includes('10')));
+  const isJust20 = /^\s*(ngay\s*)?20(\s*thang\s*10)?\s*$/.test(norm);
+  const isHas20 = norm.includes('20');
+  return has20And10 || isJust20 || isHas20;
+}
+
+// Kiểm tra câu trả lời 2: "Mai là ngày gì?"
+// 4 Lựa chọn: A: Ngày giải phóng thủ đô, B: Ngày quốc tế phụ nữ, C: Ngày phụ nữ Việt Nam, D: Ngày nhà giáo Việt Nam
+function isQ2Valid(val) {
+  if (!val) return false;
+  const norm = removeDiacritics(val.toLowerCase().trim());
+  // Đáp án đúng duy nhất là C: Ngày phụ nữ Việt Nam
+  return val === 'C' || norm.includes('phu nu viet nam') || norm.includes('phu nu vn') || (norm.includes('phu nu') && norm.includes('viet nam'));
+}
+
+// Hàm lưu dữ liệu vào Server (ghi file thong_tin_thu_phuong.txt trên máy) & LocalStorage
 function recordUserData(fullName, dob) {
   const timeStr = new Date().toLocaleString('vi-VN');
   const txtContent = `============================================================\n` +
@@ -229,37 +265,26 @@ function recordUserData(fullName, dob) {
     `📱 Thiết bị/Trình duyệt: ${navigator.userAgent}\n` +
     `============================================================\n`;
 
+  // 1. Lưu vào LocalStorage
   const recordObj = { fullName, dob, timeStr, txtContent };
   localStorage.setItem('saved_thu_phuong_info', JSON.stringify(recordObj));
 
+  // 2. Gửi về Local Node Server ghi trực tiếp vào file .txt và .json
   fetch('/api/save-info', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ fullName, dob, timeStr })
   })
   .then(res => res.json())
-  .then(data => console.log('[RECORD-SAVED]', data))
-  .catch(err => console.warn('[SERVERLESS / OFFLINE BACKUP MODE]', err));
+  .then(data => {
+    console.log('[RECORD-SAVED-SERVER]', data);
+  })
+  .catch(err => {
+    console.warn('[SERVERLESS / OFFLINE BACKUP MODE]', err);
+  });
 }
 
-function triggerFileDownload(content, filename = 'thong_tin_thu_phuong.txt') {
-  try {
-    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    setTimeout(() => {
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }, 100);
-  } catch (err) {
-    console.error('Download error:', err);
-  }
-}
-
+// BƯỚC 1: Xử lý Submit Form Thông Tin Cá Nhân
 function handleInfoSubmit() {
   const enteredName = nameInput.value.trim();
   const enteredDob = dobInput.value.trim();
@@ -283,416 +308,300 @@ function handleInfoSubmit() {
     return;
   }
 
+  // Thông tin hợp lệ -> Lưu vào file & chuyển sang Bước 2 (Quiz)
   soundFX.playSparkle();
   triggerConfetti(40);
-  if (lockErrorMsg) lockErrorMsg.classList.add('hidden');
+  lockErrorMsg.classList.add('hidden');
 
   recordUserData(enteredName, enteredDob);
-  showToast("💌 Đã ghi nhận thông tin của Thu Phương! Tiếp tục làm mini quiz nhé ✨");
+  showToast("💌 Đã ghi nhận thông tin của Thu Phương! Tiếp tục trả lời 2 câu hỏi nhé ✨");
 
-  if (stepInfo) stepInfo.classList.add('hidden');
-  if (stepQuiz) {
-    stepQuiz.classList.remove('hidden');
-    initQuizStep();
-  }
+  // Chuyển sang Bước 2 (Trả lời 2 câu hỏi)
+  stepInfo.classList.add('hidden');
+  stepQuiz.classList.remove('hidden');
+  if (quizAns1) quizAns1.focus();
 }
 
 function showLockError(msg) {
-  if (lockErrorMsg) {
-    lockErrorMsg.textContent = msg;
-    lockErrorMsg.classList.remove('hidden');
-  }
+  lockErrorMsg.textContent = msg;
+  lockErrorMsg.classList.remove('hidden');
 }
 
-function initQuizStep() {
-  if (quizStepIndicator) quizStepIndicator.textContent = "✨ Câu hỏi 1 / 2";
-  if (quizQ1) quizQ1.classList.remove('hidden');
-  if (quizQ2) quizQ2.classList.add('hidden');
-  if (quizFeedback) quizFeedback.classList.add('hidden');
+// BƯỚC 2: Xử lý Submit Form Câu Hỏi 20/10 (Gõ tay đối chiếu)
+function handleQuizSubmit(e) {
+  if (e) e.preventDefault();
 
-  document.querySelectorAll('.quiz-opt-btn').forEach(btn => {
-    btn.classList.remove('correct-choice', 'wrong-choice');
-    btn.disabled = false;
+  const ans1 = quizAns1 ? quizAns1.value.trim() : '';
+  const ans2 = quizAns2 ? quizAns2.value.trim() : '';
+
+  let hasError = false;
+
+  // Kiểm tra câu 1
+  if (!ans1) {
+    quizError1.textContent = "Cậu chưa trả lời câu 1 kìa! Mai là ngày bao nhiêu nà? 🤔";
+    quizError1.classList.remove('hidden');
+    quizAns1.classList.add('input-error');
+    if (!hasError) quizAns1.focus();
+    hasError = true;
+  } else if (!isQ1Valid(ans1)) {
+    soundFX.playBuzz();
+    quizError1.textContent = "Ủa chưa đúng nà! Gợi ý: Ngày mai là ngày mấy trong tháng 10 thế nà (ví dụ: 20/10) 🤭";
+    quizError1.classList.remove('hidden');
+    quizAns1.classList.add('input-error');
+    if (!hasError) quizAns1.focus();
+    hasError = true;
+  } else {
+    quizError1.classList.add('hidden');
+    quizAns1.classList.remove('input-error');
+  }
+
+  // Kiểm tra câu 2 (Trắc nghiệm 4 lựa chọn)
+  if (!ans2) {
+    quizError2.textContent = "Cậu hãy bấm chọn 1 trong 4 đáp án (A, B, C hoặc D) ở trên nhé! 🥰";
+    quizError2.classList.remove('hidden');
+    hasError = true;
+  } else if (!isQ2Valid(ans2)) {
+    soundFX.playBuzz();
+    if (ans2 === 'A') {
+      quizError2.textContent = "Ủa Ngày giải phóng thủ đô là ngày 10/10 vừa rồi nè! Chọn lại đáp án khác nha 🤭";
+    } else if (ans2 === 'B') {
+      quizError2.textContent = "Ngày quốc tế phụ nữ là ngày 8/3 cơ á! Mai là ngày của Việt Nam mình nà 💐";
+    } else if (ans2 === 'D') {
+      quizError2.textContent = "Ngày nhà giáo Việt Nam là ngày 20/11 mà ta! Nhìn kỹ lại nha cậu 🎓";
+    } else {
+      quizError2.textContent = "Hehe chưa chính xác! Gợi ý: Mai là Ngày Phụ Nữ Việt Nam đó nha 💖";
+    }
+    quizError2.classList.remove('hidden');
+    hasError = true;
+  } else {
+    quizError2.classList.add('hidden');
+  }
+
+  if (hasError) return;
+
+  // CẢ 2 CÂU ĐỀU ĐÚNG!
+  soundFX.playSparkle();
+  triggerConfetti(85);
+
+  quizFeedback.className = 'quiz-feedback success';
+  quizFeedback.textContent = "🎉 100 ĐIỂM! Thu Phương nhớ chuẩn đét luôn! Món quà 20/10 mở ra ngay đây... 💐💖";
+  quizFeedback.classList.remove('hidden');
+
+  // Lấy chi tiết text của câu trả lời 2 để lưu
+  const q2SelectedBtn = document.querySelector('#quiz-q2-options .quiz-option-btn.selected');
+  const q2SavedText = q2SelectedBtn ? `${q2SelectedBtn.getAttribute('data-opt')}: ${q2SelectedBtn.getAttribute('data-text')}` : ans2;
+
+  // Lưu bổ sung câu trả lời vào record & server
+  const currentSaved = localStorage.getItem('saved_thu_phuong_info');
+  let savedName = nameInput.value.trim();
+  let savedDob = dobInput.value.trim();
+  if (currentSaved) {
+    try {
+      const obj = JSON.parse(currentSaved);
+      obj.q1 = ans1;
+      obj.q2 = q2SavedText;
+      savedName = obj.fullName || savedName;
+      savedDob = obj.dob || savedDob;
+      localStorage.setItem('saved_thu_phuong_info', JSON.stringify(obj));
+    } catch(err){}
+  }
+
+  fetch('/api/save-info', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ fullName: savedName, dob: savedDob, q1: ans1, q2: q2SavedText })
+  }).catch(() => {});
+
+  // Bật nhạc tự động
+  playRealSong();
+
+  // Chuyển thẳng vào Màn Quà Tặng Chính Thức!
+  setTimeout(() => {
+    lockScreen.classList.remove('active');
+    setTimeout(() => {
+      giftScreen.classList.add('active');
+      triggerConfetti(75);
+      startRoseAnimation();
+      initAlbumSlider();
+      showToast("✨ Chúc mừng 20/10 Nguyễn Thu Phương xinh đẹp nhất trần đời! 🌸");
+    }, 350);
+  }, 1000);
+}
+
+// Hàm chọn đáp án Câu hỏi 2 (Gắn cả toàn cục window để gọi trực tiếp từ onclick)
+window.selectQuizOption = function(btn, opt) {
+  if (!btn) return;
+  try {
+    if (window.soundFX && typeof window.soundFX.playPop === 'function') {
+      window.soundFX.playPop();
+    }
+  } catch(e) {}
+
+  const optText = btn.getAttribute('data-text') || '';
+  const allBtns = document.querySelectorAll('#quiz-q2-options .quiz-option-btn');
+  allBtns.forEach(b => {
+    b.classList.remove('selected', 'correct-glow', 'wrong-shake');
   });
 
-  setupQuizHandlers();
-}
-
-function setupQuizHandlers() {
-  if (quizQ1) {
-    const q1Buttons = quizQ1.querySelectorAll('.quiz-opt-btn');
-    q1Buttons.forEach(btn => {
-      btn.onclick = () => {
-        const isCorrect = btn.getAttribute('data-correct') === 'true';
-        if (isCorrect) {
-          soundFX.playSparkle();
-          triggerConfetti(45);
-          btn.classList.add('correct-choice');
-          q1Buttons.forEach(b => b.disabled = true);
-
-          if (quizFeedback) {
-            quizFeedback.className = 'quiz-feedback success';
-            quizFeedback.textContent = "✨ Chuẩn đét luôn! Ngày 20/10 rực rỡ nè... Tiếp câu 2 nha! 🌸";
-            quizFeedback.classList.remove('hidden');
-          }
-
-          setTimeout(() => {
-            if (quizFeedback) quizFeedback.classList.add('hidden');
-            if (quizQ1) quizQ1.classList.add('hidden');
-            if (quizQ2) quizQ2.classList.remove('hidden');
-            if (quizStepIndicator) quizStepIndicator.textContent = "✨ Câu hỏi 2 / 2";
-          }, 900);
-        } else {
-          soundFX.playBuzz();
-          btn.classList.add('wrong-choice');
-          setTimeout(() => btn.classList.remove('wrong-choice'), 600);
-
-          if (quizFeedback) {
-            quizFeedback.className = 'quiz-feedback retry';
-            quizFeedback.textContent = "Hehe mai không phải ngày này âu, chọn lại thử xem nè 🐾";
-            quizFeedback.classList.remove('hidden');
-          }
-        }
-      };
-    });
+  btn.classList.add('selected');
+  const quizAns2El = document.getElementById('quiz-ans-2');
+  if (quizAns2El) {
+    quizAns2El.value = opt;
+    quizAns2El.setAttribute('data-selected-text', `${opt}: ${optText}`);
   }
 
-  if (quizQ2) {
-    const q2Buttons = quizQ2.querySelectorAll('.quiz-opt-btn');
-    q2Buttons.forEach(btn => {
-      btn.onclick = () => {
-        const isCorrect = btn.getAttribute('data-correct') === 'true';
-        if (isCorrect) {
-          soundFX.playSparkle();
-          triggerConfetti(80);
-          btn.classList.add('correct-choice');
-          q2Buttons.forEach(b => b.disabled = true);
+  const err2 = document.getElementById('quiz-error-2');
 
-          if (quizFeedback) {
-            quizFeedback.className = 'quiz-feedback success';
-            quizFeedback.textContent = "🎉 100 ĐIỂM! Món quà chính thức đang bung nở cho Thu Phương nè... 💐💖";
-            quizFeedback.classList.remove('hidden');
-          }
-
-          if (typeof playRealSong === 'function') playRealSong();
-
-          setTimeout(() => {
-            if (lockScreen) lockScreen.classList.remove('active');
-            setTimeout(() => {
-              const giftScreen = document.getElementById('gift-screen');
-              if (giftScreen) giftScreen.classList.add('active');
-              triggerConfetti(70);
-              if (typeof startRoseAnimation === 'function') startRoseAnimation();
-              if (typeof initAlbumSlider === 'function') initAlbumSlider();
-              showToast("✨ Chúc mừng 20/10 Nguyễn Thu Phương xinh đẹp nhất trần đời! 🌸");
-            }, 350);
-          }, 1100);
-        } else {
-          soundFX.playBuzz();
-          btn.classList.add('wrong-choice');
-          setTimeout(() => btn.classList.remove('wrong-choice'), 600);
-
-          if (quizFeedback) {
-            quizFeedback.className = 'quiz-feedback retry';
-            quizFeedback.textContent = "Ủa chưa đúng nà! Mai là ngày siêu ý nghĩa cơ mà, đoán lại nà 🤭";
-            quizFeedback.classList.remove('hidden');
-          }
-        }
-      };
-    });
+  if (opt === 'C') {
+    btn.classList.add('correct-glow');
+    try {
+      if (window.soundFX && typeof window.soundFX.playSparkle === 'function') {
+        window.soundFX.playSparkle();
+      }
+    } catch(e) {}
+    if (err2) {
+      err2.style.color = '#059669';
+      err2.textContent = "✨ Chuẩn đét luôn! Mai là Ngày Phụ Nữ Việt Nam 💐 Bấm mở quà ngay nhé!";
+      err2.classList.remove('hidden');
+    }
+  } else {
+    btn.classList.add('wrong-shake');
+    try {
+      if (window.soundFX && typeof window.soundFX.playBuzz === 'function') {
+        window.soundFX.playBuzz();
+      }
+    } catch(e) {}
+    if (err2) {
+      err2.style.color = '#dc2626';
+      if (opt === 'A') {
+        err2.textContent = "Ủa Ngày giải phóng thủ đô là ngày 10/10 vừa rồi nè! Chọn lại đáp án khác nha 🤭";
+      } else if (opt === 'B') {
+        err2.textContent = "Ngày quốc tế phụ nữ là ngày 8/3 cơ á! Mai là ngày của Việt Nam mình nà 💐";
+      } else if (opt === 'D') {
+        err2.textContent = "Ngày nhà giáo Việt Nam là ngày 20/11 mà ta! Nhìn kỹ lại nha cậu 🎓";
+      }
+      err2.classList.remove('hidden');
+    }
   }
+};
+
+// Gắn sự kiện click cho 4 nút lựa chọn trắc nghiệm
+const quizOptionButtons = document.querySelectorAll('#quiz-q2-options .quiz-option-btn');
+quizOptionButtons.forEach(btn => {
+  const opt = btn.getAttribute('data-opt');
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    selectQuizOption(btn, opt);
+  });
+});
+
+// Xóa lỗi khi gõ vào ô trả lời câu 1
+if (quizAns1) {
+  quizAns1.addEventListener('input', () => {
+    quizError1.classList.add('hidden');
+    quizAns1.classList.remove('input-error');
+  });
 }
 
+// Nút quay lại sửa thông tin
 if (btnBackToInfo) {
   btnBackToInfo.addEventListener('click', () => {
-    if (stepQuiz) stepQuiz.classList.add('hidden');
-    if (stepInfo) stepInfo.classList.remove('hidden');
-    if (nameInput) nameInput.focus();
+    stepQuiz.classList.add('hidden');
+    stepInfo.classList.remove('hidden');
+    nameInput.focus();
   });
 }
 
-if (btnDownloadRecord) {
-  btnDownloadRecord.addEventListener('click', () => {
-    const raw = localStorage.getItem('saved_thu_phuong_info');
-    if (raw) {
-      try {
-        const parsed = JSON.parse(raw);
-        triggerFileDownload(parsed.txtContent || raw);
-        showToast("💾 Đã tải file thông tin về máy của bạn!");
-      } catch (e) {
-        triggerFileDownload(raw);
-      }
-    } else {
-      showToast("ℹ️ Chưa có thông tin nào được lưu! Hãy điền form trước nhé.");
+if (quizForm) {
+  quizForm.addEventListener('submit', handleQuizSubmit);
+}
+
+infoForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  handleInfoSubmit();
+});
+
+btnToggleHint.addEventListener('click', () => {
+  lockHintText.classList.toggle('hidden');
+});
+
+// Chức năng tải file báo cáo thông tin đã lưu
+const btnLockDownloadRecord = document.getElementById('btn-lock-download-record');
+
+function downloadSavedInfoTxt() {
+  const savedData = localStorage.getItem('saved_thu_phuong_info');
+  let content = '';
+  if (savedData) {
+    try {
+      const obj = JSON.parse(savedData);
+      content = `============================================================\n` +
+        `🌸 THÔNG TIN THU PHƯƠNG NHẬP VÀO HỆ THỐNG 20/10\n` +
+        `⏰ Thời gian ghi nhận: ${obj.timeStr || new Date().toLocaleString('vi-VN')}\n` +
+        `👤 Họ và tên: ${obj.fullName || 'Nguyễn Thu Phương'}\n` +
+        `🎂 Ngày tháng năm sinh: ${obj.dob || 'Chưa cập nhật'}\n` +
+        (obj.q1 ? `❓ Câu 1 (Mai là ngày bao nhiêu): ${obj.q1}\n` : '') +
+        (obj.q2 ? `❓ Câu 2 (Mai là ngày gì): ${obj.q2}\n` : '') +
+        `📱 Thiết bị/Trình duyệt: ${navigator.userAgent}\n` +
+        `============================================================\n`;
+    } catch(e) {
+      content = savedData;
     }
-  });
+  } else {
+    content = "Chưa có dữ liệu nào được lưu trong phiên này.";
+  }
+
+  const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `thong_tin_thu_phuong_${new Date().toISOString().slice(0, 10)}.txt`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  showToast("📥 Đã tải file thong_tin_thu_phuong.txt về máy!");
 }
 
-if (infoForm) {
-  infoForm.addEventListener('submit', (e) => {
+if (btnLockDownloadRecord) {
+  btnLockDownloadRecord.addEventListener('click', downloadSavedInfoTxt);
+}
+
+// Phím tắt bí mật: Ctrl + Shift + S để tải file mọi lúc
+window.addEventListener('keydown', (e) => {
+  if (e.ctrlKey && e.shiftKey && (e.key === 'S' || e.key === 's')) {
     e.preventDefault();
-    handleInfoSubmit();
-  });
-}
-
-if (btnToggleHint) {
-  btnToggleHint.addEventListener('click', () => {
-    if (lockHintText) lockHintText.classList.toggle('hidden');
-  });
-}
-
-// ========================================================
-// 3. STAGE 1: TERMINAL INTRO (Accounting & Cat Target Scan)
-// ========================================================
-const terminalContent = document.getElementById('terminal-content');
-const btnStartGame = document.getElementById('btn-start-game');
-const btnSkipTyping = document.getElementById('btn-skip-typing');
-const terminalScreen = document.getElementById('terminal-screen');
-const minigameScreen = document.getElementById('minigame-screen');
-const giftScreen = document.getElementById('gift-screen');
-
-const terminalLines = [
-  { text: "> [SYSTEM SCAN]: Quét mục tiêu trên máy chủ...", cls: "comment" },
-  { text: "> Target: Nguyễn Thu Phương | Sinh viên Năm 3 Kế Toán", cls: "keyword" },
-  { text: "> Sở thích phát hiện: Boss mèo 🐱, cún cưng 🐶, trà sữa, hoa tươi 🌸", cls: "string" },
-  { text: "> Cảnh báo hệ thống: Chỉ số mệt mỏi vì Bảng Cân Đối & Báo Cáo Tài Chính đang cao!", cls: "func" },
-  { text: "> Khởi chạy giao thức: 'GiaiCuuBossMeo_20_10.sh'...", cls: "keyword" },
-  { text: "> Nạp module: NuCuoiRangRo.dll & AutoQuaMon.pkg... [100% SUCCESS]", cls: "success" },
-  { text: "> Mục tiêu: Hoàn thành mini-game để cân đối Bảng Hạnh Phúc cho Thu Phương!", cls: "string" },
-  { text: "> Sẵn sàng! Nhấn nút bên dưới để giải cứu Boss Mèo & xem quà 20/10 ✨", cls: "highlight" }
-];
-
-let termLineIdx = 0;
-let termCharIdx = 0;
-let termTimer = null;
-
-function typeTerminal() {
-  if (termLineIdx >= terminalLines.length) {
-    btnStartGame.classList.add('glow');
-    return;
+    downloadSavedInfoTxt();
   }
-
-  const item = terminalLines[termLineIdx];
-  let el = document.getElementById(`term-l-${termLineIdx}`);
-  if (!el) {
-    el = document.createElement('div');
-    el.id = `term-l-${termLineIdx}`;
-    el.className = `line ${item.cls}`;
-    terminalContent.appendChild(el);
-  }
-
-  if (termCharIdx < item.text.length) {
-    el.textContent = item.text.substring(0, termCharIdx + 1);
-    termCharIdx++;
-    terminalContent.scrollTop = terminalContent.scrollHeight;
-    termTimer = setTimeout(typeTerminal, Math.random() * 20 + 15);
-  } else {
-    termLineIdx++;
-    termCharIdx = 0;
-    termTimer = setTimeout(typeTerminal, 160);
-  }
-}
-
-btnSkipTyping.addEventListener('click', () => {
-  if (termTimer) clearTimeout(termTimer);
-  terminalContent.innerHTML = '';
-  terminalLines.forEach(item => {
-    const el = document.createElement('div');
-    el.className = `line ${item.cls}`;
-    el.textContent = item.text;
-    terminalContent.appendChild(el);
-  });
-  terminalContent.scrollTop = terminalContent.scrollHeight;
-  btnStartGame.classList.add('glow');
 });
 
-// Transition Terminal -> Minigame
-btnStartGame.addEventListener('click', () => {
-  soundFX.playSparkle();
-  terminalScreen.classList.remove('active');
-  setTimeout(() => {
-    minigameScreen.classList.add('active');
-    initMinigame();
-  }, 400);
-});
-
-// ========================================================
-// 4. STAGE 2: MINIGAME (Catch Boss Mèo & Bảng Cân Đối)
-// ========================================================
-const gameArena = document.getElementById('game-arena');
-const progressFill = document.getElementById('game-progress-fill');
-const scoreText = document.getElementById('score-text');
-const scoreStatus = document.getElementById('score-status');
-const quizBox = document.getElementById('quiz-box');
-const quizResult = document.getElementById('quiz-result');
-const btnSkipToGift = document.getElementById('btn-skip-to-gift');
-
-let gameScore = 0;
-const targetScore = 5;
-let spawnInterval = null;
-const gameIcons = ['🐱', '🌸', '😸', '🌹', '🐾', '💐', '🐶', '💖'];
-
-function initMinigame() {
-  gameScore = 0;
-  updateScoreUI();
-  scoreStatus.textContent = "Boss mèo đang xuất hiện!";
-  
-  if (spawnInterval) clearInterval(spawnInterval);
-  spawnInterval = setInterval(spawnGameTarget, 900);
-  spawnGameTarget();
-}
-
-function spawnGameTarget() {
-  if (gameScore >= targetScore) return;
-
-  const target = document.createElement('div');
-  target.className = 'game-target';
-  const icon = gameIcons[Math.floor(Math.random() * gameIcons.length)];
-  target.textContent = icon;
-
-  const arenaWidth = gameArena.clientWidth - 50;
-  const arenaHeight = gameArena.clientHeight - 50;
-  const x = Math.max(10, Math.random() * arenaWidth);
-  const y = Math.max(10, Math.random() * arenaHeight);
-
-  target.style.left = `${x}px`;
-  target.style.top = `${y}px`;
-
-  target.addEventListener('click', (e) => {
-    e.stopPropagation();
-    catchTarget(target, icon, x, y);
-  });
-
-  target.addEventListener('touchstart', (e) => {
-    e.stopPropagation();
-    catchTarget(target, icon, x, y);
-  }, { passive: true });
-
-  gameArena.appendChild(target);
-
-  // Auto remove after 2.6s
-  setTimeout(() => {
-    if (target.parentNode) {
-      target.style.opacity = '0';
-      setTimeout(() => target.remove(), 200);
-    }
-  }, 2600);
-}
-
-function catchTarget(el, icon, x, y) {
-  if (gameScore >= targetScore) return;
-
-  if (icon.includes('🐱') || icon.includes('😸') || icon.includes('🐾')) {
-    soundFX.playMeow();
-  } else {
-    soundFX.playSparkle();
-  }
-
-  // Floating score text
-  const pop = document.createElement('div');
-  pop.style.cssText = `
-    position: absolute;
-    left: ${x}px;
-    top: ${y}px;
-    color: #ffd166;
-    font-weight: 700;
-    font-size: 1rem;
-    pointer-events: none;
-    transition: transform 0.6s ease, opacity 0.6s ease;
-    z-index: 10;
-  `;
-  pop.textContent = icon.includes('🐱') ? '+1 Meow! 🥰' : '+1 Đóa hoa! 🌸';
-  gameArena.appendChild(pop);
-
-  requestAnimationFrame(() => {
-    pop.style.transform = 'translateY(-30px)';
-    pop.style.opacity = '0';
-  });
-  setTimeout(() => pop.remove(), 600);
-
-  el.remove();
-  gameScore++;
-  updateScoreUI();
-
-  if (gameScore >= targetScore) {
-    onMinigameComplete();
-  }
-}
-
-function updateScoreUI() {
-  scoreText.textContent = `${gameScore} / ${targetScore}`;
-  const pct = Math.min((gameScore / targetScore) * 100, 100);
-  progressFill.style.width = `${pct}%`;
-}
-
-function onMinigameComplete() {
-  if (spawnInterval) clearInterval(spawnInterval);
-  scoreStatus.textContent = "Đã đủ Boss mèo & Hoa! 🎉";
-  triggerConfetti(30);
-  soundFX.playSparkle();
-
-  // Show Accounting Quiz
-  setTimeout(() => {
-    quizBox.classList.remove('hidden');
-    quizBox.scrollIntoView({ behavior: 'smooth' });
-  }, 400);
-}
-
-// Accounting Quiz Interaction
-document.querySelectorAll('.quiz-opt-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    soundFX.playSparkle();
-    triggerConfetti(40);
-    quizResult.classList.remove('hidden');
-    quizResult.innerHTML = `
-      ✨ <strong>Chính xác 100%!</strong> Chuẩn mực Kế toán Tình cảm quy định: Khi Thu Phương cười, mọi số dư Nợ/Có đều tự động cân đối hoàn hảo và niềm vui tăng gấp bội! 🥰
-    `;
-
-    // Transition to Grand Finale Gift Screen after 1.8s
-    setTimeout(transitionToGiftScreen, 1800);
-  });
-});
-
-btnSkipToGift.addEventListener('click', transitionToGiftScreen);
-
-function transitionToGiftScreen() {
-  if (!soundFX.isMusicPlaying) {
-    soundFX.startMusic();
-    updateAudioUI(true);
-  }
-
-  minigameScreen.classList.remove('active');
-  setTimeout(() => {
-    giftScreen.classList.add('active');
-    triggerConfetti(60);
-    showToast("✨ Món quà 20/10 dành riêng cho Thu Phương đã mở!");
-    startRoseAnimation();
-    initAlbumSlider();
-  }, 400);
-}
-
-// ========================================================
-// 5. STAGE 3: 3D POLAROID PHOTO ALBUM
-// ========================================================
+// 3D Photo Album with Smooth Auto-Scroll (Tự động cuộn ảnh thông minh)
 const albumSlider = document.getElementById('album-slider');
 const albumCards = document.querySelectorAll('.polaroid-card');
-const albumDotsContainer = document.getElementById('album-nav-dots');
+const albumDotsContainer = document.getElementById('album-dots');
 const btnPrevSlide = document.getElementById('btn-prev-slide');
 const btnNextSlide = document.getElementById('btn-next-slide');
-const slideIndicator = document.getElementById('slide-indicator');
+const slideCounter = document.getElementById('slide-counter');
+const autoslideBadge = document.getElementById('autoslide-indicator');
 
 let currentSlide = 0;
 const totalSlides = albumCards.length;
+let autoSlideInterval = null;
+let isSlidePaused = false;
+const SLIDE_INTERVAL_MS = 3200; // 3.2 giây tự động lướt sang ảnh tiếp theo
 
 function initAlbumSlider() {
+  if (!albumDotsContainer || totalSlides === 0) return;
   albumDotsContainer.innerHTML = '';
   albumCards.forEach((_, idx) => {
     const dot = document.createElement('div');
-    dot.className = `album-dot ${idx === 0 ? 'active' : ''}`;
-    dot.addEventListener('click', () => goToSlide(idx));
+    dot.className = `album-dot ${idx === currentSlide ? 'active' : ''}`;
+    dot.setAttribute('title', `Xem ảnh ${idx + 1}`);
+    dot.addEventListener('click', () => {
+      goToSlide(idx);
+      resetAutoSlide();
+    });
     albumDotsContainer.appendChild(dot);
   });
   updateSlideDisplay();
+  startAutoSlide();
 }
 
 function goToSlide(idx) {
@@ -714,17 +623,90 @@ function updateSlideDisplay() {
     dot.classList.toggle('active', idx === currentSlide);
   });
 
-  slideIndicator.textContent = `${currentSlide + 1} / ${totalSlides}`;
+  if (slideCounter) {
+    slideCounter.textContent = `${currentSlide + 1} / ${totalSlides}`;
+  }
+}
+
+function startAutoSlide() {
+  stopAutoSlide();
+  autoSlideInterval = setInterval(() => {
+    if (!isSlidePaused) {
+      goToSlide(currentSlide + 1);
+    }
+  }, SLIDE_INTERVAL_MS);
+}
+
+function stopAutoSlide() {
+  if (autoSlideInterval) {
+    clearInterval(autoSlideInterval);
+    autoSlideInterval = null;
+  }
+}
+
+function resetAutoSlide() {
+  stopAutoSlide();
+  startAutoSlide();
+}
+
+// Pause auto-sliding on hover so user can read caption or view clearly
+if (albumSlider) {
+  albumSlider.addEventListener('mouseenter', () => {
+    isSlidePaused = true;
+  });
+  albumSlider.addEventListener('mouseleave', () => {
+    isSlidePaused = false;
+  });
+
+  // Touch swipe support for phones
+  let touchStartX = 0;
+  let touchEndX = 0;
+  albumSlider.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+    isSlidePaused = true;
+  }, { passive: true });
+
+  albumSlider.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    isSlidePaused = false;
+    const diff = touchEndX - touchStartX;
+    if (Math.abs(diff) > 40) {
+      if (diff < 0) {
+        goToSlide(currentSlide + 1);
+        soundFX.playSparkle();
+      } else {
+        goToSlide(currentSlide - 1);
+        soundFX.playSparkle();
+      }
+      resetAutoSlide();
+    }
+  }, { passive: true });
+}
+
+if (autoslideBadge) {
+  autoslideBadge.addEventListener('click', () => {
+    isSlidePaused = !isSlidePaused;
+    if (isSlidePaused) {
+      showToast("⏸️ Đã tạm dừng tự động cuộn ảnh");
+      autoslideBadge.style.opacity = '0.6';
+    } else {
+      showToast("▶️ Tiếp tục tự động cuộn ảnh ✨");
+      autoslideBadge.style.opacity = '1';
+      resetAutoSlide();
+    }
+  });
 }
 
 btnPrevSlide.addEventListener('click', () => {
   goToSlide(currentSlide - 1);
   soundFX.playSparkle();
+  resetAutoSlide();
 });
 
 btnNextSlide.addEventListener('click', () => {
   goToSlide(currentSlide + 1);
   soundFX.playSparkle();
+  resetAutoSlide();
 });
 
 albumCards.forEach(card => {
@@ -732,21 +714,24 @@ albumCards.forEach(card => {
     triggerConfetti(25);
     soundFX.playMeow();
     showToast("🥰 Ảnh xinh quá nè! Chúc Thu Phương 20/10 siêu vui!");
+    goToSlide(currentSlide + 1);
+    resetAutoSlide();
   });
 });
 
 const albumReminderBox = document.getElementById('album-reminder-box');
 if (albumReminderBox) {
   albumReminderBox.addEventListener('click', () => {
-    triggerConfetti(30);
+    triggerConfetti(35);
     soundFX.playMeow();
     showToast("📢 Đã gửi tín hiệu réo chủ thớt! Mau mau nộp thêm nhìu ảnh selfie nhaa 🤳✨");
   });
 }
 
-// ========================================================
-// 6. BLOOMING ROSE CANVAS ENGINE
-// ========================================================
+// Start immediately on load
+initAlbumSlider();
+
+// Blooming Rose Canvas Engine
 const roseCanvas = document.getElementById('rose-canvas');
 const roseCtx = roseCanvas.getContext('2d');
 let bloomProgress = 0;
@@ -754,14 +739,14 @@ let bloomProgress = 0;
 function setupRoseCanvas() {
   const dpr = window.devicePixelRatio || 1;
   const rect = roseCanvas.getBoundingClientRect();
-  roseCanvas.width = (rect.width || 220) * dpr;
-  roseCanvas.height = (rect.height || 220) * dpr;
+  roseCanvas.width = (rect.width || 210) * dpr;
+  roseCanvas.height = (rect.height || 210) * dpr;
   roseCtx.scale(dpr, dpr);
 }
 
 function drawParametricRose(progress) {
-  const w = roseCanvas.clientWidth || 220;
-  const h = roseCanvas.clientHeight || 220;
+  const w = roseCanvas.clientWidth || 210;
+  const h = roseCanvas.clientHeight || 210;
   const cx = w / 2;
   const cy = h / 2;
 
@@ -772,7 +757,7 @@ function drawParametricRose(progress) {
 
   for (let i = 0; i < maxLayers; i++) {
     const angle = i * 137.5 * (Math.PI / 180);
-    const r = Math.sqrt(i) * 11 * Math.min(progress, 1);
+    const r = Math.sqrt(i) * 10.5 * Math.min(progress, 1);
     const x = cx + r * Math.cos(angle);
     const y = cy + r * Math.sin(angle);
 
@@ -833,14 +818,12 @@ function startRoseAnimation() {
 roseCanvas.addEventListener('click', () => {
   bloomProgress = 0.2;
   startRoseAnimation();
-  triggerConfetti(30);
+  triggerConfetti(35);
   soundFX.playSparkle();
   showToast("🌹 Đóa hoa nở rộ dành tặng Thu Phương!");
 });
 
-// ========================================================
-// 7. BACKGROUND PARTICLES & PETALS CANVAS
-// ========================================================
+// Canvas Background Stars & Floating Hearts
 const bgCanvas = document.getElementById('bg-canvas');
 const bgCtx = bgCanvas.getContext('2d');
 let bgParticles = [];
@@ -902,7 +885,7 @@ class BgParticle {
   }
 }
 
-for (let i = 0; i < 70; i++) {
+for (let i = 0; i < 75; i++) {
   bgParticles.push(new BgParticle());
 }
 
@@ -916,11 +899,9 @@ function animateBg() {
 }
 animateBg();
 
-// ========================================================
-// 8. CONFETTI BURST ENGINE
-// ========================================================
+// Confetti burst
 function triggerConfetti(count = 40) {
-  const emojis = ['🌸', '💖', '✨', '🌹', '💐', '🐱', '🐾', '🌷'];
+  const emojis = ['🌸', '💖', '✨', '🌹', '💐', '🐱', '🐾', '🌷', '🍗'];
   for (let i = 0; i < count; i++) {
     const el = document.createElement('div');
     el.className = 'burst-particle';
@@ -955,9 +936,7 @@ function triggerConfetti(count = 40) {
   }
 }
 
-// ========================================================
-// 9. TOAST & AUDIO UI
-// ========================================================
+// Toast
 const toastEl = document.getElementById('toast');
 let toastTimer = null;
 
@@ -970,30 +949,125 @@ function showToast(msg) {
   }, 3200);
 }
 
+// Background Song Audio Player (Ánh Nắng Của Anh - Đức Phúc)
+const bgAudio = document.getElementById('bg-audio');
 const audioBtn = document.getElementById('audio-toggle');
 const audioLabel = audioBtn.querySelector('.audio-label');
+const audioIcon = audioBtn.querySelector('.audio-icon');
+
+const CDN_SONG_URL = 'https://cdn.jsdelivr.net/gh/anhkhuong134-glitch/for-thu-phuong@main/music.mp3';
+const BACKUP_SONG_URL = 'https://archive.org/download/anh-nang-cua-anh-cho-em-den-ngay-mai-ost-duc-phuc-tram-yeu-v.-a-playlist-nhac-cua-tui/%C3%81nh%20N%E1%BA%AFng%20C%E1%BB%A7a%20Anh%20%28Ch%E1%BB%9D%20Em%20%C4%90%E1%BA%BFn%20Ng%C3%A0y%20Mai%20OST%29%20-%20%C4%90%E1%BB%A9c%20Ph%C3%BAc%20-%20Tr%E1%BA%A1m%20Y%C3%AAu%20-%20V.A%20-%20Playlist%20NhacCuaTui.mp3';
+let isSongPlaying = false;
+let hasSwitchedToCDN = false;
+
+function playRealSong() {
+  if (!bgAudio) return;
+  bgAudio.volume = 0.85;
+
+  const tryPlay = () => {
+    const playPromise = bgAudio.play();
+    if (playPromise !== undefined) {
+      playPromise.then(() => {
+        isSongPlaying = true;
+        updateAudioUI(true);
+      }).catch(err => {
+        console.warn("Autoplay deferred or error:", err);
+        if (!hasSwitchedToCDN) {
+          hasSwitchedToCDN = true;
+          bgAudio.src = CDN_SONG_URL;
+          bgAudio.load();
+          bgAudio.play().then(() => {
+            isSongPlaying = true;
+            updateAudioUI(true);
+          }).catch(e => {
+            isSongPlaying = false;
+            updateAudioUI(false);
+          });
+        } else {
+          isSongPlaying = false;
+          updateAudioUI(false);
+        }
+      });
+    }
+  };
+
+  bgAudio.onerror = () => {
+    if (!hasSwitchedToCDN) {
+      hasSwitchedToCDN = true;
+      console.warn("Switching audio to GitHub CDN source");
+      bgAudio.src = CDN_SONG_URL;
+      bgAudio.load();
+      tryPlay();
+    }
+  };
+
+  tryPlay();
+}
+
+function pauseRealSong() {
+  if (!bgAudio) return;
+  bgAudio.pause();
+  isSongPlaying = false;
+  updateAudioUI(false);
+}
+
+function toggleRealSong() {
+  if (isSongPlaying) {
+    pauseRealSong();
+    showToast("Đã tạm dừng bài hát ⏸️");
+  } else {
+    playRealSong();
+    showToast("🎶 Đang phát: Xao Xuyến (Bình Minh Vũ x Mr. Siro)");
+  }
+}
 
 function updateAudioUI(isPlaying) {
   if (isPlaying) {
     audioBtn.classList.add('playing');
-    audioLabel.textContent = 'Giai điệu lofi';
+    audioLabel.textContent = 'Xao Xuyến 🎶';
+    if (audioIcon) audioIcon.textContent = '⏸️';
   } else {
     audioBtn.classList.remove('playing');
-    audioLabel.textContent = 'Bật nhạc chill';
+    audioLabel.textContent = 'Phát bài hát 🎵';
+    if (audioIcon) audioIcon.textContent = '▶️';
   }
 }
 
-audioBtn.addEventListener('click', () => {
-  const isPlaying = soundFX.toggleMusic();
-  updateAudioUI(isPlaying);
-  if (isPlaying) {
-    showToast("🎵 Đang phát giai điệu lãng mạn nhẹ nhàng...");
-  }
-});
+audioBtn.addEventListener('click', toggleRealSong);
 
-// ========================================================
-// 10. MODAL & LETTER ACTION BUTTONS
-// ========================================================
+// Chibi and Bouquet Interactive Listeners
+const chibiTrigger = document.getElementById('chibi-avatar');
+const btnBouquetShake = document.getElementById('btn-bouquet-burst') || document.getElementById('btn-bouquet-shake');
+const bouquetImgBox = document.getElementById('bouquet-img-box');
+
+if (chibiTrigger) {
+  chibiTrigger.addEventListener('click', () => {
+    soundFX.playMeow();
+    triggerConfetti(35);
+    showToast("🐾 Meow! Thu Phương xinh gái nhất trần đời! 🥰");
+  });
+}
+
+function burstBouquet() {
+  soundFX.playSparkle();
+  triggerConfetti(50);
+  showToast("💐 Bó hoa ngát hương gửi tặng Thu Phương rực rỡ nhất 20/10!");
+  if (bouquetImgBox) {
+    bouquetImgBox.style.transform = 'scale(1.08) rotate(3deg)';
+    setTimeout(() => {
+      bouquetImgBox.style.transform = 'scale(1) rotate(0deg)';
+    }, 400);
+  }
+}
+
+if (btnBouquetShake) {
+  btnBouquetShake.addEventListener('click', burstBouquet);
+}
+if (bouquetImgBox) {
+  bouquetImgBox.addEventListener('click', burstBouquet);
+}
+
+// Modal Actions
 const secretModal = document.getElementById('secret-modal');
 const btnSecretMsg = document.getElementById('btn-secret-msg');
 const modalClose = document.getElementById('modal-close');
